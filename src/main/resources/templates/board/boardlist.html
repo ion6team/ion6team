@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>BoardList</title>
+</head>
+<style>
+table, th, td {
+	border: 1px solid #bcbcbc;
+}
+
+table {
+	width: 1000px;
+}
+</style>
+<body>
+	<div class="contianer">
+		<h2>게시글 목록</h2>
+
+		<table>
+			<thead>
+				<tr>
+					<td>글번호</td>
+					<td>제목</td>
+					<td>금액</td>
+					<td>카테고리</td>
+					<td>작성자명</td>
+					<td>작성일</td>
+					<td>조회수></td>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="board : ${boards}">
+					<td th:text="${board.id}"></td>
+					<td><a href="/board/boardDetail/"
+						th:attrappend="href=${board.id}" th:text="${board.title}"></a></td>
+					<td th:text="${board.price}"></td>
+					<td th:text="${board.category.name}"></td>
+					<td th:text="${board.member.name}"></td>
+					<td th:text="${board.create_date}"></td>
+					<td th:text="${board.hit}"></td>
+				</tr>
+				<!--  <tr th:unless="${#lists.size(boards)}>0">
+					<td colspan="5">조회 결과 없음</td>
+				</tr> -->
+			</tbody>
+		</table>
+		<a th:href="@{/board/new}"> 글쓰기</a>
+	</div>
+</body>
+</html>
