@@ -78,6 +78,13 @@ public class HomeController {
     	return "admin/memberlist";
     }
     
+    @GetMapping(value = "/member/all")
+    @ResponseBody
+    public List<Member> manageMember1() {
+        
+
+    	return memberService.findAll();
+    }
     
     
    

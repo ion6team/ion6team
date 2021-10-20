@@ -43,6 +43,7 @@ public class BoardController {
 		return "board/addboard";
 	}
 
+
 	@PostMapping("/board/new")
 	public String addBoard(BoardDto board) {
 		System.out.println("@@@@@");
