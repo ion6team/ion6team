@@ -24,7 +24,7 @@ public class HomeController {
 	@Autowired
 	BoardService boardService;
 	
-	@GetMapping("/")
+	@GetMapping("/123123")
 	public String home(@AuthenticationPrincipal Member member, Model model) {
 		if(Objects.isNull(member)) 
 			return "home";
