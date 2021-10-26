@@ -7,15 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kosa.ion.team6.DTO.MemberDto;
 import kosa.ion.team6.Domain.Member;
 import kosa.ion.team6.Service.BoardService;
 import kosa.ion.team6.Service.MemberService;
 
 @Controller
+@CrossOrigin(origins="*")
 public class HomeController {
 	
 	@Autowired
@@ -84,6 +89,30 @@ public class HomeController {
         
 
     	return memberService.findAll();
+    }
+    
+    @GetMapping(value = "/check")
+    @ResponseBody
+    public String checkAxios(@RequestParam("id") String id, @RequestParam("pw") String pw) {
+    	System.out.println(id);
+    	System.out.println(pw);
+    	
+    	if(id.equals("son") && pw.equals("1")) {
+    		return "로그인 성공";
+    	}else
+    		return "로그인 실패";
+    }
+    
+    @PostMapping(value = "/check")
+    @ResponseBody
+    public String checkAxios2(@RequestBody final MemberDto memberDto) {
+    	System.out.println(memberDto.getId());
+    	System.out.println(memberDto.getPw());
+    	
+    	if(memberDto.getId().equals("son") && memberDto.getPw().equals("1")) {
+    		return "로그인 성공";
+    	}else
+    		return "로그인 실패";
     }
     
     

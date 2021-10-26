@@ -52,7 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true) // 세션 날리기
                 .and()
              .exceptionHandling()
-                .accessDeniedPage("/members/denied");
+                .accessDeniedPage("/members/denied")
+                .and()
+             .csrf().disable();
     }
 
     @Override
