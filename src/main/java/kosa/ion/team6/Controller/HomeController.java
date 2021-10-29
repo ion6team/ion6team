@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import kosa.ion.team6.Service.MemberService;
 
 @Controller
 @CrossOrigin(origins="*")
+
 public class HomeController {
 	
 	@Autowired
@@ -29,7 +32,7 @@ public class HomeController {
 	@Autowired
 	BoardService boardService;
 	
-	@GetMapping("/123123")
+	@GetMapping("/")
 	public String home(@AuthenticationPrincipal Member member, Model model) {
 		if(Objects.isNull(member)) 
 			return "home";
