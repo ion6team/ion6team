@@ -10,7 +10,7 @@ import kosa.ion.team6.Domain.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long>{
-	 Optional<Member> findByEmail(String email);
+	 Member findByEmail(String email);
 	 boolean existsByEmail(String email);
 	 Member findById(long id);
 }

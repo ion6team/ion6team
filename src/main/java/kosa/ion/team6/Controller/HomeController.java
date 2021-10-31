@@ -106,17 +106,17 @@ public class HomeController {
     		return "로그인 실패";
     }
     
-    @PostMapping(value = "/check")
-    @ResponseBody
-    public String checkAxios2(@RequestBody final MemberDto memberDto) {
-    	System.out.println(memberDto.getId());
-    	System.out.println(memberDto.getPw());
-    	
-    	if(memberDto.getId().equals("son") && memberDto.getPw().equals("1")) {
-    		return "로그인 성공";
-    	}else
-    		return "로그인 실패";
-    }
+//    @PostMapping(value = "/check")
+//    @ResponseBody
+//    public String checkAxios2(@RequestBody final MemberDto memberDto) {
+//    	System.out.println(memberDto.getId());
+//    	System.out.println(memberDto.getPw());
+//
+//    	if(memberDto.getId().equals("son") && memberDto.getPw().equals("1")) {
+//    		return "로그인 성공";
+//    	}else
+//    		return "로그인 실패";
+//    }
     
     
    

@@ -1,57 +1,79 @@
-import axios from 'axios'
+// import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate';
+import axios from 'axios'
+// import router from '../router';
+
+// import router from 'vue-router'
+// import modules from './modules';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     loginSuccess: false,
     loginError: false,
-    userName: null
+    loginfailed: false,
+    member: {
+      id: null,
+      name: null,
+      email: null,
+      address: null,
+      address_detail: null
+    },
+    checkcheck: 10000,
   },
   mutations: {
-    loginSuccess(state, {user, password}) {
+    loginSuccess(state, member) {
       state.loginSuccess = true;
-      state.userName = user
-      state.password = password
+      state.member = member;
     },
-    loginError(state, {user, password}) {
+    logout(state) {
+      state.loginSuccess = false;
+    },
+    loginError(state) {
       state.loginError = true;
-      state.userName = user
-      state.userName = password
+    },
+    loginfailed(state){
+      state.loginfailed=true;
     }
   },
   actions: {
-    async login({commit}, {user, password}) {
+    async login({
+      commit
+    }, {
+      email,
+      password
+    }) {
       try {
-        const result = await axios.get('/api/login', {
-          auth: {
-            username: user,
-            password: password
-          },
+        const result = await axios.post('/api/login', {
+          username: email,
+          password: password,
 
         });
-        if (result.status === 200) {
-          commit('loginSuccess', {
-            userName: user,
-            userPass: password
-          });
+        console.log(result.data)
+        if (result.data.email == email) {
+          commit('loginSuccess', result.data)
+
+        }else{
+          commit('loginfailed')
         }
       } catch (err) {
         commit('loginError', {
-          userName: user
+          userName: email
         });
         throw new Error(err)
       }
     }
   },
-  getters: {
-    isLoggedIn: state => state.loginSuccess,
-    hasLoginErrored: state => state.loginError,
-    getUserName: state => state.userName,
-    getUserPass: state => state.userPass
-  },
-  modules: {
-  }
+  // getters: {
+  //   isLoggedIn: state => state.loginSuccess,
+  //   hasLoginErrored: state => state.loginError,
+  //   getUserName: state => state.userName,
+  //   getUserPass: state => state.userPass
+  // },
+  // modules: {
+  // }
 })

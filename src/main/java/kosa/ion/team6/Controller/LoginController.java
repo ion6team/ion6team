@@ -1,10 +1,12 @@
 package kosa.ion.team6.Controller;
 
+import kosa.ion.team6.DTO.MemberDto;
 import kosa.ion.team6.Domain.Member;
+import kosa.ion.team6.Repository.MemberRepository;
 import kosa.ion.team6.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
@@ -16,6 +18,12 @@ public class LoginController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     final private static Logger LOG = Logger.getGlobal();
     public static final String SECURED_TEXT = "Hello from the secured resource!";
@@ -41,6 +49,24 @@ public class LoginController {
         LOG.info(member.getAddress_detail());
         memberService.join(member);
         LOG.info(" ##### Login Success #####");
+    }
 
+    @GetMapping(value="/join/{email}")
+    @ResponseBody
+    public boolean checkDupEmail(@PathVariable("email") String email){
+        LOG.info("이메일 중복체크 : " + email);
+       return memberService.checkEmail(email);
+    }
+
+
+    @PostMapping(value="/login")
+    @ResponseBody
+    public Member login(@RequestBody MemberDto memberDto) {
+        Member loginMember = memberRepository.findByEmail(memberDto.getUsername());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        LOG.info( "ID >> " + memberDto.getUsername());
+        LOG.info( "PW >> " + passwordEncoder.encode(memberDto.getPassword()));
+
+        return memberService.validationLogin(memberDto);
     }
 }

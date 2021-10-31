@@ -3,21 +3,20 @@
 
     <div id="nav">
           <Header/>
-      <router-link to="/">Login</router-link> |
-      <router-link to="/protected">Protected</router-link> |
-      <router-link to="/join">Join</router-link>
     </div>
     <router-view/>
+    <Footer/>
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
 
 export default {
   name: 'App',
   components: {
-    Header,
+    Header, Footer
   }
 }
 </script>

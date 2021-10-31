@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Protected from '../views/Protected.vue';
 import Login from '../components/Login.vue';
 import Join from '../views/Join.vue';
 import Header from '../components/Header.vue';
+import Footer from '../components/Footer.vue';
 
-import store from '../store'
+// import store from '../store'
 
 Vue.use(VueRouter);
 
@@ -22,17 +22,14 @@ const routes = [
     component: Header
   },
   {
+    path: '/',
+    name: 'Footer',
+    component: Footer
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login
-  },
-  {
-    path: '/protected',
-    name: 'Protected',
-    component: Protected,
-    meta: {
-      requiresAuth: true
-    }
   },
   {
     path: '/join',
@@ -49,18 +46,18 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.getters.isLoggedIn) {
-      next({
-        name: 'Login'
-      })
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     if (!store.getters.isLoggedIn) {
+//       next({
+//         name: 'Login'
+//       })
+//     } else {
+//       next();
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 export default router

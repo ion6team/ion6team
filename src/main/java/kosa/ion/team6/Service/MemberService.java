@@ -2,11 +2,13 @@ package kosa.ion.team6.Service;
 
 import java.util.List;
 
+import kosa.ion.team6.DTO.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kosa.ion.team6.Domain.Member;
@@ -16,6 +18,7 @@ import kosa.ion.team6.Repository.MemberRepository;
 public class MemberService implements UserDetailsService{
 
 	private MemberRepository memberRepository;
+
 
 	@Autowired
 	public MemberService(MemberRepository memberRepository) {
@@ -59,7 +62,22 @@ public class MemberService implements UserDetailsService{
             authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
         }
         return new User(member.getName(),member.getPw(),authorities);*/
-        return (UserDetails) memberRepository.findByEmail(email).
-                orElseThrow(() -> new UsernameNotFoundException(email));
+        return (UserDetails) memberRepository.findByEmail(email);
+                //orElseThrow(() -> new UsernameNotFoundException(email));
     }
+
+	public Member validationLogin(MemberDto memberDto){
+		Member lmember = memberRepository.findByEmail(memberDto.getUsername());
+
+		if(lmember==null){
+			return null;
+		}
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		if(!passwordEncoder.matches(memberDto.getPassword(), lmember.getPassword())){
+			return null;
+		}
+
+		return lmember;
+	}
 }
