@@ -59,11 +59,13 @@
                 }
                 if (this.$store.state.loginSuccess == true) {
                     console.log("홈으로가자")
+                    alert("로그인 성공")
                     this.$router.push('/')
                 }
 
                 if (this.$store.state.loginSuccess == false){
                     console.log("현재페이지 새로고침하자")
+                    alert("로그인 실패")
                     this.$router.go()
                 }
 
