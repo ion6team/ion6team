@@ -4,28 +4,26 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Member implements UserDetails{
+@AllArgsConstructor
+@Builder
+@Table
+public class Member{
 	
     @Id
+    @Column(name="member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
@@ -37,45 +35,56 @@ public class Member implements UserDetails{
     
     @ColumnDefault("0")
     private int report_count;
-    
-    private String auth;
-    
-	@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> roles = new HashSet<>();
-        for (String role : auth.split(",")) {
-            roles.add(new SimpleGrantedAuthority(role));
-        }
-        return roles;
-    }
-	
-    @Override
-    public String getUsername() {
-        return email;
-    }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+    @JsonIgnore
+    @Column(name = "activated")
+    private boolean activated;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "member_authority",
+            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    //UserDetails
+//
+//	@Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Set<GrantedAuthority> roles = new HashSet<>();
+//        for (String role : auth.split(",")) {
+//            roles.add(new SimpleGrantedAuthority(role));
+//        }
+//        return roles;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return email;
+//    }
+//
+//    @Override
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 }

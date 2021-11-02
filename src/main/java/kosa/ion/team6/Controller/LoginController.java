@@ -33,10 +33,10 @@ public class LoginController {
         LOG.info("GET successfully called on /login resource");
     }
 
-    @GetMapping("/hello")
-    public void hello() {
-        System.out.println("HelloWorld");
-    }
+//    @GetMapping("/hello")
+//    public void hello() {
+//        System.out.println("HelloWorld");
+//    }
 
     @PostMapping(value="/join")
     @ResponseBody
@@ -58,15 +58,15 @@ public class LoginController {
        return memberService.checkEmail(email);
     }
 
-
-    @PostMapping(value="/login")
-    @ResponseBody
-    public Member login(@RequestBody MemberDto memberDto) {
-        Member loginMember = memberRepository.findByEmail(memberDto.getUsername());
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        LOG.info( "ID >> " + memberDto.getUsername());
-        LOG.info( "PW >> " + passwordEncoder.encode(memberDto.getPassword()));
-
-        return memberService.validationLogin(memberDto);
-    }
+//
+//    @PostMapping(value="/login")
+//    @ResponseBody
+//    public Member login(@RequestBody MemberDto memberDto) {
+//        Member loginMember = memberRepository.findByEmail(memberDto.getEmail());
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        LOG.info( "ID >> " + memberDto.getUsername());
+//        LOG.info( "PW >> " + passwordEncoder.encode(memberDto.getPassword()));
+//
+//        return memberService.validationLogin(memberDto);
+//    }
 }

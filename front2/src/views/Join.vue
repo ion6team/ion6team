@@ -31,8 +31,13 @@
                 </b-form-group>
                 <b-button @click="join" variant="primary">Submit</b-button>
                 <b-button type="reset" variant="danger">Reset</b-button>
+
+                <input type="text" class="addr1" id="address" placeholder="서울특별시 서초구 -" v-model="address" disabled>
+
             </b-form>
+
         </b-container>
+
     </div>
 </template>
 
@@ -74,9 +79,8 @@
                     if (!response.data) this.result = '사용가능한 이메일'
                     else this.result = '중복이메일'
                 })
-
-            }
-
+            },
+          
         },
         watch: {
             result: function (result) {
