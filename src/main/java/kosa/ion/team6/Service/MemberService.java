@@ -83,6 +83,28 @@ public class MemberService implements UserDetailsService{
 
 	}
 
+	@Transactional
+	public String editMember(Long id, MemberDto memberDto){
+		Member editMember = memberRepository.findById(id).get();
+
+		editMember.setEmail(memberDto.getEmail());
+		editMember.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+		editMember.setName(memberDto.getName());
+		editMember.setAddress(memberDto.getAddress());
+		editMember.setAddress_detail(memberDto.getAddress_detail());
+
+		return editMember.getEmail() + " 수정됨.";
+	}
+
+	@Transactional
+	public String deleteMember(Long id){
+		Member deleteMember = memberRepository.findById(id).get();
+
+		deleteMember.setActivated(false);
+
+		return deleteMember.getEmail() + " 비활성화";
+	}
+
 	// 이메일을 받아서 정보를 가져옴
 	@Transactional(readOnly = true)
 	public Optional<Member> getUserWithAuthorities(String email) {
@@ -97,31 +119,31 @@ public class MemberService implements UserDetailsService{
 
 
 
-	public Long join(Member m) {
-		//if(memberRepository.existsByEamil(m.getEmail())) {
-		//	return 0L;
-		//}
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		m.setPassword(passwordEncoder.encode(m.getPassword()));
-		
-		return memberRepository.save(m).getId();
-	}
-	
-	public List<Member> findAll(){
-		return memberRepository.findAll();
-	}
-	
-	public boolean checkEmail(String email) {
-		if(memberRepository.existsByEmail(email))
-			return true;
-		else
-			return false;
-	}
-	
-	public Member selectOne(long id) {
-		
-		return memberRepository.findById(id);
-	}
+//	public Long join(Member m) {
+//		//if(memberRepository.existsByEamil(m.getEmail())) {
+//		//	return 0L;
+//		//}
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//		m.setPassword(passwordEncoder.encode(m.getPassword()));
+//
+//		return memberRepository.save(m).getId();
+//	}
+//
+//	public List<Member> findAll(){
+//		return memberRepository.findAll();
+//	}
+//
+//	public boolean checkEmail(String email) {
+//		if(memberRepository.existsByEmail(email))
+//			return true;
+//		else
+//			return false;
+//	}
+//
+//	public Member selectOne(long id) {
+//
+//		return memberRepository.findById(id);
+//	}
 
 /*    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

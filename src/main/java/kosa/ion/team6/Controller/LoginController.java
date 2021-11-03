@@ -38,25 +38,25 @@ public class LoginController {
 //        System.out.println("HelloWorld");
 //    }
 
-    @PostMapping(value="/join")
-    @ResponseBody
-    public void join(@RequestBody Member member) {
-        LOG.info(" ##### Join Infomation #####");
-        LOG.info(member.getEmail());
-        LOG.info(member.getName());
-        LOG.info(member.getPassword());
-        LOG.info(member.getAddress());
-        LOG.info(member.getAddress_detail());
-        memberService.join(member);
-        LOG.info(" ##### Login Success #####");
-    }
-
-    @GetMapping(value="/join/{email}")
-    @ResponseBody
-    public boolean checkDupEmail(@PathVariable("email") String email){
-        LOG.info("이메일 중복체크 : " + email);
-       return memberService.checkEmail(email);
-    }
+//    @PostMapping(value="/join")
+//    @ResponseBody
+//    public void join(@RequestBody Member member) {
+//        LOG.info(" ##### Join Infomation #####");
+//        LOG.info(member.getEmail());
+//        LOG.info(member.getName());
+//        LOG.info(member.getPassword());
+//        LOG.info(member.getAddress());
+//        LOG.info(member.getAddress_detail());
+//        memberService.join(member);
+//        LOG.info(" ##### Login Success #####");
+//    }
+//
+//    @GetMapping(value="/join/{email}")
+//    @ResponseBody
+//    public boolean checkDupEmail(@PathVariable("email") String email){
+//        LOG.info("이메일 중복체크 : " + email);
+//       return memberService.checkEmail(email);
+//    }
 
 //
 //    @PostMapping(value="/login")

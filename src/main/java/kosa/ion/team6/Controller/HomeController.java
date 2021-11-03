@@ -48,19 +48,19 @@ public class HomeController {
 		return "member/join";
 	}
 	
-	@PostMapping(value="/member/new")
-	@ResponseBody
-	public String join(Member member) {
-		System.out.println(member.getName());
-		if(memberService.checkEmail(member.getEmail())) {
-			return "이메일 중복 다시 ㄱ";
-		}
-		
-		if(memberService.join(member)== 0L)
-			return "join failed <br> email Joongbok <a href='/'>go home</a>";
-		else 
-			return "join success <br> <a href='/'>go home</a>";
-	}
+//	@PostMapping(value="/member/new")
+//	@ResponseBody
+//	public String join(Member member) {
+//		System.out.println(member.getName());
+//		if(memberService.checkEmail(member.getEmail())) {
+//			return "이메일 중복 다시 ㄱ";
+//		}
+//
+//		if(memberService.join(member)== 0L)
+//			return "join failed <br> email Joongbok <a href='/'>go home</a>";
+//		else
+//			return "join success <br> <a href='/'>go home</a>";
+//	}
 	
     @GetMapping(value ="/member/login")
     public String login(){
@@ -78,21 +78,21 @@ public class HomeController {
     	return "admin/admin";
     }
     
-    @GetMapping(value = "/admin/memberlist")
-    public String manageMember(Model model) {
-        List<Member> members = memberService.findAll();
-        model.addAttribute("members",members);
-
-    	return "admin/memberlist";
-    }
-    
-    @GetMapping(value = "/member/all")
-    @ResponseBody
-    public List<Member> manageMember1() {
-        
-
-    	return memberService.findAll();
-    }
+//    @GetMapping(value = "/admin/memberlist")
+//    public String manageMember(Model model) {
+//        List<Member> members = memberService.findAll();
+//        model.addAttribute("members",members);
+//
+//    	return "admin/memberlist";
+//    }
+//
+//    @GetMapping(value = "/member/all")
+//    @ResponseBody
+//    public List<Member> manageMember1() {
+//
+//
+//    	return memberService.findAll();
+//    }
     
     @GetMapping(value = "/check")
     @ResponseBody
