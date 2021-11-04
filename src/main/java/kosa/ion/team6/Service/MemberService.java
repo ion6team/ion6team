@@ -117,6 +117,12 @@ public class MemberService implements UserDetailsService{
 		return SecurityUtil.getCurrentUsername().flatMap(memberRepository::findOneWithAuthoritiesByEmail);
 	}
 
+	// 전체 정보를 가져옴
+	@Transactional(readOnly = true)
+	public List<Member> getAllMemberInfo(){
+		return (List<Member>) memberRepository.findAll();
+	}
+
 
 
 //	public Long join(Member m) {

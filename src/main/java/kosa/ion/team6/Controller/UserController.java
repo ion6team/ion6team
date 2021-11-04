@@ -21,16 +21,7 @@ public class UserController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/hello")
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("hello");
-    }
-
-    @PostMapping("/test-redirect")
-    public void testRedirect(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/api/user");
-    }
-
+    // 회원가입
     @PostMapping("/member/new")
     public ResponseEntity<Member> signup(
             @Valid @RequestBody MemberDto memberDto
@@ -45,18 +36,14 @@ public class UserController {
         return ResponseEntity.ok(memberService.signup(memberDto));
     }
 
+    // 회원 정보 조회
     @GetMapping("/member")
     @PreAuthorize("hasAnyRole('USER','ADMIN')") // 두가지 권한 모두 허용
     public ResponseEntity<Member> getMyUserInfo(HttpServletRequest request) {
         return ResponseEntity.ok(memberService.getMyUserWithAuthorities().get());
     }
 
-    @GetMapping("/user/{username}")
-    @PreAuthorize("hasAnyRole('ADMIN')") // admin만 허용
-    public ResponseEntity<Member> getUserInfo(@PathVariable String email) {
-        return ResponseEntity.ok(memberService.getUserWithAuthorities(email).get());
-    }
-
+    // 회원 수정
     @PutMapping("/member")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<String> EditMemberInfo(HttpServletRequest request, @RequestBody MemberDto memberDto) {
@@ -71,6 +58,7 @@ public class UserController {
         );
     }
 
+    // 회원 삭제
     @DeleteMapping("/member")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<String> DeleteMember(HttpServletRequest request){
