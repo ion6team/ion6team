@@ -1,79 +1,30 @@
-// import axios from 'axios'
+/* eslint-disable no-unused-vars */
+import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate';
-import axios from 'axios'
-// import router from '../router';
-
-// import router from 'vue-router'
-// import modules from './modules';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
-  state: {
-    loginSuccess: false,
-    loginError: false,
-    loginfailed: false,
-    member: {
-      id: null,
-      name: null,
-      email: null,
-      address: null,
-      address_detail: null
-    },
-    checkcheck: 10000,
+  state: { //data
+    boards:[]
   },
-  mutations: {
-    loginSuccess(state, member) {
-      state.loginSuccess = true;
-      state.member = member;
-    },
-    logout(state) {
-      state.loginSuccess = false;
-    },
-    loginError(state) {
-      state.loginError = true;
-    },
-    loginfailed(state){
-      state.loginfailed=true;
+  mutations: { 
+    boardData(state,boards){
+      state.boards=boards
     }
   },
-  actions: {
-    async login({
-      commit
-    }, {
-      email,
-      password
-    }) {
-      try {
-        const result = await axios.post('/api/login', {
-          username: email,
-          password: password,
-
-        });
-        console.log(result.data)
-        if (result.data.email == email) {
-          commit('loginSuccess', result.data)
-
-        }else{
-          commit('loginfailed')
-        }
-      } catch (err) {
-        commit('loginError', {
-          userName: email
-        });
-        throw new Error(err)
+  actions: { //method
+    getBoardData({commit})
+      {
+        axios.get('http://localhost:8080/api/board')
+        .then(res=>res.data)
+        
+        
+        //.then('set_boards',boards)
+        
       }
-    }
-  },
-  // getters: {
-  //   isLoggedIn: state => state.loginSuccess,
-  //   hasLoginErrored: state => state.loginError,
-  //   getUserName: state => state.userName,
-  //   getUserPass: state => state.userPass
-  // },
-  // modules: {
-  // }
+    },
+  modules: {
+  }
 })

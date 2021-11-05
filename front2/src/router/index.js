@@ -1,63 +1,58 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '../components/Login.vue';
-import Join from '../views/Join.vue';
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+import DefaultLayout from '../layouts/default/index'
+import PageLayout from '../layouts/page/index'
+import Login from '../views/Login.vue'
+import Join from '../views/Join.vue'
+import Board from '../views/Board.vue'
 
-// import store from '../store'
-
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path:'/',
+    name:'DefaultLayout',
+    component: DefaultLayout,
+    children:[
+      {
+        path: '/',
+        name: 'Home',
+        component: Home
+      },
+      {
+        path: '/board',
+        name: 'Board',
+        component: Board
+      },
+    ]
   },
+
   {
-    path: '/',
-    name: 'Header',
-    component: Header
-  },
-  {
-    path: '/',
-    name: 'Footer',
-    component: Footer
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/join',
-    name: 'Join',
-    component: Join
-  },
-  // otherwise redirect to home
-  { path: '*', redirect: '/' }
-];
+    path:'/',
+    name:'PageLayout',
+    component: PageLayout,
+    children:[
+      {
+        path:'/login',
+        name:'login',
+        component: Login
+      },
+      {
+        path:'/join',
+        name:'join',
+        component: Join
+      }
+    ]
+  }
+ 
+ 
+]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-});
-
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (!store.getters.isLoggedIn) {
-//       next({
-//         name: 'Login'
-//       })
-//     } else {
-//       next();
-//     }
-//   } else {
-//     next();
-//   }
-// });
+})
 
 export default router

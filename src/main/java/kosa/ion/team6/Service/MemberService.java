@@ -75,6 +75,9 @@ public class MemberService implements UserDetailsService{
 				.name(memberDto.getName())
 				.address(memberDto.getAddress())
 				.address_detail(memberDto.getAddress_detail())
+				.phone(memberDto.getPhone())
+				.resident1(memberDto.getResident1())
+				.resident2(memberDto.getResident2())
 				.authorities(Collections.singleton(authority))
 				.activated(true)
 				.build();
@@ -121,6 +124,11 @@ public class MemberService implements UserDetailsService{
 	@Transactional(readOnly = true)
 	public List<Member> getAllMemberInfo(){
 		return (List<Member>) memberRepository.findAll();
+	}
+
+	//이메일 중복 체크
+	public boolean isEmailDuplicate(String email){
+		return memberRepository.findOneWithAuthoritiesByEmail(email).orElse(null) != null;
 	}
 
 

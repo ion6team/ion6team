@@ -14,6 +14,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("*")
 public class UserController {
     private final MemberService memberService;
 
@@ -63,5 +64,11 @@ public class UserController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<String> DeleteMember(HttpServletRequest request){
         return ResponseEntity.ok(memberService.deleteMember(memberService.getMyUserWithAuthorities().get().getId()));
+    }
+
+    // 이메일 중복 체크
+    @GetMapping(value="/member/{email}")
+    public ResponseEntity<Boolean> isEmailDup(@PathVariable("email") String email){
+        return ResponseEntity.ok(memberService.isEmailDuplicate(email));
     }
 }
