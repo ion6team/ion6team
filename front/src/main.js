@@ -7,9 +7,25 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { bootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import axios from 'axios'
+import{
+  ValidationObserver,
+  ValidationProvider,
+  extend,
+  localize,
+} from "vee-validate";
+import * as rules from "vee-validate/dist/rules";
+
+
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
+Object.keys(rules).forEach(rule =>{
+  extend(rule, rules[rule])
+})
+
+Vue.component("ValidationObserver", ValidationObserver)
+Vue.component("ValidationProvider", ValidationProvider)
 
 Vue.config.productionTip = false
 
