@@ -38,7 +38,7 @@ export default new Vuex.Store({
       password
     }) {
       try {
-        const result = await axios.post('/api/authenticate', {
+        const result = await axios.post('/api/login', {
           email: email,
           password: password,
 
