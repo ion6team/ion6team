@@ -7,6 +7,7 @@ import Login from '../views/Login.vue';
 import Join from '../views/Join.vue';
 import Board from '../views/Board.vue';
 import BoardPage from '../views/BoardPage.vue';
+import Sales from '../views/Sales.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,11 @@ const routes = [{
                 path: '/join',
                 name: 'join',
                 component: Join
+            },
+            {
+                path: '/Sales',
+                name: 'sales',
+                component: Sales
             }
         ]
     }
