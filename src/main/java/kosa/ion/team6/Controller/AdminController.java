@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin")
+@PreAuthorize("hasAnyRole('ADMIN')")
 public class AdminController {
 
     private final MemberService memberService;
@@ -24,14 +25,8 @@ public class AdminController {
         this.memberService = memberService;
     }
 
-//    @GetMapping("/member/all")
-//    @PreAuthorize("hasAnyRole('ADMIN')") // admin만 허용
-//    public ResponseEntity<Member> getUserInfo(@PathVariable String email) {
-//        return ResponseEntity.ok(memberService.getUserWithAuthorities(email).get());
-//    }
-
+    // 관리자 권한 전체 멤버 조회
     @GetMapping("/member/all")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<Member>> getAllMemberInfo(HttpServletRequest request){
         return ResponseEntity.ok(memberService.getAllMemberInfo());
     }

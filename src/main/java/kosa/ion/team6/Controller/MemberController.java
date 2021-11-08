@@ -1,25 +1,55 @@
 package kosa.ion.team6.Controller;
 
+import kosa.ion.team6.DTO.LoginDto;
 import kosa.ion.team6.DTO.MemberDto;
+import kosa.ion.team6.DTO.TokenDto;
 import kosa.ion.team6.Domain.Member;
+import kosa.ion.team6.Jwt.JwtFilter;
+import kosa.ion.team6.Jwt.TokenProvider;
 import kosa.ion.team6.Service.MemberService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("*")
-public class UserController {
+public class MemberController {
     private final MemberService memberService;
+    private final TokenProvider tokenProvider;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public UserController(MemberService memberService) {
+    public MemberController(MemberService memberService, TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder){
         this.memberService = memberService;
+        this.tokenProvider = tokenProvider;
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
+    }
+
+    // 로그인
+    @PostMapping("/authenticate")
+    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = tokenProvider.createToken(authentication);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
+        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
 
     // 회원가입

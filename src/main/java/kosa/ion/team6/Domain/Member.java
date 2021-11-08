@@ -29,7 +29,10 @@ public class Member{
     
     private String name;
     private String email;
+
+    @JsonIgnore
     private String password;
+
     private String address;
     private String address_detail;
     private String phone;
