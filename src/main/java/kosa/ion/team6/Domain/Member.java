@@ -29,7 +29,10 @@ public class Member{
     
     private String name;
     private String email;
+
+    @JsonIgnore
     private String password;
+
     private String address;
     private String address_detail;
     private String phone;
@@ -43,51 +46,12 @@ public class Member{
     @Column(name = "activated")
     private boolean activated;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "member_authority",
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 
-    //UserDetails
-//
-//	@Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Set<GrantedAuthority> roles = new HashSet<>();
-//        for (String role : auth.split(",")) {
-//            roles.add(new SimpleGrantedAuthority(role));
-//        }
-//        return roles;
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return email;
-//    }
-//
-//    @Override
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
+
 }

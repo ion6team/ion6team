@@ -6,6 +6,10 @@
         <b-col cols='7'>
 
           <h2>나도 판매하기</h2>
+          <b-button href="/sales" 
+                class="bg-primary m-2 ">
+                판매
+                </b-button>
 
         </b-col>
 
@@ -27,5 +31,4 @@
 </script>
 
 <style>
-
 </style>

@@ -67,16 +67,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
 
-                // 만든 에러처리
+                // 만든 에러처리 적용
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
-
-                // enable h2-console
-//                .and()
-//                .headers()
-//                .frameOptions()
-//                .sameOrigin()
 
                 // 세션을 사용하지 않기 때문에 STATELESS로 설정
                 .and()
@@ -86,8 +80,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인, 회원가입은 토큰이 없이 접근함
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/member/**").permitAll()
+                .antMatchers("/api/login").permitAll() // 로그인 페이지
+                .antMatchers("/api/member/**").permitAll() // 회원 관련 페이지
+                .antMatchers("/api/category").permitAll()
 
                 .anyRequest().authenticated()
 

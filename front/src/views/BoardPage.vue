@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data(){
         return{
@@ -47,7 +48,12 @@ export default {
     mounted(){
         this.index=this.$route.params.id;
 
-		this.$axios.get("http://localhost:8080/api/board1/boardDetail/"+this.index)
+		axios.get("http://localhost:8080/api/board/"+this.index, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ this.$store.state.token
+          }
+        })
 		.then((res)=>{
         //console.log(res.data.content[0]);
             this.list=res.data;

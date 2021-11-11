@@ -2,37 +2,33 @@ package kosa.ion.team6.Controller;
 
 import kosa.ion.team6.Domain.Member;
 import kosa.ion.team6.Repository.MemberRepository;
+import kosa.ion.team6.Service.AdminService;
 import kosa.ion.team6.Service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+// 관리자만 접속가능한 Rest Api
 @RestController
 @RequestMapping("/api/admin")
+@PreAuthorize("hasAnyRole('ADMIN')")
 public class AdminController {
 
-    private final MemberService memberService;
+    @Autowired
+    private AdminService adminService;
 
-    public AdminController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
-//    @GetMapping("/member/all")
-//    @PreAuthorize("hasAnyRole('ADMIN')") // admin만 허용
-//    public ResponseEntity<Member> getUserInfo(@PathVariable String email) {
-//        return ResponseEntity.ok(memberService.getUserWithAuthorities(email).get());
-//    }
-
-    @GetMapping("/member/all")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<List<Member>> getAllMemberInfo(HttpServletRequest request){
-        return ResponseEntity.ok(memberService.getAllMemberInfo());
+    // 관리자 권한 전체 멤버 조회
+    @GetMapping("/member")
+    public ResponseEntity<Page<Member>> getAllMemberWithPaging(
+            @RequestParam int page, @RequestParam int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return ResponseEntity.ok(adminService.getAllMemberWithPaging(pageRequest));
     }
 }
