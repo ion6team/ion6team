@@ -32,8 +32,13 @@ public class BoardService {
 	private ReplyRepository replyRepository;
 
 	@Transactional(readOnly = true)
-	public Page<Board> getMyAddressBoardList(String hopeaddress, Pageable pageable){ //페이징
-		return boardRepository.findByHopeaddressContains(hopeaddress, pageable);
+	public Page<Board> getMyAddressBoardList(long category_id, String hopeaddress, String keyword, Pageable pageable){ //페이징
+		if(keyword.equals("")) {
+			return boardRepository.findByCategory_idAndHopeaddressContains(category_id, hopeaddress, pageable);
+		}else{
+			System.out.println("%%%%%" + category_id );
+			return boardRepository.findByCategory_idAndHopeaddressContainsAndTitleContainsOrContentsContains(category_id, hopeaddress,  keyword, keyword,pageable);
+		}
 	}
 	@Transactional
 	public Board addboard(BoardDto boardDto, Member member) {

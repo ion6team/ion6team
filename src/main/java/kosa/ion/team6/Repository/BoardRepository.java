@@ -18,7 +18,10 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
    @Query(value = "select * from board where category_id =?1 ", nativeQuery=true)
    List<Board> findByCategory_Id(long id);
 
-   Page<Board> findByHopeaddressContains(String hopeaddress, Pageable pageable);
+   Page<Board> findByCategory_idAndHopeaddressContains(Long category_id, String hopeaddress, Pageable pageable);
+
+
+   Page<Board> findByCategory_idAndHopeaddressContainsAndTitleContainsOrContentsContains(long category_id, String hopeaddress, String keyword, String keyword2, Pageable pageable);
 
    // 검색 //
 

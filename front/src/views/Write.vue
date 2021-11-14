@@ -56,7 +56,7 @@
         hope_address: 'not_accepted',
         contents: '',
         defaultaddress: '',
-        category_id: 1,
+        category_id: 2,
       }
     },
     mounted() {
@@ -74,7 +74,7 @@
       write_board() {
         axios.post('/api/board',  {
           'title': this.title,
-          'category_id': 1,
+          'category_id': 2,
           'contents': this.contents,
           'hopeaddress': this.defaultaddress,
           'price': this.price,
