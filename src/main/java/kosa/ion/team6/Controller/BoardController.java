@@ -47,12 +47,16 @@ public class BoardController {
 
     // 우리집 주소 게시물 조회
     @GetMapping("/board")
-    public ResponseEntity<Page> boardList(@PageableDefault(size=3, sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
-
+    public ResponseEntity<Page> boardList(
+            @PageableDefault(size=3, sort="id", direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(value="category_id") long category_id,
+            @RequestParam(required = false, value="keyword") String keyword
+    ) {
+        System.out.println("@@@@@@@@@@@@@@@@@@@@" + keyword);
         String[] arr = memberService.getMyUserWithAuthorities().get().getAddress().split(" ");
         String hopeaddress = arr[0] + " " + arr[1];
 
-        return ResponseEntity.ok(boardService.getMyAddressBoardList(hopeaddress, pageable));
+        return ResponseEntity.ok(boardService.getMyAddressBoardList(category_id, hopeaddress, keyword, pageable));
     }
 
 //    // 다른 주소 게시물 조회
