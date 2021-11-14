@@ -18,13 +18,14 @@ import java.util.Set;
 @Entity
 public class Board {
     @Id
+    @Column(name="board_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String title;
     private String price;
-    private String hope_address;
-    private boolean onslae;
+    private String hopeaddress;
+    private boolean onsale;
     private Date create_date;
     private Date update_date;
     private String contents;

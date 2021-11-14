@@ -25,10 +25,15 @@ public class AdminController {
     private AdminService adminService;
 
     // 관리자 권한 전체 멤버 조회
-    @GetMapping("/member")
+    @GetMapping("/member/{kind}")
     public ResponseEntity<Page<Member>> getAllMemberWithPaging(
-            @RequestParam int page, @RequestParam int size){
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam(required = false) String keyword,
+            @PathVariable String kind){
         PageRequest pageRequest = PageRequest.of(page, size);
-        return ResponseEntity.ok(adminService.getAllMemberWithPaging(pageRequest));
+        System.out.println(kind);
+        System.out.println(keyword);
+        return ResponseEntity.ok(adminService.getAllMemberWithPaging(pageRequest, kind, keyword));
     }
 }

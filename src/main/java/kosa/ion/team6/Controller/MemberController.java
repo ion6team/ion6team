@@ -24,7 +24,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("*")
 public class MemberController {
     private final MemberService memberService;
     private final TokenProvider tokenProvider;
@@ -93,6 +92,11 @@ public class MemberController {
     @GetMapping(value="/member/{email}")
     public ResponseEntity<Boolean> isEmailDup(@PathVariable("email") String email){
         return ResponseEntity.ok(memberService.isEmailDuplicate(email));
+    }
+
+    @GetMapping(value = "/member/address")
+    public ResponseEntity<String> getMemberAddress(){
+        return ResponseEntity.ok(memberService.getMyUserWithAuthorities().get().getAddress());
     }
 
 //    @GetMapping(value="/member/wishlist")

@@ -27,8 +27,8 @@ import kosa.ion.team6.Exception.DuplicateMemberException;
 @Service
 public class MemberService implements UserDetailsService{
 
-	private MemberRepository memberRepository;
-	private PasswordEncoder passwordEncoder;
+	private final MemberRepository memberRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
 	public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
