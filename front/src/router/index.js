@@ -7,11 +7,8 @@ import Login from '../views/Login.vue';
 import Join from '../views/Join.vue';
 import Board from '../views/Board.vue';
 import BoardPage from '../views/BoardPage.vue';
-<<<<<<< HEAD
 import admin from '../views/admin.vue';
-=======
-import Sales from '../views/Sales.vue'
->>>>>>> dbc30df29d123636da08a3c2a6ca306420508bda
+import Write from '../views/Write.vue';
 
 Vue.use(VueRouter)
 
@@ -30,11 +27,17 @@ const routes = [{
                 component: Board,
             },
             {
+                path: '/write',
+                name: 'Write',
+                component: Write,
+            },
+
+            {
                 path: '/board/:id',
                 name: 'BoardPage',
                 component: BoardPage,
                 props: true,
-            }
+            },
         ]
     },
 
@@ -53,18 +56,13 @@ const routes = [{
                 component: Join
             },
             {
-<<<<<<< HEAD
                 path: '/admin',
                 name: 'admin',
                 component: admin
-=======
-                path: '/Sales',
-                name: 'sales',
-                component: Sales
->>>>>>> dbc30df29d123636da08a3c2a6ca306420508bda
             }
         ]
-    }
+    },
+
 
 
 ]
