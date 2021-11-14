@@ -1,9 +1,6 @@
 package kosa.ion.team6.Domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Category {
     @Id
+	@Column(name = "category_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
     
