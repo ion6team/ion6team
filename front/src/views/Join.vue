@@ -1,7 +1,17 @@
 <template>
   <div class="container">
     <div class="input-form-backgroud">
+      
       <div class="input-form col-md-12 mx-auto">
+        
+        <div style="height:300px;" align-center>
+          <div>
+            <b-link href='/'>
+              <img src='../assets/Daangeun_Logo_vertical_Color_RGB.png'>
+            </b-link>
+          </div>
+        </div>
+
         <h4 class="mb-3">회원가입</h4>
 
         <validation-observer ref="observer" v-slot="{ handleSubmit }">
@@ -232,6 +242,7 @@
 <style>
   .container {
     min-height: 100vh;
+    margin-bottom: 80px;
   }
 
   .input-form {
@@ -239,7 +250,7 @@
     margin-top: 80px;
     padding: 32px;
     background: #fff;
-    border-radius: 10px;
+    border: 4px double orange;
     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
   }
 </style>

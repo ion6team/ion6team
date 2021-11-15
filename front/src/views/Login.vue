@@ -2,6 +2,15 @@
   <div class="container">
     <div class="input-form-backgroud">
       <div class="input-form col-md-12 mx-auto">
+
+        <div style="height:300px;" align-center>
+          <div>
+            <b-link href='/'>
+              <img src='../assets/Daangeun_Logo_vertical_Color_RGB.png'>
+            </b-link>
+          </div>
+        </div>
+
         <h4 class="mb-3">로그인</h4>
         <!-- <form class="validation-form" novalidate> -->
           <div class="mb-3">
@@ -50,7 +59,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .container {
     min-height: 100vh;
   }

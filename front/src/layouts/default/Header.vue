@@ -6,7 +6,7 @@
         <b-col align-self="center" class="nav justify-content-start">
           <b-navbar-brand href='/'>
             <!-- 클릭하면 홈으로 돌아가는 로고 -->
-            <img src='../../assets/logo.jpg'>
+            <img src='../../assets/Daangeun_Logo_Color_RGB.png'>
           </b-navbar-brand>
         </b-col>
 
@@ -29,7 +29,7 @@
             <!-- if문으로 로그인후 변경하려면 b-navbar-nav 이하로 복사해서 바꾸면됨 -->
             <b-nav-item v-if="this.$store.state.islogin==false" href='/Join'>회원가입</b-nav-item>
             <b-nav-item v-if="this.$store.state.islogin==true" >{{this.$store.state.member.name}}님</b-nav-item>
-            <b-nav-item v-if="this.$store.state.islogin==true" >마이페이지</b-nav-item>
+            <b-nav-item v-if="this.$store.state.islogin==true" href='/MyPage'>마이페이지</b-nav-item>
             <b-nav-item v-if="this.$store.state.islogin==true" @click='logout()'>로그아웃</b-nav-item>
 
           </b-navbar-nav>
@@ -57,6 +57,6 @@
   }
 </script>
 
-<style>
+<style scoped>
 
 </style>

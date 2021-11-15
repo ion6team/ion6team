@@ -6,18 +6,7 @@
         <option  :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
       </select>
     </div>
-    <div style="margin-top:10px; margin-right:0;" >
-      <b-row>
-      <b-col sm="4">
-    <b-form-input type="text" width="100px" placeholder="검색어" v-model="keyword"></b-form-input>
-    
-      </b-col>
-       <b-col lg="4" class="pb-2"><b-button @click="searchApi()">검색</b-button></b-col>
-       </b-row>
-    </div>
-    {{selected}}
-    {{keyword}}
-        <hr>
+    <hr>
     <!-- <b-card-group class="cardlayout"> -->
     <div>
       <b-card @click="$router.push({
@@ -83,7 +72,6 @@
     data() {
       return {
         myarea: '',
-        keyword: '',
         rows: '',
         perPage: 5,
         currentPage: null,
@@ -96,7 +84,6 @@
     },
     mounted() {
       this.currentPage = 1
-
       var arr = this.$store.state.member.address.split(' ')
       this.myaddress = arr[0] + ' ' + arr[1]
 
@@ -113,7 +100,7 @@
     methods: {
       loadApi() {
         const page = this.currentPage - 1
-        axios.get('/api/board?page=' + page + '&size=' + this.perPage + '&category_id=' + this.selected + '&keyword=' + this.keyword, {
+        axios.get('/api/board?page=' + page + '&size=' + this.perPage, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + this.$store.state.token
@@ -124,16 +111,9 @@
             this.rows = response.data.totalElements
           })
       },
-      searchApi(){
-        this.loadApi();
-      }
     },
     watch: {
       currentPage() {
-        this.loadApi()
-      },
-      selected(){
-        this.keyword=''
         this.loadApi()
       }
     }
@@ -141,7 +121,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   tr,
   th,
   td {

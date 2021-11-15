@@ -7,7 +7,7 @@
       >
       <b-row align-v="center" style="height:100%">
         <b-col cols='5'>
-            <div style="background-color:orange; width:300px; height:300px"></div>
+            <img src="../../assets/banner_animation.gif">
         </b-col>
 
         <b-col cols='7'>
@@ -18,7 +18,7 @@
             </b-row>
             <b-row>
                 <b-col md="8" offset-md="3" >
-                 <img src="../../assets/name.jpg">
+                 <img src="../../assets/name.png">
                 </b-col>
             </b-row>
         </b-col>
@@ -33,6 +33,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+h2{
+  font-size: 50px;
+}
 </style>
