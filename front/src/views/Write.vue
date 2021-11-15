@@ -101,11 +101,13 @@ write_board() {
       { 
         headers: 
        { 
-         'Content-Type': 'multipart/form-data' ,
+         'Content-Type': 'multipart/form-data' , 
           'Authorization': 'Bearer ' + this.$store.state.token
        } 
       }) .then((response) => 
-      { // 응답 처리 }) .catch((error) => { // 예외 처리 })
+      { 
+        alert("게시물 작성 완료")
+       this.$router.go(-1);
       })
       .catch((error) => { // 예외 처리 })
 

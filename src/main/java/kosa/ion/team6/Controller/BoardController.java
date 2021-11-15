@@ -147,6 +147,8 @@ public class BoardController {
     public List<Category> getAllCategory(){
         return categoryRepository.findAll();
     }
+
+
     @GetMapping("/board/category")
     public Page oneCategory(@PageableDefault(size =16, sort ="id",direction = Sort.Direction.DESC) Pageable pageable) {
         return boardService.oneCategory(pageable);
