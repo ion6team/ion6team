@@ -6,14 +6,15 @@
         <b-col cols='7'>
 
           <h2>나도 판매하기</h2>
+          <p>더이상 사용하지 않는 내 물품, 다른사람들에게는 필요할 수 있어요</p>
                 <b-button href="/write" 
                 class="bg-primary m-2 ">
-                판매
+                판매 글쓰기
                 </b-button>
         </b-col>
 
         <b-col cols='5'>
-          <div style="background-color:orange; width:300px; height:300px"></div>
+          <img src="../../assets/sales.png">
         </b-col>
       </b-row>
 
@@ -29,6 +30,11 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+h2{
+  font-size: 50px;
+}
+p{
+  margin: 20px 0;
+}
 </style>

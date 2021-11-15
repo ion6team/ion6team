@@ -21,6 +21,7 @@
             <b-row>
                 <b-col >
                  <h2>검색하기</h2>
+                 <p>개인용품부터 사무용품까지 내가 필요한 물품만 모아보아요</p>
                 </b-col>
             </b-row>
         </b-col>
@@ -35,6 +36,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+h2{
+  font-size: 50px;
+}
+p{
+  margin: 20px 0;
+}
 </style>

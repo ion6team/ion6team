@@ -52,5 +52,5 @@ import ManageMember from '../components/admin/ManageMember.vue'
     }
 </script>
 
-<style>
+<style scoped>
 </style>

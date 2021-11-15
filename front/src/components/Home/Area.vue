@@ -12,6 +12,7 @@
             <b-row>
               <h2>우리동네</h2>
               <h2>중고직거래마켓</h2>
+              <p>동네 주민들과 가깝고 따뜻한 거래를 지금 경험해보세요.</p>
             </b-row>
             <b-row>
               <b-col>
@@ -31,7 +32,7 @@
           </b-col>
 
           <b-col cols='5'>
-              <div style="background-color:orange; width:300px; height:300px"></div>
+              <img src="../../assets/map.png">
           </b-col>
        </b-row>
       
@@ -47,6 +48,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+h2{
+  font-size: 50px;
+}
+p{
+  margin: 20px 0;
+}
 </style>
