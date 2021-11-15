@@ -27,6 +27,8 @@
             }
           })" v-for="(board,i) in list" :key="i" img-src="https://placekitten.com/300/300" img-alt="Card image"
         img-left title="" class="mb-3" style="border:1px solid #fec69f">
+        <!-- <img src="../assets/1373b807-50c9-43a7-837f-fb3b2c5e34ce_dog5.jpg" />
+        <img src="`../assets/${board.filename}`" />  -->
         <h4><b>{{board.title}}</b></h4>
         <template #footer>
           <b-link href='#'>

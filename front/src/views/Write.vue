@@ -1,3 +1,4 @@
+
 <template>
   <b-container style="width:600px; margin-top:50px;">
 
@@ -35,8 +36,15 @@
     <div>
       <b-form-input v-model="contents" placeholder="상세설명"></b-form-input>
     </div>
+    <div>
 
-    <button class="btn btn-primary btn-lg btn-block" @click="write_board()">작성 완료</button>
+  <form> <input type="file" name="photo" id="photo" /> </form>
+
+
+
+  </div>
+    
+    <button class="btn btn-primary btn-lg btn-block" @click="write_board()" >작성 완료</button>
 
 
 
@@ -57,6 +65,8 @@
         contents: '',
         defaultaddress: '',
         category_id: 1,
+        image : '',
+        FormData : null
       }
     },
     mounted() {
@@ -70,34 +80,45 @@
         this.defaultaddress = response.data;
       })
     },
-    methods: {
-      write_board() {
-        axios.post('/api/board',  {
-          'title': this.title,
-          'category_id': 1,
-          'contents': this.contents,
-          'hopeaddress': this.defaultaddress,
-          'price': this.price,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.$store.state.token
-          },
-        }).catch((err) =>{
-          console.log(err)
-        }).then((res)=>{
-          if(res.status==200){
-            alert("글 작성되었습니다")
-            this.$router.push('/')
-          }
-        })
+    
+    
+  
+  methods: {
 
-      },
+write_board() {
+      var frm = new FormData(); 
+      var photoFile = document.getElementById("photo"); 
+      var data ={
+        "title" : this.title,
+        "contents" : this.contents,
+        "category_id": "1",
+        "price": this.price,
+        "hopeaddress": this.defaultaddress,
+      }
+      frm.append('data', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
+      frm.append("file", photoFile.files[0]); 
+      axios.post('http://localhost:8080/api/board', frm, 
+      { 
+        headers: 
+       { 
+         'Content-Type': 'multipart/form-data' ,
+          'Authorization': 'Bearer ' + this.$store.state.token
+       } 
+      }) .then((response) => 
+      { // 응답 처리 }) .catch((error) => { // 예외 처리 })
+      })
+      .catch((error) => { // 예외 처리 })
+
+    })
+}
+  
+  
+  
     }
   }
+  
 </script>
 
-<style scoped>
+<style>
 
 </style>
