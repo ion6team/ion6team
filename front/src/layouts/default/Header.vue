@@ -30,6 +30,9 @@
             <b-nav-item v-if="this.$store.state.islogin==false" href='/Join'>회원가입</b-nav-item>
             <b-nav-item v-if="this.$store.state.islogin==true" >{{this.$store.state.member.name}}님</b-nav-item>
             <b-nav-item v-if="this.$store.state.islogin==true" href='/MyPage'>마이페이지</b-nav-item>
+            <span v-if="this.$store.state.islogin==true">
+              <b-nav-item v-if="this.$store.state.member.email=='admin'" href='/admin'>관리자페이지</b-nav-item>
+            </span>
             <b-nav-item v-if="this.$store.state.islogin==true" @click='logout()'>로그아웃</b-nav-item>
 
           </b-navbar-nav>

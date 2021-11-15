@@ -30,8 +30,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-    name:'category'
+    name:'category',
+    data(){
+      return {
+        list: [],
+      }
+    },
+    mounted(){
+      axios.get
+    }
+  
 }
 </script>
 
