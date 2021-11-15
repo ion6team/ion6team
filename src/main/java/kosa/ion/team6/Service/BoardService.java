@@ -1,7 +1,9 @@
 package kosa.ion.team6.Service;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import kosa.ion.team6.DTO.BoardDto;
 import kosa.ion.team6.DTO.ReplyDto;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class BoardService {
@@ -41,7 +44,17 @@ public class BoardService {
 		}
 	}
 	@Transactional
-	public Board addboard(BoardDto boardDto, Member member) {
+	public Board addboard(BoardDto boardDto, Member member, MultipartFile file) throws Exception
+	{
+		String projectPath = System.getProperty("user.dir") +"\\front\\src\\assets" ; //저장 경로 잡기
+
+		UUID uuid = UUID.randomUUID(); //랜덤으로 아이디 만들어줌
+
+		String fileName = uuid + "_" + file.getOriginalFilename(); // uuid 붙여서 파일이름
+
+		File saveFile = new File(projectPath, fileName); //경로랑 파일이름 만들어서 객체저장
+
+		file.transferTo(saveFile);
 
 		Board board = Board.builder()
 				.title(boardDto.getTitle())
@@ -53,6 +66,8 @@ public class BoardService {
 				.member(member)
 				.onsale(false)
 				.hit(0)
+				.filename(fileName)
+				.filepath(fileName)
 				.build();
 
 		return boardRepository.save(board);

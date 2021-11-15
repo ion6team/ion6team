@@ -24,6 +24,7 @@ import kosa.ion.team6.Domain.Board;
 import kosa.ion.team6.Domain.Category;
 import kosa.ion.team6.Domain.Member;
 import kosa.ion.team6.Service.BoardService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,8 +80,8 @@ public class BoardController {
 
     // 게시물 쓰기
     @PostMapping("/board")
-    public Board save(@RequestBody BoardDto boardDto ) {
-        Board add = boardService.addboard(boardDto, memberService.getMyUserWithAuthorities().get());
+    public Board save(@RequestPart(value="data") BoardDto boardDto , @RequestPart(value="file", required=false) MultipartFile file )throws Exception {
+        Board add = boardService.addboard(boardDto, memberService.getMyUserWithAuthorities().get(), file);
         return add;
     }
 
@@ -101,7 +102,7 @@ public class BoardController {
 
     // 게시물 상세페이지 댓글 조회
     @GetMapping("/reply/{id}")
-    public Page ReplyList(@PathVariable long id, @PageableDefault(size=3,sort="id",
+    public Page ReplyList(@PathVariable long id, @PageableDefault(size=10,sort="id",
             direction = Sort.Direction.DESC) Pageable pageable) {
         System.out.println("Controller" + id);
         return boardService.replyList(id,pageable);

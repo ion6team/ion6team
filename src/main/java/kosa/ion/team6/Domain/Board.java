@@ -39,4 +39,7 @@ public class Board {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    private String filename;
+    private String filepath;
 }

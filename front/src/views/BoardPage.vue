@@ -38,7 +38,7 @@
             <!-- 지도API -->
         </div>
 
-
+        <button>수정</button> <button>삭제</button> 
 
         <div style="background-color:#fbf7f2">
             <div>
@@ -50,6 +50,7 @@
                 </table>
             </div>
         </div>
+
 
 
       <!-- <h3>게시글 정보</h3>
@@ -88,10 +89,10 @@
 
         <button @click="replyput(reply.id)"> 수정 </button>
         <button @click="replydel(reply.id)"> 삭제 </button>
-      </b-card>
+      </b-card>-->
       <h3>댓글 쓰기</h3>
       <textarea v-model="relpycontent" ref="relpycontent"></textarea>
-      <button @click="replynew"> 작성 </button> -->
+      <button @click="replynew"> 작성 </button> 
 
     </div>
   </div>
@@ -107,6 +108,7 @@
         index: 0,
         replylist: [],
         replyno: 0,
+        replycontent: '',
       }
     },
     props: {
@@ -164,6 +166,7 @@
           .then((res) => {
 
             console.log(res.data.content);
+            this.$router.go(0);
             //this.replylist=res.data.content;
           })
 
@@ -173,7 +176,7 @@
 
         this.index = this.$route.params.id;
         axios.post('/api/reply/' + this.index, {
-            content: this.relpycontent
+            contents: this.relpycontent
           }, {
             headers: {
               'Content-Type': 'application/json',
@@ -183,6 +186,7 @@
           .then((res) => {
 
             console.log(res.data.content);
+            this.$router.go(0);
             //this.replylist=res.data.content;
           })
 
@@ -199,6 +203,7 @@
           })
           .then((res) => {
             console.log(res.data.content[0]);
+            this.$router.go(0);
             //this.replylist=res.data.content;
           })
       },
