@@ -17,7 +17,7 @@
             <b-row>
               <b-col>
                 
-                <b-button href="/board" 
+                <b-button href="/board"
                 class="bg-primary m-2 ">
                 내지역보기
                 </b-button>
@@ -36,15 +36,29 @@
           </b-col>
        </b-row>
       
-      
+      <modal v-if="$store.state.closeModal">
+        <p>모달창</p>
+      </modal>
   
+      <button @click="show">버튼</button>
+
     </b-container>
   </b-container>
 </template>
 
 <script>
+import Modal from '../Modal/Modal.vue'
+
 export default {
-    name:'area'
+    name:'area',
+    components:{
+      Modal:Modal,
+    },
+    methods:{
+      show(){
+        this.$store.commit('showModal');
+      }
+    }
 }
 </script>
 

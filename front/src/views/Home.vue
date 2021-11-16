@@ -13,13 +13,14 @@ import Area from '../components/Home/Area.vue'
 import Category from '../components/Home/Category.vue'
 import Sales from '../components/Home/Sales.vue'
 
+
 export default {
   name: 'Home',
   components: {
     Banner:Banner,
     Area:Area,
     Category:Category,
-    Sales:Sales
+    Sales:Sales,
   }
 }
 </script>
