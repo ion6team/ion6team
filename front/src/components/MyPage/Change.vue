@@ -1,56 +1,84 @@
 <template>
    <div class="container">
-    <div class="input-form-backgroud">
-      
-      <div class="input-form col-md-12 mx-auto">
-        <div style="height:300px;" align-center>
+       <div>
+    <b-form class="position-relative p-3" @submit.prevent="onSubmit">
+      <b-form-group label="이름" label-for="form-name" label-cols-lg="2">
+        <b-input-group>
+          <b-input-group-prepend is-text>
+            <b-icon icon="person-fill"></b-icon>
+          </b-input-group-prepend>
+          <b-form-input id="form-name" :disabled="busy"></b-form-input>
+        </b-input-group>
+      </b-form-group>
 
-        </div>
-        <h4 class="mb-3">내정보수정</h4>
-          
-        <div class="row">
+      <b-form-group label="Email" label-for="form-mail" label-cols-lg="2">
+        <b-input-group>
+          <b-input-group-prepend is-text>
+            <i class="material-icons">email</i>
+          </b-input-group-prepend>
+          <b-form-input id="form-email" type="email" :disabled="busy"></b-form-input>
+        </b-input-group>
+      </b-form-group>
 
-              <label for="address">우편번호</label>
-              <div class="col-md-10 mb-3">
-                <input type="text" class="form-control" v-model="address_num" placeholder="우편번호" readonly>
-              </div>
-              <div class="col-md-2 mb-3">
-                <b-button class="ml-2" @click="addressApi()">검색</b-button>
-              </div>
+      <b-form-group label="전화번호" label-for="form-phonNum" label-cols-lg="2">
+        <b-input-group>
+          <b-input-group-prepend is-text>
+            <i class="material-icons">phone</i>
+          </b-input-group-prepend>
+          <b-form-input id="form-phonNum" :disabled="busy"></b-form-input>
+        </b-input-group>
+      </b-form-group>
 
-        </div>
-            <div class="mb-3">
-              <label for="address">주소</label>
-              <input type="text" class="form-control" v-model="address" placeholder="서울특별시 강남구" readonly>
+      <b-form-group label="주소" label-for="form-address" label-cols-lg="2">
+        <b-input-group>
+          <b-input-group-prepend is-text>
+            <i class="material-icons">place</i>
+          </b-input-group-prepend>
+          <b-form-input id="form-address" :disabled="busy"></b-form-input>
+        </b-input-group>
+        <b-form-input ></b-form-input>
+      </b-form-group>
 
+      <div class="d-flex justify-content-center">
+         <b-button ref="submit" type="submit" :disabled="busy">Submit</b-button>
+      </div>
+
+      <b-overlay :show="busy" no-wrap @shown="onShown" @hidden="onHidden">
+        <template #overlay>
+          <div v-if="processing" class="text-center p-4 bg-primary text-light rounded">
+            <b-icon icon="cloud-upload" font-scale="4"></b-icon>
+            <div class="mb-3">Processing...</div>
+            <b-progress
+              min="1"
+              max="20"
+              :value="counter"
+              variant="success"
+              height="3px"
+              class="mx-n4 rounded-0"
+            ></b-progress>
+          </div>
+          <div
+            v-else
+            ref="dialog"
+            tabindex="-1"
+            role="dialog"
+            aria-modal="false"
+            aria-labelledby="form-confirm-label"
+            class="text-center p-3"
+          >
+            <p><strong id="form-confirm-label">Are you sure?</strong></p>
+            <div class="d-flex">
+              <b-button variant="outline-danger" class="mr-3" @click="onCancel">
+                Cancel
+              </b-button>
+              <b-button variant="outline-success" @click="onOK">OK</b-button>
             </div>
-            <div class="mb-3">
-              <label for="address2">상세주소<span class="text-muted">&nbsp;(필수 아님)</span></label>
-              <input type="text" class="form-control" v-model="address_detail" placeholder="상세주소를 입력해주세요.">
-            </div>
-
-
-            <div class="mb-3">
-              <label for="phone">전화번호<span class="text-muted">&nbsp;('-' 없이 입력)</span></label>
-              <input type="tel" class="form-control" v-model="phone" placeholder="전화번호를 입력해주세요.">
-            </div>
-            <div class="row">
-     <label for="address">주민등록번호</label>
-  <div class="col-sm-6">
-    <div class="card" style="width: 18rem;">
-      {{resident1}}
-    
-    </div>
+          </div>
+        </template>
+      </b-overlay>
+    </b-form>
   </div>
-  <div class="col-sm-6 mb-4">
-    <div class="card">
-     
-       *******
-        
-     
-    </div>
-  </div>
-</div>
+
 
 </div>
 
@@ -62,73 +90,60 @@
 </template>
 
 <script>
-import axios from 'axios';
+
 export default {
     name:'change',
     data() {
       return {
-        isDuplicateEmail: true,
-        name: '',
-        email: '',
-        password: '',
-        address_num: '',
-        address: '',
-        address_detail: '',
-        phone: '',
-        resident1: '',
-        resident2: '',
-        aggrement: '',
-  
+        busy: false,
+        processing: false,
+        counter: 1,
+        interval: null
       }
+    },
+    beforeDestroy() {
+      this.clearInterval()
+    },
+    methods: {
+      clearInterval() {
+        if (this.interval) {
+          clearInterval(this.interval)
+          this.interval = null
+        }
       },
-      addressApi() {
-        new window.daum.Postcode({
-          oncomplete: (
-            data
-          ) => { // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분. // 도로명 주소의 노출 규칙에 따라 주소를 조합한다. // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-            let fullRoadAddr = data.roadAddress; // 도로명 주소 변수 
-            let extraRoadAddr =
-              ''; // 도로명 조합형 주소 변수 // 법정동명이 있을 경우 추가한다. (법정리는 제외) // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다. 
-
-            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-              extraRoadAddr += data.bname;
-            } // 건물명이 있고, 공동주택일 경우 추가한다.
-
-            if (data.buildingName !== '' && data.apartment === 'Y') {
-              extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-            } // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다. 
-            if (extraRoadAddr !== '') {
-              extraRoadAddr = ' (' + extraRoadAddr + ')';
-            } // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다. 
-            if (fullRoadAddr !== '') {
-              fullRoadAddr += extraRoadAddr;
-            } // 우편번호와 주소 정보를 해당 필드에 넣는다. 
-
-            this.address_num = data.zonecode; //5자리 새우편번호 사용 
-            this.address = fullRoadAddr;
-
-          }
-        }).open(this.$refs.embed)
+      onShown() {
+        // Focus the dialog prompt
+        this.$refs.dialog.focus()
       },
-
-   mounted(){
-     axios.put('/api/member', {
-           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+ this.$store.state.token
-          }
+      onHidden() {
+        // In this case, we return focus to the submit button
+        // You may need to alter this based on your application requirements
+        this.$refs.submit.focus()
+      },
+      onSubmit() {
+        this.processing = false
+        this.busy = true
+      },
+      onCancel() {
+        this.busy = false
+      },
+      onOK() {
+        this.counter = 1
+        this.processing = true
+        // Simulate an async request
+        this.clearInterval()
+        this.interval = setInterval(() => {
+          if (this.counter < 20) {
+            this.counter = this.counter + 1
+          } else {
+            this.clearInterval()
+            this.$nextTick(() => {
+              this.busy = this.processing = false
             })
-             .then((res)=>{
-              this.name=res.data.name,
-              this.email=res.data.email,
-              this.address=res.data.address,
-              this.address_detail=res.data.address_detail,
-              this.phone=res.data.phone,
-              this.resident1=res.data.resident1
-             })
-             
-            
-     },
+          }
+        }, 350)
+      }
+    }
 }
 </script>
 

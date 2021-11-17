@@ -1,105 +1,16 @@
 <template>
-  <div class="container">
-    <div class="input-form-backgroud">
-      
-      <div class="input-form col-md-12 mx-auto">
-        <div style="height:300px;" align-center>
-        </div>
-        <h4 class="mb-3">내정보</h4>
-          <div class="row">
-            <label for="address">이메일</label>
-             <div class="col-md-3 mb-4">
-               <div class="card" style="width: 38rem;">
-                  <ul class="list-group list-group-flush">
-                     <li class="list-group-item"> 
-                      {{email}} </li>
-                   </ul>
-              </div>
-             </div>
-           </div>
-           <div class="row">
-            <label for="address">이름</label>
-             <div class="col-md-3 mb-4">
-               <div class="card" style="width: 38rem;">
-                  <ul class="list-group list-group-flush">
-                     <li class="list-group-item"> 
-                      {{name}}</li>
-                   </ul>
-              </div>
-             </div>
-           </div>
-           <div class="row">
-             <label for="address">주소</label>
-             <div class="col-md-3 mb-4">
-               <div class="card" style="width: 38rem;">
-                  <ul class="list-group list-group-flush">
-                     <li class="list-group-item"> 
-                     {{address}}</li>
-                   </ul>
-              </div>
-             </div>
-           </div>
-           <div class="row">
-              <label for="address">상세주소</label>
-             <div class="col-md-3 mb-4">
-               <div class="card" style="width: 38rem;">
-                  <ul class="list-group list-group-flush">
-                     <li class="list-group-item"> 
-                      {{address_detail}}</li>
-                   </ul>
-              </div>
-             </div>
-           </div>
-           <div class="row">
-                <label for="address">전화번호</label>
-             <div class="col-md-3 mb-4">
-               <div class="card" style="width: 38rem;">
-                  <ul class="list-group list-group-flush">
-                     <li class="list-group-item"> 
-                      {{phone}}</li>
-                   </ul>
-              </div>
-             </div>
-           </div>
-  <div class="row">
-     <label for="address">주민등록번호</label>
-  <div class="col-sm-6">
-    <div class="card" style="width: 18rem;">
-      {{resident1}}
-    
-        
-       
-        
-    
-    </div>
-  </div>
-  <div class="col-sm-6 mb-4">
-    <div class="card">
-     
-       *******
-        
-     
-    </div>
-  </div>
-</div>
-       
-            
-           
-       <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#"> <b-button class="btn btn-primary btn-lg btn-block" type="submit" variant="primary">위로
-            </b-button></a>
-        </div>     
-      </div>
-           </div>
-   
- 
-
-
-    
- 
-
-      </div>
+  <div
+  class="py-5" id='profileBG'> 
+    <b-row align-h="center">
+        <b-col cols="3">
+          <h3>{{name}}<span style="font-size:15px;"> 님</span></h3>
+        </b-col>
+        <b-col cols=4>
+          <p><i class="material-icons">email</i>{{email}} </p>
+          <p><i class="material-icons">place</i>{{address}}{{address_detail}}</p>
+          <p><i class="material-icons">phone</i>{{phone}}</p>
+        </b-col>
+      </b-row>
     </div>
     
  
@@ -144,8 +55,13 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    min-height: 100vh;
-    margin-bottom: 80px;
+  #profileBG{
+    background-image:url(../../assets/profileBG.jpeg);
+    background-repeat:no-repeat;
+    background-size:cover;
+    min-height:300px;
+  }
+  p{
+    margin:0;
   }
 </style>

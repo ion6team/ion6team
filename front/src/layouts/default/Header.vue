@@ -40,16 +40,35 @@
 
       </b-navbar>
     </b-row>
+
+    <b-button v-b-modal.logoutCheck>로그아웃확인버튼</b-button>
+    <b-modal id="logoutCheck" centered>
+     <logout-check />
+     <template #modal-footer="{ ok, cancel }">
+      
+      <b-button size="sm"  @click="ok()">
+        YES
+      </b-button>
+      <b-button size="sm" @click="cancel()" >
+        NO
+      </b-button>
+      
+    </template>
+    </b-modal>
   </b-container>
 </template>
 
 <script>
+import LogoutCheck from '../../components/Modal/LogoutCheck.vue'
   export default {
     name: 'header',
     data(){
       return{
         name:'',
       }
+    },
+    components:{
+      LogoutCheck
     },
     methods: {
       logout() {
