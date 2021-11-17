@@ -4,8 +4,6 @@
       <b-row align-v="center" style="height:100%">
         <b-col cols='5'>
               <b-row>
-
-                
                 <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
                  <a href="/board" @click="setCategoryId(category.id)">
                   {{category.name}}
