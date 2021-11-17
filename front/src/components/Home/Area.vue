@@ -35,30 +35,23 @@
               <img src="../../assets/map.png">
           </b-col>
        </b-row>
-      
-      <modal v-if="$store.state.modalView">
-        <p>모달창</p>
-      </modal>
+
+      <div>
   
-      <button @click="show">버튼</button>
+</div>
+  
+      
 
     </b-container>
   </b-container>
 </template>
 
 <script>
-import Modal from '../Modal/Modal.vue'
+
 
 export default {
     name:'area',
-    components:{
-      Modal:Modal,
-    },
-    methods:{
-      show(){
-        this.$store.commit('showModal');
-      }
-    }
+    
 }
 </script>
 
