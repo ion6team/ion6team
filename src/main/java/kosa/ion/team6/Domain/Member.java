@@ -42,7 +42,6 @@ public class Member{
     @ColumnDefault("0")
     private int report_count;
 
-    @JsonIgnore
     @Column(name = "activated")
     private boolean activated;
 
@@ -52,6 +51,8 @@ public class Member{
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
+
+    private String zzim;
 
 
 }

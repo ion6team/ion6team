@@ -22,9 +22,13 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	@EntityGraph(attributePaths = "authorities")
 	Page<Member> findAll(Pageable pageable);
 
+	Member findByNameAndResident1AndResident2(String name, String resident1, String resident2);
+
 	@Query(value="select * from member where member_id=:keyword", nativeQuery = true)
 	Page<Member> findMemberById(@Param("keyword") String keyword, Pageable pageable);
+
 	Page<Member> findByEmailContains(String email, Pageable pageable);
 	Page<Member> findByNameContains(String name, Pageable pageable);
 	Page<Member> findByAddressContains(String address, Pageable pageable);
+
 }

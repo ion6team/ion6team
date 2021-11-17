@@ -99,6 +99,24 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getMyUserWithAuthorities().get().getAddress());
     }
 
+    @PostMapping(value = "/member/email")
+    public String findEmail(@RequestBody MemberDto memberDto){
+        String email = memberService.findEmail(memberDto);
+        if(email.equals("")){
+            email = "없습니다";
+        }
+        return email;
+    }
+
+    @PostMapping(value = "/member/password")
+    public String findPassword(@RequestBody MemberDto memberDto){
+        String email = memberService.findEmail(memberDto);
+        if(email.equals("")){
+            email = "없습니다";
+        }
+        return email;
+    }
+
 //    @GetMapping(value="/member/wishlist")
 //    public ResponseEntity<List<Board>> getAllWishList(HttpServletRequest request){
 //        //return ResponseEntity.ok(memberServi

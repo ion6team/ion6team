@@ -30,10 +30,25 @@ public class AdminController {
             @RequestParam int page,
             @RequestParam int size,
             @RequestParam(required = false) String keyword,
-            @PathVariable String kind){
+            @PathVariable String kind) {
         PageRequest pageRequest = PageRequest.of(page, size);
         System.out.println(kind);
         System.out.println(keyword);
         return ResponseEntity.ok(adminService.getAllMemberWithPaging(pageRequest, kind, keyword));
     }
+
+    @PostMapping("/member")
+    public ResponseEntity<Boolean> delSelectedMember(@RequestBody String selectlist) {
+
+
+        String[] arr = selectlist.substring(15,selectlist.length()-2).split(",");
+
+        for(int i=0; i<arr.length ;i++){
+            System.out.println(arr[i]);
+        }
+
+        return ResponseEntity.ok(adminService.delMember(arr));
+
+    }
+
 }
