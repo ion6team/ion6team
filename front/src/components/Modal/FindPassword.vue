@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5 mx-5">
+  <div>
       <h5>비밀번호찾기</h5>
     <b-input-group>
         <b-row>

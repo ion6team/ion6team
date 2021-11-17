@@ -49,6 +49,11 @@
 
      </div>
         {{this.$store.state.token}}
+
+        <b-button v-b-modal.welcome>로그인성공 환영</b-button>
+    <b-modal id="welcome" centered hide-footer>
+    <welcome />
+  </b-modal>
     
   </div>
 </template>
@@ -56,6 +61,7 @@
 <script>
 import Findemail from '../components/Modal/Findemail.vue'
 import FindPassword from '../components/Modal/FindPassword.vue'
+import Welcome from '../components/Modal/Welcome.vue'
 
   export default {
     name: 'login',
@@ -68,7 +74,8 @@ import FindPassword from '../components/Modal/FindPassword.vue'
     },
     components: {
       Findemail,
-      FindPassword
+      FindPassword,
+        Welcome
     },
     methods:{
         

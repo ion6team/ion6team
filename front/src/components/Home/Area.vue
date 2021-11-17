@@ -22,9 +22,10 @@
                 내지역보기
                 </b-button>
 
-                <b-button href="/board" 
-                class="bg-primary m-2">
-                지역검색
+                <b-button
+                class="bg-primary m-2"
+                v-b-modal.needLogin>
+                버튼
                 </b-button>
 
               </b-col>
@@ -37,6 +38,10 @@
        </b-row>
 
       <div>
+
+        <b-modal id="needLogin" centered hide-footer>
+           <needLogin />
+        </b-modal>
   
 </div>
   
@@ -47,10 +52,13 @@
 </template>
 
 <script>
-
+import NeedLogin from '../Modal/NeedLogin';
 
 export default {
     name:'area',
+    components:{
+      NeedLogin
+    }
     
 }
 </script>

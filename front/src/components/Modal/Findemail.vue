@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import FindPassword from './FindPassword.vue';
+
 
 export default {
   name:'findeEmail',

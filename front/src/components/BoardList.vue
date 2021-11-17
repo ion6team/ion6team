@@ -3,6 +3,12 @@
   <div>
     <div>
       <h3 style="postion:flex;" align="left">{{myaddress}} 내 검색결과 </h3>
+      <b-button v-b-modal.searchAddr>다른지역검색</b-button>
+      <b-modal id="searchAddr" centered hide-footer>
+    <searchAddr />
+  </b-modal>
+
+    
       <select class="form-control" v-model="selected">
         <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
       </select>
@@ -10,8 +16,12 @@
         <b-button class="ml-2" @click="addressApi()">검색</b-button>
       </div>
     </div>
+ 
     <div style="margin-top:10px; margin-right:0;">
-      <b-row>
+      
+        <b-col>
+        결과내 재검색
+        </b-col>
         <b-col sm="4">
           <b-form-input type="text" width="100px" placeholder="검색어" v-model="keyword"></b-form-input>
 
@@ -81,11 +91,22 @@
     </div>
     <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" align="center">
     </b-pagination>
+
+    <b-button
+                class="bg-primary m-2"
+                v-b-modal.needLogin>
+                버튼
+                </b-button>
+                <b-modal id="needLogin" centered hide-footer>
+           <needLogin />
+        </b-modal>
   </div>
 </template>
 
 <script>
   import axios from 'axios';
+  import SearchAddr from './Modal/SearchAddr.vue'
+  import NeedLogin from './Modal/NeedLogin.vue'
 
   export default {
     data() {
@@ -102,6 +123,10 @@
         options: [],
         myaddress: '',
       }
+    },
+    components:{
+      SearchAddr,
+      NeedLogin,
     },
     mounted() {
       this.currentPage = 1
