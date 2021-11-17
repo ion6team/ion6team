@@ -1,14 +1,5 @@
 <template>
     <div class="container">
-        <b-form-select v-model="perPage" :options="options" size="sm" class="mt-3" style="float:right;">
-        </b-form-select>
-        <a v-if="kind!='all'" @click="kindAll()">전체보기</a>
-        <b-form-select v-model="searchKinds" :options="searchOptions" style="float:left;margin-right:10px;">
-        </b-form-select>
-        <b-form-input size="sm" v-model="search" placeholder="검색하세요" style="float:left; width:200px;">
-        </b-form-input>
-        <b-button size="sm" style="float:left; margin-left:10px;" @click="searchApi()">Search</b-button>
-
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -18,13 +9,10 @@
                             <i class="form-icon"></i>
                         </label>
                     </th>
-                    <th width="5%">id</th>
-                    <th width="8%">name</th>
-                    <th width="20%">email</th>
-                    <th width="25%">address</th>
-                    <th width="25%">address_detail</th>
-                    <th width="10%">phone</th>
-                    <th width="20%">탈퇴</th>
+                    <th width="10%">id</th>
+                    <th width="20%">icon</th>
+                    <th width="35%">name</th>
+                    <th width="35%">description</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,27 +24,18 @@
                         </label>
                     </td>
                     <td>{{item.id}}</td>
+                    <td><img src="@/assets/Daangeun_Icon.png" width="40px" height="40px"></td>
+                    <td>{{item.description}}</td>
                     <td>{{item.name}}</td>
-                    <td>{{item.email}}</td>
-                    <td>{{item.address}}</td>
-                    <td>{{item.address_detail}}</td>
-                    <td>{{item.phone}}</td>
-                    <td> <a v-if="item.activated==false" @click="check(item.id)"> 탈퇴
-                    </a>
-                    </td>
                 </tr>
             </tbody>
         </table>
-
-        <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" align="center">
+        <b-button size="sm" style="float:right; margin-left:20px;" @click="deleteCategory()">삭제</b-button>
+        <b-button size="sm" style="float:right;" @click="addCategory()">추가</b-button>
+        <br><br>
+        <b-pagination align="center" v-model="currentPage" :total-rows="rows" :per-page="perPage" >
         </b-pagination>
-
-
-        <b-button size="sm" style="float:right;" @click="deleteMember()">삭제</b-button>
-        <h6 style="float:right;">
-            <pre />{{tableselected.length}}/{{rows}}..</h6>
-
-            {{tableselected}}
+        
     </div>
 </template>
 
@@ -68,7 +47,7 @@
             return {
                 kind:'all',
                 rows: '',
-                perPage: 5, 
+                perPage: 10, 
                 currentPage: null, 
                 searchKinds: 'id',
                 totalpage: '',
@@ -129,8 +108,8 @@
                 this.search = this.text;
             },
             loadApi() {
-                              const page = this.currentPage - 1
-                axios.get('/api/admin/member/' + this.kind  + '?page=' + page + '&size=' + this.perPage + '&keyword=' + this.keyword, {
+                const page = this.currentPage - 1
+                axios.get('/api/admin/category?page=' + page,{
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': 'Bearer ' + this.$store.state.token
@@ -142,65 +121,29 @@
                         this.rows = response.data.totalElements
                     })
             },
-            searchApi(){
-                this.kind = this.searchKinds;
-                this.keyword = this.search
-            },
-            kindAll(){
-                this.kind='all';
-            },
             
-            deleteMember(){
-                var data = {
-                    selectlist : this.tableselected
-                }
-                axios.post('/api/admin/member', data, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + this.$store.state.token
-                        }
-                })
+            // deleteMember(){
+            //     var data = {
+            //         selectlist : this.tableselected
+            //     }
+            //     axios.post('/api/admin/member', data, {
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //             'Authorization': 'Bearer ' + this.$store.state.token
+            //             }
+            //     })
 
-                alert("탈퇴되었습니다")
-                this.tableselected = []
-                this.loadApi()
-
-
-            },
-            check(rejoinid){
-
-                axios.get('/api/admin/member/rejoin?id=' + rejoinid ,{
-                    },
-                    {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + this.$store.state.token
-                        }
-                })
-
-                alert(rejoinid + "번 회원 탈퇴 취소")
-
-                
-                this.loadApi()
-
-            }
+            //     alert("탈퇴되었습니다")
+            //     this.tableselected = []
+            //     this.loadApi()
 
 
+            // },
         },
         watch: {
             currentPage() {
                 this.loadApi()
             },
-            perPage(){
-                this.loadApi()
-            },
-            kind(){
-                this.loadApi()
-            },
-            keyword(){
-                this.loadApi()
-            }
-
         }
     }
 </script>

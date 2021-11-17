@@ -1,5 +1,8 @@
 package kosa.ion.team6.Controller;
 
+import kosa.ion.team6.DTO.MemberDto;
+import kosa.ion.team6.Domain.Board;
+import kosa.ion.team6.Domain.Category;
 import kosa.ion.team6.Domain.Member;
 import kosa.ion.team6.Repository.MemberRepository;
 import kosa.ion.team6.Service.AdminService;
@@ -18,7 +21,7 @@ import java.util.Optional;
 // 관리자만 접속가능한 Rest Api
 @RestController
 @RequestMapping("/api/admin")
-@PreAuthorize("hasAnyRole('ADMIN')")
+//@PreAuthorize("hasAnyRole('ADMIN')")
 public class AdminController {
 
     @Autowired
@@ -39,16 +42,36 @@ public class AdminController {
 
     @PostMapping("/member")
     public ResponseEntity<Boolean> delSelectedMember(@RequestBody String selectlist) {
-
-
         String[] arr = selectlist.substring(15,selectlist.length()-2).split(",");
 
         for(int i=0; i<arr.length ;i++){
             System.out.println(arr[i]);
         }
-
         return ResponseEntity.ok(adminService.delMember(arr));
+    }
 
+    @GetMapping("/member/rejoin")
+    public ResponseEntity<Boolean> rejoinMember(@RequestParam(value="id") long id){
+        return ResponseEntity.ok(adminService.rejoinMember(id));
+    }
+    ///////////////////////////////////// 보드 //////////////////////////////////////
+    @GetMapping("/board/{kind}")
+    public ResponseEntity<Page<Board>> getAllBoardWithPaging(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam(required = false) String keyword,
+            @PathVariable String kind) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return ResponseEntity.ok(adminService.getBoardWithPagingWithKeyword(pageRequest, kind, keyword));
+    }
+
+
+    //////////////////////////////////// 카테고리 ///////////////////////////////////
+
+    @GetMapping("/category")
+    public ResponseEntity<Page<Category>> getAllCategory(@RequestParam int page){
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return ResponseEntity.ok(adminService.getAllCategory(pageRequest));
     }
 
 }
