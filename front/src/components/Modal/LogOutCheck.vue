@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <h3>정말 로그아웃하시겠습니까?</h3>
   </div>
 </template>
 

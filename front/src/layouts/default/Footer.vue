@@ -1,6 +1,6 @@
 <template>
   <b-container fluid style="background-color:#495057; height:100%;">
-    <b-container>
+    <div>
       <b-row class="py-5">
         <b-col align-self="center" cols="3">
           
@@ -38,7 +38,7 @@
             </ul>
           </b-row>
 
-    </b-container>
+    </div>
   </b-container>
 </template>
 

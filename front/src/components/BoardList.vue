@@ -8,29 +8,34 @@
     <searchAddr />
   </b-modal>
 
-    
+<b-navbar type="light" variant="light">
+  <b-nav>
+    <b-nav-item>
       <select class="form-control" v-model="selected">
-        <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
-      </select>
+          <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
+        </select>
+    </b-nav-item>
+
+    <b-nav-item>
+      <b-input-group>
+            <b-form-input placeholder="검색"></b-form-input>
+            <b-input-group-append>
+              <b-button type='submit'>
+                <b-icon icon='search'></b-icon>
+              </b-button>
+            </b-input-group-append>
+          </b-input-group>
+    </b-nav-item>
+  </b-nav>
+</b-navbar>
+
+    
+      
       <div class="col-md-2 mb-3">
         <b-button class="ml-2" @click="addressApi()">검색</b-button>
       </div>
     </div>
  
-    <div style="margin-top:10px; margin-right:0;">
-      
-        <b-col>
-        결과내 재검색
-        </b-col>
-        <b-col sm="4">
-          <b-form-input type="text" width="100px" placeholder="검색어" v-model="keyword"></b-form-input>
-
-        </b-col>
-        <b-col lg="4" class="pb-2">
-          <b-button @click="searchApi()">검색</b-button>
-        </b-col>
-      </b-row>
-    </div>
     {{selected}}
     {{keyword}}
     <hr>
