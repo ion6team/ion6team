@@ -84,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/member/**").permitAll() // 회원 관련 페이지
                 .antMatchers("/api/admin/member/**").permitAll()
                 .antMatchers("/api/category").permitAll()
+                .antMatchers("/api/admin/**").permitAll()
 
                 .anyRequest().authenticated()
 

@@ -68,7 +68,7 @@
             return {
                 kind:'all',
                 rows: '',
-                perPage: 5, 
+                perPage: 10, 
                 currentPage: null, 
                 searchKinds: 'id',
                 totalpage: '',

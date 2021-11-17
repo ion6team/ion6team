@@ -1,22 +1,14 @@
 package kosa.ion.team6.Controller;
 
-import kosa.ion.team6.DTO.MemberDto;
 import kosa.ion.team6.Domain.Board;
 import kosa.ion.team6.Domain.Category;
 import kosa.ion.team6.Domain.Member;
-import kosa.ion.team6.Repository.MemberRepository;
 import kosa.ion.team6.Service.AdminService;
-import kosa.ion.team6.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Optional;
 
 // 관리자만 접속가능한 Rest Api
 @RestController
@@ -72,6 +64,23 @@ public class AdminController {
     public ResponseEntity<Page<Category>> getAllCategory(@RequestParam int page){
         PageRequest pageRequest = PageRequest.of(page, 10);
         return ResponseEntity.ok(adminService.getAllCategory(pageRequest));
+    }
+
+    @PostMapping("/category")
+    public ResponseEntity<Category> addCategory(@RequestBody Category categoryDto){
+        System.out.println(categoryDto.getDescription());
+        System.out.println(categoryDto.getName());
+        return ResponseEntity.ok(adminService.addCategory(categoryDto));
+    }
+
+    @PostMapping("/rcategory")
+    public ResponseEntity<Boolean> delSelectedCategory(@RequestBody String selectlist) {
+        String[] arr = selectlist.substring(15,selectlist.length()-2).split(",");
+
+        for(int i=0; i<arr.length ;i++){
+            System.out.println(arr[i]);
+        }
+        return ResponseEntity.ok(adminService.delCategory(arr));
     }
 
 }

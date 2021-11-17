@@ -77,4 +77,19 @@ public class AdminService {
     public Page<Category> getAllCategory(Pageable pageable){
         return categoryRepository.findAll(pageable);
     }
+
+    public Category addCategory(Category category){
+        Category c = Category.builder()
+                .name(category.getName())
+                .description(category.getDescription())
+                .build();
+        return categoryRepository.save(c);
+    }
+
+    public Boolean delCategory(String arr[]){
+        for (int i = 0; i < arr.length; i++) {
+            categoryRepository.deleteById(Long.parseLong(arr[i]));
+        }
+        return true;
+    }
 }
