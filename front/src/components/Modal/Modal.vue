@@ -1,15 +1,16 @@
 <template>
   <div id="modal">
-      <div id='overlay' @click="close">
+      
         <div id="modal-card">
             <b-nav align-right style="position=relative;">
                     <button @click="close">X</button>
             </b-nav>
-
-            <slot />
+            <div class="m-5">
+                <slot />
+            </div>
             
         </div>
-      </div>
+      
   </div>
 </template>
 
@@ -38,13 +39,15 @@ export default {
     }
     #modal-card{
         position: relative;
+        width: 500px;
         max-width: 50%;
         margin: auto;
-        margin-top: 30px;
+        top: 30%;
         background-color: white;
         min-height: 300px;
-        z-index: 10;
-        opacity:1;
+        border: 6px double orange;
+        border-radius: 10px;
+        opacity: 1;
     }
     button{
         background-color: white;
