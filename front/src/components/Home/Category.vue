@@ -3,17 +3,17 @@
     <b-container fluid="md" class="p-4" style="height:600px;">
       <b-row align-v="center" style="height:100%">
         <b-col cols='5'>
-              <b-row>
+          <b-row>
 
-                
-                <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
-                 <a href="/board" @click="setCategoryId(category.id)">
-                  {{category.name}}
-                  </a>
-                  </b-col>
-                
 
-              </b-row>
+            <b-col v-for="(category,i) in categorylist" :key="i" cols='3'>
+              <a href="/board" @click="setCategoryId(category.id)">
+                {{category.name}}
+              </a>
+            </b-col>
+
+
+          </b-row>
         </b-col>
 
         <b-col cols='7'>
@@ -35,34 +35,30 @@
 </template>
 
 <script>
-import axios from 'axios'
+  import axios from 'axios'
   export default {
     name: 'category',
     data() {
       return {
         categorylist: [],
-        id:'',
-        category_id:'',
+        id: '',
+        category_id: '',
       }
     },
-    props:{
+    props: {
       category_id: '',
     },
-    mounted() {
-      axios.get('/api/category', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + this.$store.state.token
-        }
-      }).then((res) => {
-        this.categorylist = res.data;
-        console.log(this.categorylist)
-      })
-    },
-    methods:{
-      setCategoryId(){
-        this.id = this.category_id 
+    methods: {
+      addCategory() {
+        axios.post('/api/admin/category', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.$store.state.token
+          }
+        })
       }
+
+
     }
   }
 </script>

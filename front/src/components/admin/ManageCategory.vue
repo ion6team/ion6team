@@ -25,12 +25,13 @@
                     </td>
                     <td>{{item.id}}</td>
                     <td><img src="@/assets/Daangeun_Icon.png" width="40px" height="40px"></td>
+                                        <td>{{item.name}}</td>
                     <td>{{item.description}}</td>
-                    <td>{{item.name}}</td>
+
                 </tr>
             </tbody>
         </table>
-        <b-button size="sm" style="float:right; margin-left:20px;" @click="deleteCategory()">삭제</b-button>
+        <b-button size="sm" style="float:right; margin-left:20px;" @click="deleteCateogory()">삭제</b-button>
         <b-button size="sm" style="float:right;" v-b-modal.AdminAddCategory>추가</b-button>
         <br><br>
         <b-pagination align="center" v-model="currentPage" :total-rows="rows" :per-page="perPage" >
@@ -39,7 +40,6 @@
           <b-modal id="AdminAddCategory" centered hide-footer>
     <admin-add-category/>
   </b-modal>
-        
     </div>
 </template>
 
@@ -66,37 +66,6 @@
                 items: [],
                 tableselected: [],
                 selectAll: false,
-                options: [{
-                        value: 5,
-                        text: '5개씩'
-                    },
-                    {
-                        value: 10,
-                        text: '10개씩'
-                    },
-                    {
-                        value: 20,
-                        text: '20개씩'
-                    }
-                ],
-                searchOptions: [{
-                    value: 'id',
-                    text: 'id'
-                    },
-                    {
-                        value: 'email',
-                        text:'이메일'
-                    },
-                    {
-                        value:'address',
-                        text:'주소',
-                    },
-                    {
-                        value:'name',
-                        text:'이름',
-                    }
-
-                ]
             }
         },
         mounted() {
@@ -130,23 +99,22 @@
                     })
             },
             
-            // deleteMember(){
-            //     var data = {
-            //         selectlist : this.tableselected
-            //     }
-            //     axios.post('/api/admin/member', data, {
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //             'Authorization': 'Bearer ' + this.$store.state.token
-            //             }
-            //     })
+            deleteCateogory(){
+                var data = {
+                    selectlist : this.tableselected
+                }
+                axios.post('/api/admin/rcategory', data, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.$store.state.token
+                        }
+                })
 
-            //     alert("탈퇴되었습니다")
-            //     this.tableselected = []
-            //     this.loadApi()
+                this.tableselected = []
+                this.loadApi()
 
 
-            // },
+            },
         },
         watch: {
             currentPage() {
