@@ -1,10 +1,13 @@
 <template>
-<b-container
-  fluid>
+<div style="margin:0; width:100%; height:100%">
     <Header />
+
+  
   <router-view/>
+  
+
     <Footer />
-</b-container>
+</div>
 </template>
 
 <script>
@@ -24,5 +27,6 @@ export default {
 </script>
 
 <style scoped>
+
 
 </style>
