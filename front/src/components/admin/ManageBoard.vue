@@ -36,10 +36,10 @@
                         </label>
                     </td>
                     <td>{{item.id}}</td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.email}}</td>
-                    <td>{{item.address}}</td>
-                    <td>{{item.address_detail}}</td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.category.name}}</td>
+                    <td>{{item.hopeaddress}}</td>
+                    <td>{{item.hit}}</td>
                     <td>{{item.phone}}</td>
                     <td> <a v-if="item.activated==false" @click="check(item.id)"> 탈퇴
                     </a>
@@ -80,16 +80,16 @@
                 tableselected: [],
                 selectAll: false,
                 options: [{
-                        value: 5,
-                        text: '5개씩'
-                    },
-                    {
                         value: 10,
                         text: '10개씩'
                     },
                     {
                         value: 20,
                         text: '20개씩'
+                    },
+                    {
+                        value: 50,
+                        text: '50개씩'
                     }
                 ],
                 searchOptions: [{
@@ -130,7 +130,7 @@
             },
             loadApi() {
                               const page = this.currentPage - 1
-                axios.get('/api/admin/member/' + this.kind  + '?page=' + page + '&size=' + this.perPage + '&keyword=' + this.keyword, {
+                axios.get('/api/admin/board/' + this.kind  + '?page=' + page + '&size=' + this.perPage + '&keyword=' + this.keyword, {
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': 'Bearer ' + this.$store.state.token
