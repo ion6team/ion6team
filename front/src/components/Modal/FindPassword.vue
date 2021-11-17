@@ -24,7 +24,11 @@
       <b-col sm="3">
         <label type="number" for="identity">주민등록번호</label>
       </b-col>
-      <b-col sm="9">
+      <b-col sm="4">
+        <b-form-input id="identity" type="number"></b-form-input>
+      </b-col>
+      -
+            <b-col sm="4">
         <b-form-input id="identity" type="number"></b-form-input>
       </b-col>
     </b-row>

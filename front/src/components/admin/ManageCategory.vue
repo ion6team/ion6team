@@ -31,18 +31,26 @@
             </tbody>
         </table>
         <b-button size="sm" style="float:right; margin-left:20px;" @click="deleteCategory()">삭제</b-button>
-        <b-button size="sm" style="float:right;" @click="addCategory()">추가</b-button>
+        <b-button size="sm" style="float:right;" v-b-modal.AdminAddCategory>추가</b-button>
         <br><br>
         <b-pagination align="center" v-model="currentPage" :total-rows="rows" :per-page="perPage" >
         </b-pagination>
+
+          <b-modal id="AdminAddCategory" centered hide-footer>
+    <admin-add-category/>
+  </b-modal>
         
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import AdminAddCategory from '../Modal/AdminAddCategory.vue'
 
     export default {
+      components:{
+        AdminAddCategory
+      },
         data() {
             return {
                 kind:'all',

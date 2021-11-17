@@ -101,19 +101,21 @@ public class MemberController {
 
     @PostMapping(value = "/member/email")
     public String findEmail(@RequestBody MemberDto memberDto){
+        System.out.println(memberDto.getName());
+        System.out.println(memberDto.getResident1());
+        System.out.println(memberDto.getResident2());
         String email = memberService.findEmail(memberDto);
-        if(email.equals("")){
-            email = "없습니다";
+        if(email.equals(" ")){
+            email = "notfound";
         }
+        System.out.println(email);
         return email;
     }
 
     @PostMapping(value = "/member/password")
     public String findPassword(@RequestBody MemberDto memberDto){
         String email = memberService.findEmail(memberDto);
-        if(email.equals("")){
-            email = "없습니다";
-        }
+        System.out.println(email);
         return email;
     }
 
