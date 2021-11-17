@@ -13,7 +13,7 @@ export default new Vuex.Store({
     islogin: '',
     loginfailed: false,
     member:[],
-    closeModal:false,
+    modalView:false,
   },
   mutations: { 
     boardData(state,boards){
@@ -31,8 +31,11 @@ export default new Vuex.Store({
       state.member=member
     },
     showModal(state){
-      return (state.closeModal=true)
-    }
+      return (state.modalView=true)
+    },
+    closeModal(state){
+      return (state.modalView=false)
+    },
   },
   actions: { //method
     async login({

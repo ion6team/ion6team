@@ -36,7 +36,7 @@
           </b-col>
        </b-row>
       
-      <modal v-if="$store.state.closeModal">
+      <modal v-if="$store.state.modalView">
         <p>모달창</p>
       </modal>
   
