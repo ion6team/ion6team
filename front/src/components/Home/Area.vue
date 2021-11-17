@@ -1,6 +1,6 @@
 <template>
   
-  <b-container fluid>
+  <b-container fluid >
     <b-container
       fluid="md"
       class="p-4"
