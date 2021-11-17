@@ -96,6 +96,8 @@ public class BoardController {
         boardService.upBoard(id,board);
     }
 
+
+
     /////////////////////////// 댓글 ////////////////////////////////////
 
     // 게시물 상세페이지 댓글 조회
@@ -151,4 +153,7 @@ public class BoardController {
     public Page oneCategory(@PageableDefault(size =16, sort ="id",direction = Sort.Direction.DESC) Pageable pageable) {
         return boardService.oneCategory(pageable);
     }
+
+    ////////////////////////////////////찜///////////////////////////////////
+
 }
