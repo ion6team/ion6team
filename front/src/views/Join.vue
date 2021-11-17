@@ -119,11 +119,16 @@
         </validation-observer>
       </div>
     </div>
+    <b-button v-b-modal.joinComplete>회원가입성공</b-button>
+    <b-modal id="joinComplete" centered hide-footer>
+    <join-complete />
+  </b-modal>
   </div>
 </template>
 
 <script>
   import axios from 'axios';
+  import JoinComplete from '../components/Modal/JoinComplete.vue'
   export default {
     name: 'join',
 
@@ -142,6 +147,9 @@
         aggrement: '',
 
       }
+    },
+    components:{
+      JoinComplete
     },
     methods: {
       getValidationStateEmail({

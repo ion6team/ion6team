@@ -33,6 +33,7 @@
 </template>
 
 <script>
+
   import FindPassword from './FindPassword.vue';
   import axios from 'axios';
 
@@ -57,6 +58,7 @@
             this.email= res.data
             if(res.data=='null')
               this.email='null'
+
 
         })
       }
