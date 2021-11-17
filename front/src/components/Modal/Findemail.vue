@@ -24,29 +24,18 @@
     <button>검색</button>
 
 
-    <modal v-if="$store.state.viewModal">
-      <find-password/>
-    </modal>
-
   </div>
 </template>
 
 <script>
 import FindPassword from './FindPassword.vue';
-import Modal from './Modal.vue';
+
 export default {
   name:'findeEmail',
-  components: { FindPassword },
-  method:{
-    show(){
-        this.$store.commit('showModal');
-      }
   }
   
-  };
 </script>
 
 <style scoped>
 
-<
-Modal/style>
+</style>

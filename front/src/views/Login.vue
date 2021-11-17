@@ -28,7 +28,10 @@
 
         <b-row class="m-3">
           <b-col>
-            <a href="#" class="mx-3" @click="show">아이디/비밀번호찾기</a>
+            <a href="#" class="mx-3" v-b-modal.findEmail>아이디찾기</a>
+          </b-col>
+          <b-col>
+            <a href="#" class="mx-3" v-b-modal.findPassword>비밀번호찾기</a>
           </b-col>
           <b-col>
             <b-link href='/join' class="mx-3">회원가입</b-link>
@@ -36,9 +39,14 @@
         </b-row>
       </div>
 
-      <modal v-if="$store.state.modalView">
-        <findemail />
-      </modal>
+  <b-modal id="findEmail" centered hide-footer>
+    <findemail />
+  </b-modal>
+
+  <b-modal id="findPassword" centered hide-footer>
+    <find-password />
+  </b-modal>
+
      </div>
         {{this.$store.state.token}}
     
@@ -47,7 +55,7 @@
 
 <script>
 import Findemail from '../components/Modal/Findemail.vue'
-import Modal from '../components/Modal/Modal.vue'
+import FindPassword from '../components/Modal/FindPassword.vue'
 
   export default {
     name: 'login',
@@ -60,9 +68,10 @@ import Modal from '../components/Modal/Modal.vue'
     },
     components: {
       Findemail,
-        Modal
+      FindPassword
     },
-    methods: {
+    methods:{
+        
       async login() {
         try {
           await this.$store.dispatch('login', {
@@ -77,9 +86,7 @@ import Modal from '../components/Modal/Modal.vue'
         }
 
       },
-      show(){
-        this.$store.commit('showModal');
-      }
+      
     }
   }
 </script>
