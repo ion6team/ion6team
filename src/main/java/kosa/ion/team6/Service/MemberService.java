@@ -131,6 +131,10 @@ public class MemberService implements UserDetailsService{
 		return memberRepository.findOneWithAuthoritiesByEmail(email).orElse(null) != null;
 	}
 
+	public String findEmail(MemberDto memberDto){
+		return memberRepository.findByNameAndResident1AndResident2(memberDto.getName(), memberDto.getResident1(), memberDto.getResident2()).getEmail();
+	}
+
 
 
 //	public Long join(Member m) {

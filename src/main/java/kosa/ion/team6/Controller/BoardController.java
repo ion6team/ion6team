@@ -50,12 +50,10 @@ public class BoardController {
     @GetMapping("/board")
     public ResponseEntity<Page> boardList(
             @PageableDefault(size=3, sort="id", direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(value="category_id") long category_id,
+            @RequestParam(required = false, value="hopeaddress") String hopeaddress,
+            @RequestParam(required = false, value="category_id") long category_id,
             @RequestParam(required = false, value="keyword") String keyword
     ) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@@" + keyword);
-        String[] arr = memberService.getMyUserWithAuthorities().get().getAddress().split(" ");
-        String hopeaddress = arr[0] + " " + arr[1];
 
         return ResponseEntity.ok(boardService.getMyAddressBoardList(category_id, hopeaddress, keyword, pageable));
     }

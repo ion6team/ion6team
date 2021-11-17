@@ -21,9 +21,10 @@
                     <th width="5%">id</th>
                     <th width="8%">name</th>
                     <th width="20%">email</th>
-                    <th width="30%">address</th>
-                    <th width="30%">address_detail</th>
+                    <th width="25%">address</th>
+                    <th width="25%">address_detail</th>
                     <th width="10%">phone</th>
+                    <th width="20%">탈퇴</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,7 +41,9 @@
                     <td>{{item.address}}</td>
                     <td>{{item.address_detail}}</td>
                     <td>{{item.phone}}</td>
-
+                    <td> <span v-if="item.activated==false"> 탈퇴
+                    </span>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -53,7 +56,7 @@
         <h6 style="float:right;">
             <pre />{{tableselected.length}}/{{rows}}..</h6>
 
-
+            {{tableselected}}
     </div>
 </template>
 
@@ -67,7 +70,7 @@
                 rows: '',
                 perPage: 1, 
                 currentPage: null, 
-                searchKinds: 'all',
+                searchKinds: 'id',
                 totalpage: '',
                 text: '',
                 search: '',
@@ -145,6 +148,18 @@
             },
             kindAll(){
                 this.kind='all';
+            },
+            
+            deleteMember(){
+                var data = {
+                    selectlist : this.tableselected
+                }
+                axios.post('/api/admin/member', data, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.$store.state.token
+                        }
+                })
             }
 
 

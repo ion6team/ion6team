@@ -13,32 +13,47 @@
 
         <h4 class="mb-3">로그인</h4>
         <!-- <form class="validation-form" novalidate> -->
-          <div class="mb-3">
-            <label for="email">아이디(이메일)</label>
-            <input type="email" class="form-control" v-model="email" placeholder="you@example.com" required>
-          </div>
-          <div class="mb-3">
-            <label for="password">비밀번호</label>
-            <input type="password" class="form-control" v-model="password" required>
-            <div class="invalid-feedback"> 비밀번호를 입력해주세요. </div>
-          </div>
-          <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit" @click="login()">로그인</button>
-        <!-- </form> -->
-        {{this.$store.state.token}}
+        <div class="mb-3">
+          <label for="email">아이디(이메일)</label>
+          <input type="email" class="form-control" v-model="email" placeholder="you@example.com" required>
+        </div>
+        <div class="mb-3">
+          <label for="password">비밀번호</label>
+          <input type="password" class="form-control" v-model="password" required>
+          <div class="invalid-feedback"> 비밀번호를 입력해주세요. </div>
+        </div>
+        <div class="mb-4"></div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit" @click="login()">로그인</button>
+
+        <b-row class="m-3">
+          <b-col>
+            <a href="#" class="mx-3">아이디/비밀번호찾기</a>
+          </b-col>
+          <b-col>
+            <b-link href='/join' class="mx-3">회원가입</b-link>
+          </b-col>
+        </b-row>
       </div>
+      <Findemail v-if="isModalViewed" @close-modal="isModalViewed = false">
+      </Findemail>
+      <button @click="isModalViewed = true">Open Modal</button>
     </div>
   </div>
 </template>
 
 <script>
+import Findemail from '../components/Modal/Findemail.vue'
   export default {
     name: 'login',
     data() {
       return {
         email: '',
         password: '',
+      isModalViewed: false,
       }
+    },
+    components: {
+      Findemail
     },
     methods: {
       async login() {
