@@ -1,24 +1,22 @@
 <template>
   <div>
-    <h5>아이디찾기</h5>
+    <h5>카테고리 추가</h5>
     <b-input-group>
       <b-row>
-        <b-col sm="3">
-          <label type="text" for="name">이름</label>
+        <b-col sm="7">
+          <label type="text" for="name">카테고리 명</label>
         </b-col>
-        <b-col sm="9">
+        <b-col sm="5">
           <b-form-input v-model="name" id="name" type="text"></b-form-input>
         </b-col>
       </b-row>
 
       <b-row>
-        <b-col sm="3">
-          <label type="text" for="identity">주민등록번호</label>
+        <b-col sm="7">
+          <label type="text" for="identity">카테고리 한글 설명</label>
         </b-col>
-        <b-col sm="9">
+        <b-col sm="5">
           <b-form-input v-model="resident1" id="identity" type="text"></b-form-input>
-          -
-          <b-form-input v-model="resident2" id="identity" type="password"></b-form-input>
         </b-col>
       </b-row>
     <span v-if="email!=''">
@@ -33,8 +31,6 @@
 </template>
 
 <script>
-
-  import FindPassword from './FindPassword.vue';
   import axios from 'axios';
 
   export default {
@@ -58,7 +54,6 @@
             this.email= res.data
             if(res.data=='null')
               this.email='null'
-
 
         })
       }
