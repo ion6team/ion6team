@@ -25,6 +25,15 @@
           <div class="mb-4"></div>
           <button class="btn btn-primary btn-lg btn-block" type="submit" @click="login()">로그인</button>
         <!-- </form> -->
+        <b-row class="m-3">
+          <b-col>
+             <a href="#" class="mx-3">아이디/비밀번호찾기</a>
+          </b-col>
+         <b-col>
+            <b-link href='/join' class="mx-3">회원가입</b-link>
+         </b-col>
+        </b-row>
+
         {{this.$store.state.token}}
       </div>
     </div>
