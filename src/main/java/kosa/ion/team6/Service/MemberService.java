@@ -132,7 +132,15 @@ public class MemberService implements UserDetailsService{
 	}
 
 	public String findEmail(MemberDto memberDto){
-		return memberRepository.findByNameAndResident1AndResident2(memberDto.getName(), memberDto.getResident1(), memberDto.getResident2()).getEmail();
+		Optional<Member> m = memberRepository.findByNameAndResident1AndResident2(
+				memberDto.getName(), memberDto.getResident1(), memberDto.getResident2());
+
+		if(m.isPresent()){
+			return m.get().getEmail();
+		}else{
+			return " ";
+		}
+
 	}
 
 
