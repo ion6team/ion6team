@@ -23,14 +23,17 @@
 
             <b-card-body class="text-center" v-if="tab==2">
                 <b-card-text>
-                    게시물 관리
+                    <b-form-group>
+                        <ManageBoard />
+                    </b-form-group>
                 </b-card-text>
-                <b-button variant="primary">Go somewhere</b-button>
             </b-card-body>
 
             <b-card-body class="text-center" v-if="tab==3">
                 <b-card-text>
-                    카테고리 관리
+                    <b-form-group>
+                        <ManageCategory />
+                    </b-form-group>
                 </b-card-text>
                 <b-button variant="primary">Go somewhere</b-button>
             </b-card-body>
@@ -40,6 +43,8 @@
 
 <script>
 import ManageMember from '../components/admin/ManageMember.vue'
+import ManageBoard from '../components/admin/ManageBoard.vue'
+import ManageCategory from '../components/admin/ManageCategory.vue'
     export default {
         data(){
             return{
@@ -47,7 +52,7 @@ import ManageMember from '../components/admin/ManageMember.vue'
             }
         },
         components:{
-            ManageMember,
+            ManageMember, ManageBoard, ManageCategory
         }
     }
 </script>
