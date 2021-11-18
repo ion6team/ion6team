@@ -1,14 +1,20 @@
 package kosa.ion.team6.Controller;
 
+import kosa.ion.team6.DTO.BoardDto;
 import kosa.ion.team6.Domain.Board;
 import kosa.ion.team6.Domain.Category;
 import kosa.ion.team6.Domain.Member;
 import kosa.ion.team6.Service.AdminService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 // 관리자만 접속가능한 Rest Api
 @RestController
@@ -66,11 +72,11 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getAllCategory(pageRequest));
     }
 
-    @PostMapping("/category")
-    public ResponseEntity<Category> addCategory(@RequestBody Category categoryDto){
+    @PostMapping("/category") //카테고리
+    public ResponseEntity<Category> addCategory(@RequestPart(value="data" ) Category categoryDto , @RequestPart(value="file", required=false) @Nullable MultipartFile file )throws Exception {
         System.out.println(categoryDto.getDescription());
         System.out.println(categoryDto.getName());
-        return ResponseEntity.ok(adminService.addCategory(categoryDto));
+        return ResponseEntity.ok(adminService.addCategory(categoryDto, file));
     }
 
     @PostMapping("/rcategory")
