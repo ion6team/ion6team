@@ -1,18 +1,18 @@
 <template>
   <div
-  class="py-5" id='profileBG'> 
-    <b-row align-h="center">
-        <b-col cols="3">
+  class="py-5"
+  style="background-color:white; height:100%; width:100%;" > 
+    
+        <div style="opacity:1;">
           <h3>{{name}}<span style="font-size:15px;"> 님</span></h3>
-        </b-col>
-        <b-col cols=4>
+        
           <ul style="list-style:none; text-align:left;">
             <li><i class="material-icons md-16">email</i><span>{{email}}</span></li>
             <li><i class="material-icons md-16">place</i><span>{{address}}{{address_detail}}</span></li>
             <li><i class="material-icons md-16">phone</i><span>{{phone}}</span></li>
           </ul>
-        </b-col>
-      </b-row>
+        </div>
+      
     </div>
     
  
@@ -57,12 +57,7 @@ export default {
 </script>
 
 <style scoped>
-  #profileBG{
-    background-image:url(../../assets/profileBG.jpeg);
-    background-repeat:no-repeat;
-    background-size:cover;
-    min-height:300px;
-  }
+  
   li{
     margin-bottom:10px;
   }
