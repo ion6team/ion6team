@@ -126,6 +126,12 @@
         selected: 1,
         options: [],
         myaddress: '',
+        index: 1,
+      }
+    },
+    props: {
+      id: {
+        type: String
       }
     },
     components:{
@@ -133,6 +139,10 @@
       NeedLogin,
     },
     mounted() {
+      this.index = this.$route.params.id;
+       console.log(this.index);
+    
+
       this.currentPage = 1
 
       this.myaddress = this.$store.state.member.address
@@ -148,8 +158,11 @@
       })
     },
     methods: {
+
       loadApi() {
+         this.index = this.$route.params.id;
         const page = this.currentPage - 1
+        this.selected = this.index
         axios.get('/api/board?page=' + page +
             '&size=' + this.perPage +
             '&hopeaddress=' + this.myaddress +

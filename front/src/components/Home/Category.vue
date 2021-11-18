@@ -15,12 +15,20 @@
 -->
 
                 
-                <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
-                 <a href="/board" @click="setCategoryId(category.id)">
-                 <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px">
-                  {{category.name}}
-                  </a>
-                  </b-col>
+ <!-- <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'> -->
+     
+     <b-col @click="$router.push({
+          name:'Board',
+          params:{
+            id:category.id
+            }
+          })" v-for="(category,i) in categorylist" :key="i" cols='3'>
+                 <!-- <a href="/board" @click="setCategoryId(category.id)"> -->
+         <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px">
+           {{category.name}}
+         </b-col>
+                  <!-- </a> -->
+                  <!-- </b-col> -->
                 
               </b-row>
         </b-col>
