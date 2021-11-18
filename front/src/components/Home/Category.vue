@@ -6,14 +6,12 @@
         <b-col cols='7'>
               <b-row>
 <!--donghyun
-
                 <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
                  <a href="/board" @click="setCategoryId(category.id)">
                   {{category.name}}
                   </a>
                   </b-col>
                 
-
 -->
 
                 
