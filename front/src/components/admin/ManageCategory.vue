@@ -37,7 +37,7 @@
         <b-pagination align="center" v-model="currentPage" :total-rows="rows" :per-page="perPage" >
         </b-pagination>
 
-          <b-modal id="AdminAddCategory" centered hide-footer>
+          <b-modal id="AdminAddCategory" centered>
     <admin-add-category/>
   </b-modal>
     </div>
