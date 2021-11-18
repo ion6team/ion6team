@@ -6,7 +6,7 @@
       class="p-4"
       style="height:600px;"
       >
-      
+      {{this.$store.state.member.zzim}}zzz
         <b-row align-v="center" style="height:100%">
           <b-col cols='7'>
             <b-row>
