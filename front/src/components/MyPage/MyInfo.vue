@@ -6,9 +6,11 @@
           <h3>{{name}}<span style="font-size:15px;"> 님</span></h3>
         </b-col>
         <b-col cols=4>
-          <p><i class="material-icons">email</i>{{email}} </p>
-          <p><i class="material-icons">place</i>{{address}}{{address_detail}}</p>
-          <p><i class="material-icons">phone</i>{{phone}}</p>
+          <ul style="list-style:none; text-align:left;">
+            <li><i class="material-icons">email</i>{{email}}</li>
+            <li><i class="material-icons">place</i>{{address}}{{address_detail}}</li>
+            <li><i class="material-icons">phone</i>{{phone}}</li>
+          </ul>
         </b-col>
       </b-row>
     </div>
