@@ -38,7 +38,7 @@
     </div>
     <div>
 
-  <form> <input type="file" name="photo" id="photo" multiple/> </form>
+  <form> <input type="file" name="photo" id="photo" multiple /> </form>
 
 
 
@@ -55,7 +55,7 @@
   import axios from 'axios'
 
   export default {
-    name: 'write',
+    name: 'ReWrite',
     data() {
       return {
         title: '',
@@ -67,10 +67,18 @@
         defaultaddress: '',
         category_id: 1,
         image : '',
-        FormData : null
+        FormData : null,
+        
       }
     },
+     props: {
+      id: {
+        type: String
+      }
+      },
     mounted() {
+    this.index = this.$route.params.id;
+    console.log(this.index);
       axios.get('/api/member/address', {
         headers: {
           'Content-Type': 'application/json',
@@ -94,50 +102,23 @@
             },
 
 write_board() {
+    this.index = this.$route.params.id;
+    console.log(this.index);
       var frm = new FormData(); 
       var photoFile = document.getElementById("photo"); 
       var data ={
         "title" : this.title,
-        "contents" : this.contents,
+        "contents" : this.value,
         "category_id": "1",
         "price": this.price,
         "hopeaddress": this.defaultaddress,
-         "onsale" :false
+        "onsale" :false
       }
-     frm.append('data', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
-
-      if(photoFile.files[0] != null){
-frm.append("file",  photoFile.files[0]); //대표이미지
-      frm.append("file",  photoFile.files[1]);
-      frm.append("file",  photoFile.files[2]); 
-      // frm.append("file", photoFile.files[2]); 
-
-      axios.post('http://localhost:8080/api/board', frm, 
-      { 
-        headers: 
-       { 
-         'Content-Type': 'multipart/form-data' , 
-          'Authorization': 'Bearer ' + this.$store.state.token
-       } 
-      }) .then((response) => 
-      { 
-        console.log(photoFile.files[0])
-        console.log(photoFile.files[1]) 
-        console.log(photoFile.files[2])
-        alert("게시물 작성 완료")
-       this.$router.go(-1);
-      })
-      .catch((error) => { // 예외 처리 })
-
-    })
-
-
-
-      }
-
-      else{
-          alert("사진이없는 처리를 할게요")
-         axios.post('http://localhost:8080/api/board', frm, 
+      frm.append('data', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
+      frm.append("file", photoFile.files[0]); 
+      frm.append("file", photoFile.files[1]); 
+      frm.append("file", photoFile.files[2]); 
+      axios.put('http://localhost:8080/api/board/'+this.index, frm, 
       { 
         headers: 
        { 
@@ -152,7 +133,6 @@ frm.append("file",  photoFile.files[0]); //대표이미지
       .catch((error) => { // 예외 처리 })
 
     })
-      }
 }
   
   

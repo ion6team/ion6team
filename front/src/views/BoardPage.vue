@@ -12,9 +12,9 @@
         @sliding-start="onSlideStart"
         @sliding-end="onSlideEnd"
         >
-        <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-        <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54"></b-carousel-slide>
-        <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=52"></b-carousel-slide>
+         <b-carousel-slide v-bind:img-src="'../upload/'+list.filepath1" ></b-carousel-slide>
+        <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2" ></b-carousel-slide>
+        <b-carousel-slide  v-if="list.filepath3!==null" v-bind:img-src="'../upload/'+list.filepath3" ></b-carousel-slide>
 
         </b-carousel>
 
@@ -31,14 +31,21 @@
             <h4 class="mx-2"> {{list.title}} </h4><!-- 글제목 -->
             <p class="mx-2"> {{list.category.name}}</p> <!--해당카테고리 -->
             <h5 class="mx-2"> {{list.price}} </h5><!--가격 -->
-            <p class="mx-2"> {{list.contents}}</p><!--상세내용 -->
+           <p class="mx-2"> <span v-html="list.contents"></span></p><!--상세내용 -->
         </div>
 
         <div class="my-3">
             <!-- 지도API -->
         </div>
 
-        <button>수정</button> <button>삭제</button> 
+       <button @click="$router.push({
+          name:'ReWrite',
+          params:{
+            id:list.id
+            },
+          })" >수정</button> 
+        <button @click="del()"> 삭제 </button>
+
 
         <div style="background-color:#fbf7f2">
             <div>
@@ -145,6 +152,19 @@
         })
     },
     methods: {
+         del(){
+       this.index = this.$route.params.id;
+        axios.delete('/api/board/' + this.index, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+           .then((res) => {
+          this.$router.go(-1);
+          })
+
+      },
 
       onSlideStart(slide) {
         this.sliding = true

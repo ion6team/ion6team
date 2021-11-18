@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,7 +79,7 @@ public class BoardController {
 
     // 게시물 쓰기
     @PostMapping("/board")
-    public Board save(@RequestPart(value="data") BoardDto boardDto , @RequestPart(value="file", required=false) MultipartFile file )throws Exception {
+    public Board save(@RequestPart(value="data" ) BoardDto boardDto , @RequestPart(value="file", required=false) @Nullable List<MultipartFile> file )throws Exception {
         Board add = boardService.addboard(boardDto, memberService.getMyUserWithAuthorities().get(), file);
         return add;
     }
@@ -92,8 +93,8 @@ public class BoardController {
 
     // 게시물 수정
     @PutMapping("/board/{id}")
-    public void update (@PathVariable long id ,@RequestBody Board board) {
-        boardService.upBoard(id,board);
+    public void update(@PathVariable long id ,@RequestPart(value="data") BoardDto boardDto, @RequestPart(value="file", required=false) @Nullable List<MultipartFile> file )throws Exception  {
+        boardService.upBoard(id,boardDto, file);
     }
 
 

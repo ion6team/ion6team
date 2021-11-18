@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@morioh/v-quill-editor": "^1.0.2",
     "@toast-ui/vue-editor": "^3.1.1",
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",

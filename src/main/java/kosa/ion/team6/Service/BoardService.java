@@ -44,18 +44,65 @@ public class BoardService {
 		}
 	}
 	@Transactional
-	public Board addboard(BoardDto boardDto, Member member, MultipartFile file) throws Exception
+	public Board addboard(BoardDto boardDto, Member member, List<MultipartFile> file) throws Exception
 	{
-		String projectPath = System.getProperty("user.dir") +"\\front\\src\\assets" ; //저장 경로 잡기
+		
+		if(file!=null) {
+			String arr[] = new String[3];
+		String projectPath = System.getProperty("user.dir") +"\\front\\public\\upload" ; //저장 경로 잡기
 
 		UUID uuid = UUID.randomUUID(); //랜덤으로 아이디 만들어줌
 
-		String fileName = uuid + "_" + file.getOriginalFilename(); // uuid 붙여서 파일이름
 
-		File saveFile = new File(projectPath, fileName); //경로랑 파일이름 만들어서 객체저장
+		int i=0;
+		for(MultipartFile m : file) {
+			String fileName = uuid + "_" + m.getOriginalFilename(); // uuid 붙여서 파일이름
+			
+			File saveFile = new File(projectPath, fileName); //경로랑 파일이름 만들어서 객체저장
 
-		file.transferTo(saveFile);
-
+			m.transferTo(saveFile);
+			arr[i++] = fileName;
+		}
+		
+		if(arr[1]==null) {
+			Board board = Board.builder()
+					.title(boardDto.getTitle())
+					.category(categoryRepository.findById(boardDto.getCategory_id()))
+					.contents(boardDto.getContents())
+					.hopeaddress(boardDto.getHopeaddress())
+					.price(boardDto.getPrice())
+					.create_date(new Date())
+					.member(member)
+					.onsale(false)
+					.hit(0)
+					.filepath1(arr[0])
+					
+					.build();
+			return boardRepository.save(board);
+			
+		}
+		else if(arr[2]==null) {
+			Board board = Board.builder()
+					.title(boardDto.getTitle())
+					.category(categoryRepository.findById(boardDto.getCategory_id()))
+					.contents(boardDto.getContents())
+					.hopeaddress(boardDto.getHopeaddress())
+					.price(boardDto.getPrice())
+					.create_date(new Date())
+					.member(member)
+					.onsale(false)
+					.hit(0)
+					.filepath1(arr[0])
+					.filepath2(arr[1])
+					
+					.build();
+			return boardRepository.save(board);
+			
+		}
+//		board.setFilepath1(arr[0]);
+//		board.setFilepath2(arr[1]);
+//		board.setFilepath3(arr[2]);
+		else {
 		Board board = Board.builder()
 				.title(boardDto.getTitle())
 				.category(categoryRepository.findById(boardDto.getCategory_id()))
@@ -66,11 +113,34 @@ public class BoardService {
 				.member(member)
 				.onsale(false)
 				.hit(0)
-				.filename(fileName)
-				.filepath(fileName)
+				.filepath1(arr[0])
+				.filepath2(arr[1])
+				.filepath3(arr[2])
 				.build();
-
 		return boardRepository.save(board);
+		}
+		}
+		else {
+			Board board = Board.builder()
+					.title(boardDto.getTitle())
+					.category(categoryRepository.findById(boardDto.getCategory_id()))
+					.contents(boardDto.getContents())
+					.hopeaddress(boardDto.getHopeaddress())
+					.price(boardDto.getPrice())
+					.create_date(new Date())
+					.member(member)
+					.onsale(false)
+					.hit(0)
+					.filepath1("이미지없음.PNG")
+				
+					.build();
+			return boardRepository.save(board);
+		}
+//		
+//		.filename1(fileName)
+//		.filepath(fileName)
+
+		
 	}
 
 
@@ -88,16 +158,59 @@ public class BoardService {
 	}
 
 	@Transactional
-	public void upBoard(long id, Board board ) {
+	public void upBoard(long id, BoardDto boardDto, List<MultipartFile> file)  throws Exception {
 		Board updata = boardRepository.findById(id).orElseThrow(()->{
 			return new IllegalArgumentException("글 찾기 실패: 아이디가 없다");
 		});//영속화 완료
-		updata.setTitle(board.getTitle());
-		updata.setContents(board.getContents());
-		updata.setOnsale(board.isOnsale());
-		updata.setHopeaddress(board.getHopeaddress());
-		updata.setPrice(board.getPrice());
+		
+		
+		updata.setTitle(boardDto.getTitle());
+		updata.setContents(boardDto.getContents());
+		updata.setHopeaddress(boardDto.getHopeaddress());
+		updata.setPrice(boardDto.getPrice());
 		updata.setUpdate_date(new Date());
+		
+	if(file!=null) {
+			String arr[] = new String[3];
+			String projectPath = System.getProperty("user.dir") +"\\front\\public\\upload" ; //저장 경로 잡기
+			UUID uuid = UUID.randomUUID(); //랜덤으로 아이디 만들어줌
+			
+
+			
+			int i=0;
+			for(MultipartFile m : file) {
+				String fileName = uuid + "_" + m.getOriginalFilename(); // uuid 붙여서 파일이름
+				
+				File saveFile = new File(projectPath, fileName); //경로랑 파일이름 만들어서 객체저장
+
+				m.transferTo(saveFile);
+				arr[i++] = fileName;
+			}
+			
+			if(arr[1]==null) {
+				  updata.setFilepath1(arr[0]);
+				  updata.setFilepath2(null);
+				  updata.setFilepath3(null);
+				
+				
+			}
+			else if(arr[2]==null) {
+				  updata.setFilepath1(arr[0]);
+				  updata.setFilepath2(arr[1]);
+				  updata.setFilepath3(null);
+				
+			}
+
+			else {
+				 updata.setFilepath1(arr[0]);
+				 updata.setFilepath2(arr[1]);
+				 updata.setFilepath3(arr[2]);
+			}
+			}
+			else {
+				updata.setFilepath1("이미지없음.PNG");
+				
+			}
 	}
 
 	@Transactional(readOnly = true)
