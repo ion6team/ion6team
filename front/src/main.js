@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { bootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import axios from 'axios'
+import '@morioh/v-quill-editor/dist/editor.css';
+import Editor from '@morioh/v-quill-editor'
 import{
   ValidationObserver,
   ValidationProvider,
@@ -16,7 +18,7 @@ import{
 import * as rules from "vee-validate/dist/rules";
 
 
-
+Vue.use(Editor);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 

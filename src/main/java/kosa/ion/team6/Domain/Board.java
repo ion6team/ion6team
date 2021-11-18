@@ -40,6 +40,9 @@ public class Board {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    private String filename;
-    private String filepath;
+    private String filepath1;
+    
+    private String filepath2;
+    
+    private String filepath3;
 }

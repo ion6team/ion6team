@@ -11,7 +11,8 @@ import BoardPage from '../views/BoardPage.vue';
 import Sales from '../views/Sales.vue'
 import admin from '../views/admin.vue';
 import Write from '../views/Write.vue';
-import MyPage from '../views/MyPage.vue'
+import MyPage from '../views/MyPage.vue';
+import ReWrite from '../views/ReWrite.vue';
 import MyInfo from '../components/MyPage/MyInfo.vue'
 import Change from '../components/MyPage/Change.vue'
 import Zzim from '../components/MyPage/Zzim.vue'
@@ -37,6 +38,12 @@ const routes = [{
                 path: '/write',
                 name: 'Write',
                 component: Write,
+            },
+            {
+                path: '/ReWrite',
+                name: 'ReWrite',
+                component: ReWrite,
+                props: true,
             },
 
             {
