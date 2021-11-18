@@ -17,6 +17,7 @@
                 
                 <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
                  <a href="/board" @click="setCategoryId(category.id)">
+                 <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px">
                   {{category.name}}
                   </a>
                   </b-col>

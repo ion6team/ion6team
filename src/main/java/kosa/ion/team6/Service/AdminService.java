@@ -1,18 +1,20 @@
 package kosa.ion.team6.Service;
 
+import java.io.File;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import kosa.ion.team6.Domain.Board;
 import kosa.ion.team6.Domain.Category;
 import kosa.ion.team6.Domain.Member;
 import kosa.ion.team6.Repository.BoardRepository;
 import kosa.ion.team6.Repository.CategoryRepository;
 import kosa.ion.team6.Repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -78,10 +80,20 @@ public class AdminService {
         return categoryRepository.findAll(pageable);
     }
 
-    public Category addCategory(Category category){
+    public Category addCategory(Category category, MultipartFile file)  throws Exception{
+    	String projectPath = System.getProperty("user.dir") +"\\front\\public\\upload\\category" ; //저장 경로 잡기
+
+		UUID uuid = UUID.randomUUID(); //랜덤으로 아이디 만들어줌
+		String fileName = uuid + "_" + file.getOriginalFilename(); // uuid 붙여서 파일이름
+		
+		File saveFile = new File(projectPath, fileName); //경로랑 파일이름 만들어서 객체저장
+
+		file.transferTo(saveFile);
+    	
         Category c = Category.builder()
                 .name(category.getName())
                 .description(category.getDescription())
+                .icon(fileName)
                 .build();
         return categoryRepository.save(c);
     }

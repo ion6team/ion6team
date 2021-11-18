@@ -24,7 +24,7 @@
                         </label>
                     </td>
                     <td>{{item.id}}</td>
-                    <td><img src="@/assets/Daangeun_Icon.png" width="40px" height="40px"></td>
+                    <td><img  v-bind:src= "'../../upload/category/'+item.icon" width="40px" height="40px"></td>
                                         <td>{{item.name}}</td>
                     <td>{{item.description}}</td>
 

@@ -2,6 +2,15 @@
     <div>
         <h5>카테고리 추가</h5>
         <b-input-group>
+             <b-row>
+                <b-col sm="7">
+                    <label type="text" for="identity">카테고리 아이콘</label>
+                </b-col>
+                <b-col sm="5">
+                    <form> <input type="file" name="categoryicon" id="categoryicon" multiple/> </form>
+                    <!-- <b-form-input v-model="categoryicon" id="categoryicon" type="file"></b-form-input> -->
+                </b-col>
+            </b-row>
             <b-row>
                 <b-col sm="7">
                     <label type="text" for="name">카테고리 명</label>
@@ -34,15 +43,28 @@
         name: 'findeEmail',
         data() {
             return {
+                categoryicon:'',
                 name: '',
                 description:'',
             }
         },
         methods: {
             addCategory() {
-                axios.post('/api/admin/category', {
-                    name: this.name,
-                    description : this.description
+                 var frm = new FormData(); 
+                 var photoFile = document.getElementById("categoryicon"); 
+                 var data ={
+                        "name" : this.name,
+                        "description" : this.description,
+                }
+                 frm.append('data', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
+                 frm.append("file",  photoFile.files[0]); 
+                axios.post('/api/admin/category', frm,
+                {
+                    headers: {
+                               'Content-Type': 'application/json',
+                              'Authorization': 'Bearer ' + this.$store.state.token
+        },
+                   
                 }).then((res) => {
 
                     this.email = res.data
