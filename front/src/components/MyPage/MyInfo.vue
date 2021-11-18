@@ -7,9 +7,9 @@
         </b-col>
         <b-col cols=4>
           <ul style="list-style:none; text-align:left;">
-            <li><i class="material-icons">email</i>{{email}}</li>
-            <li><i class="material-icons">place</i>{{address}}{{address_detail}}</li>
-            <li><i class="material-icons">phone</i>{{phone}}</li>
+            <li><i class="material-icons md-16">email</i><span>{{email}}</span></li>
+            <li><i class="material-icons md-16">place</i><span>{{address}}{{address_detail}}</span></li>
+            <li><i class="material-icons md-16">phone</i><span>{{phone}}</span></li>
           </ul>
         </b-col>
       </b-row>
@@ -63,7 +63,15 @@ export default {
     background-size:cover;
     min-height:300px;
   }
-  p{
-    margin:0;
+  li{
+    margin-bottom:10px;
+  }
+  .material-icons.md-16 { 
+    font-size: 16px; 
+    }
+
+  span{
+    font-size:18px;
+    margin-left:10px;
   }
 </style>

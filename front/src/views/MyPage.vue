@@ -1,12 +1,12 @@
 <template>
-  <b-container>
+  <div>
 
     <MyInfo />
     <b-tabs align="center" style="position:relative; top:-40px;">
       <b-tab title="정보수정"><change /></b-tab>
       <b-tab title="찜목록"><Zzim /></b-tab>
     </b-tabs>
-  </b-container>
+  </div>
 </template>
 
 <script>
