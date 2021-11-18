@@ -132,6 +132,7 @@
       SearchAddr,
       NeedLogin,
     },
+
     mounted() {
       this.currentPage = 1
 

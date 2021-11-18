@@ -1,66 +1,57 @@
 <template>
   <div>
     상세페이지 : {{index}}
-          <div class="container" style="width:1000px">
-        <b-carousel
-        id="carousel-1"
-        v-model="slide"
-        :interval="4000"
-        controls
-        img-width="1024"
-        img-height="480"
-        @sliding-start="onSlideStart"
-        @sliding-end="onSlideEnd"
-        >
-         <b-carousel-slide v-bind:img-src="'../upload/'+list.filepath1" ></b-carousel-slide>
-        <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2" ></b-carousel-slide>
-        <b-carousel-slide  v-if="list.filepath3!==null" v-bind:img-src="'../upload/'+list.filepath3" ></b-carousel-slide>
+    <div class="container" style="width:1000px">
+      <b-carousel id="carousel-1" v-model="slide" controls img-width="1024" img-height="480"
+        @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
+        <b-carousel-slide v-bind:img-src="'../upload/'+list.filepath1"></b-carousel-slide>
+        <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2"></b-carousel-slide>
+        <b-carousel-slide v-if="list.filepath3!==null" v-bind:img-src="'../upload/'+list.filepath3"></b-carousel-slide>
 
-        </b-carousel>
+      </b-carousel>
 
-<div 
-        class="my-3" 
-        style="border-bottom:1px solid #fec69f; text-align:left">
+      <div class="my-3" style="border-bottom:1px solid #fec69f; text-align:left">
         <h6 class="mx-2"><b> {{list.member.name}} </b></h6>
-        
-        <a href="#" @click="addzzim()" > 찜</a>
+
+        <a href="#" @click="addzzim()"> 찜</a>
 
 
         <p class="mx-2" style="font-size:14px;"> {{list.boardaddress}} </p>
-        </div>
+      </div>
 
-  <div 
-        class="my-3" 
-        style="border-bottom:1px solid #fec69f; text-align:left">
-            <h4 class="mx-2"> {{list.title}} </h4><!-- 글제목 -->
-            <p class="mx-2"> {{list.category.name}}</p> <!--해당카테고리 -->
-            <h5 class="mx-2"> {{list.price}} </h5><!--가격 -->
-           <p class="mx-2"> <span v-html="list.contents"></span></p><!--상세내용 -->
-        </div>
+      <div class="my-3" style="border-bottom:1px solid #fec69f; text-align:left">
+        <h4 class="mx-2"> {{list.title}} </h4><!-- 글제목 -->
+        <p class="mx-2"> {{list.category.name}}</p>
+        <!--해당카테고리 -->
+        <h5 class="mx-2"> {{list.price}} </h5>
+        <!--가격 -->
+        <p class="mx-2"> <span v-html="list.contents"></span></p>
+        <!--상세내용 -->
+      </div>
 
-        <div class="my-3">
-            <!-- 지도API -->
-        </div>
+      <div class="my-3">
+        <KaKaoMap v-bind:address="list.hopeaddress" />
+      </div>
 
-       <button @click="$router.push({
+      <button @click="$router.push({
           name:'ReWrite',
           params:{
             id:list.id
             },
-          })" >수정</button> 
-        <button @click="del()"> 삭제 </button>
+          })">수정</button>
+      <button @click="del()"> 삭제 </button>
 
 
-        <div style="background-color:#fbf7f2">
-            <div>
-                <table v-for="(reply,i) in replylist" :key="i">
-                    <tr>
-                        <th style="width:150px; border-right:1px solid #fec69f; text-align:center">{{reply.member.name}}</th>
-                        <td>{{reply.content}}</td>
-                    </tr>
-                </table>
-            </div>
+      <div style="background-color:#fbf7f2">
+        <div>
+          <table v-for="(reply,i) in replylist" :key="i">
+            <tr>
+              <th style="width:150px; border-right:1px solid #fec69f; text-align:center">{{reply.member.name}}</th>
+              <td>{{reply.content}}</td>
+            </tr>
+          </table>
         </div>
+      </div>
 
 
 
@@ -103,14 +94,17 @@
       </b-card>-->
       <h3>댓글 쓰기</h3>
       <textarea v-model="relpycontent" ref="relpycontent"></textarea>
-      <button @click="replynew"> 작성 </button> 
+      <button @click="replynew"> 작성 </button>
+
 
     </div>
+
   </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import KaKaoMap from '../components/KaKaoMap.vue'
   export default {
 
     data() {
@@ -125,11 +119,19 @@
     props: {
       id: {
         type: String
-      }
+      },
+      myaddress:String
+    },
+    components:{
+KaKaoMap
     },
 
     mounted() {
+      
+     
+
       this.index = this.$route.params.id;
+
 
       axios.get("http://localhost:8080/api/board/" + this.index, {
           headers: {
@@ -138,10 +140,8 @@
           }
         })
         .then((res) => {
-          //console.log(res.data.content[0]);
           this.list = res.data;
           this.totalpage = res.data.totalPages;
-          console.log(replyno);
         })
 
       axios.get('/api/reply/' + this.index, {
@@ -151,21 +151,25 @@
           }
         })
         .then((res) => {
-          //console.log(res.data.content[0]);
           this.replylist = res.data.content;
         })
+
+
+
+
+
     },
     methods: {
-         del(){
-       this.index = this.$route.params.id;
+      del() {
+        this.index = this.$route.params.id;
         axios.delete('/api/board/' + this.index, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + this.$store.state.token
             }
           })
-           .then((res) => {
-          this.$router.go(-1);
+          .then((res) => {
+            this.$router.go(-1);
           })
 
       },
@@ -232,14 +236,17 @@
           })
       },
 
-      addzzim(){
-        axios.get('/api/zzim/' + this.index , {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + this.$store.state.token
-            }
-          })
-      }
+      addzzim() {
+        axios.get('/api/zzim/' + this.index, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.$store.state.token
+          }
+        })
+      },
+
+
+
 
     }
   }
