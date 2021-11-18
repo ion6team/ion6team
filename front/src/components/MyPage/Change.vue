@@ -1,6 +1,6 @@
 <template>
-   <div class="container">
-       <div>
+   <div >
+       <div style="max-width:600px; margin:auto;">
     <b-form class="position-relative p-3" @submit.prevent="onSubmit">
       <b-form-group label="이름" label-for="form-name" label-cols-lg="2">
         <b-input-group>
@@ -40,7 +40,7 @@
       </b-form-group>
 
       <div class="d-flex justify-content-center">
-         <b-button ref="submit" type="submit" :disabled="busy">Submit</b-button>
+         <b-button ref="submit" type="submit" :disabled="busy">변경</b-button>
       </div>
 
       <b-overlay :show="busy" no-wrap @shown="onShown" @hidden="onHidden">
@@ -66,12 +66,12 @@
             aria-labelledby="form-confirm-label"
             class="text-center p-3"
           >
-            <p><strong id="form-confirm-label">Are you sure?</strong></p>
+            <p><strong id="form-confirm-label">변경하시겠습니까?</strong></p>
             <div class="d-flex">
               <b-button variant="outline-danger" class="mr-3" @click="onCancel">
-                Cancel
+                취소
               </b-button>
-              <b-button variant="outline-success" @click="onOK">OK</b-button>
+              <b-button variant="outline-success" @click="onOK">확인</b-button>
             </div>
           </div>
         </template>
@@ -148,16 +148,7 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    min-height: 100vh;
-    margin-bottom: 80px;
-  }
-  .input-form {
-    max-width: 680px;
-    margin-top: 80px;
-    padding: 32px;
-    background: #fff;
-    border: 4px double orange;
-    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+  button{
+    margin:10px;
   }
 </style>

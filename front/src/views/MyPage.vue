@@ -1,12 +1,22 @@
 <template>
-  <b-container>
+  <div>
+    <div id='profileBG' style="padding:100px;">
+      <div style="max-width:1000px; margin:auto;">
+        <b-row >
+          <b-col cols='3' style="opacity:0.6;">
+            <MyInfo />
+          </b-col>
 
-    <MyInfo />
-    <b-tabs align="center" style="position:relative; top:-40px;">
-      <b-tab title="정보수정"><change /></b-tab>
-      <b-tab title="찜목록"><Zzim /></b-tab>
-    </b-tabs>
-  </b-container>
+          <b-col cols='9' style="background-color:white;" >
+            <b-tabs align="start">
+              <b-tab title="정보수정" ><change /></b-tab>
+              <b-tab title="찜목록" ><Zzim /></b-tab>
+            </b-tabs>
+          </b-col>
+        </b-row>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -24,4 +34,11 @@ export default {
 </script>
 
 <style scoped>
+#profileBG{
+    background-image:url(../assets/profileBG.jpeg);
+    background-repeat:no-repeat;
+    background-size:cover;
+    min-height:100px;
+  }
+  
 </style> 
