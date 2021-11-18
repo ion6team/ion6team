@@ -41,8 +41,8 @@
       </b-navbar>
     </b-row>
 
-    <!-- <b-button v-b-modal.logoutCheck>로그아웃확인버튼</b-button>
-    <b-modal id="logoutCheck" centered>
+    <!-- <b-button v-b-modal.logoutCheck>로그아웃확인버튼</b-button> -->
+    <!-- <b-modal id="logoutCheck" centered>
      <logout-check />
      <template #modal-footer="{ ok, cancel }">
       
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-// import LogoutCheck from '../../components/Modal/LogoutCheck.vue'
   export default {
     name: 'header',
     data(){
@@ -71,10 +70,10 @@
       // LogoutCheck
     },
     methods: {
-      logout() {
-        this.$store.dispatch('logout')
-        alert("로그아웃 되었습니다")
-      }
+       logout() {
+         this.$store.dispatch('logout')
+         alert("로그아웃 되었습니다")
+     }
     }
   }
 </script>
