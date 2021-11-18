@@ -2,9 +2,11 @@
   <b-container fluid style="background-color:#e6f3e6">
     <b-container fluid="md" class="p-4" style="height:600px;">
       <b-row align-v="center" style="height:100%">
-        <b-col cols='5'>
-          <b-row>
-            <!--donghyun
+
+        <b-col cols='7'>
+              <b-row>
+<!--donghyun
+
                 <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
                  <a href="/board" @click="setCategoryId(category.id)">
                   {{category.name}}
@@ -14,18 +16,23 @@
 
 -->
 
+                
+                <b-col  v-for="(category,i) in categorylist" :key="i" cols='3' >
+                 <a href="/board" @click="setCategoryId(category.id)" style="background-color:blue;">
+                    <ul style="list-style:none; display:flex; width:240px; margin:0;">
+                      <li id="imgBack" style="">
+                        <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px" style="text-align:center; margin:10px 0;">
+                      </li>
+                      <li  ><p class="categoryName" style="">{{category.name}}</p></li>
+                    </ul>
+                </a>
+               </b-col>
+                
+              </b-row>
 
-            <b-col v-for="(category,i) in categorylist" :key="i" cols='3'>
-              <a @click="goboard()">
-                <img v-bind:src="'../../upload/category/'+category.icon" width="40px" height="40px">
-                {{category.name}}
-              </a>
-            </b-col>
-
-          </b-row>
         </b-col>
 
-        <b-col cols='7'>
+        <b-col cols='5'>
           <b-row>
             <b-col>
               <h2>카테고리별</h2>
@@ -89,9 +96,33 @@
 <style scoped>
   h2 {
     font-size: 50px;
+    
   }
-
-  p {
-    margin: 20px 0;
+  
+  #imgBack{
+    z-index: 2;
+    height:60px;
+    width:60px; 
+    background-color:white; 
+    border-radius:50%;
+    border: 4px solid #56c271;
+  }
+  .categoryName:hover{
+    background-color: #56c271;
+    color: white;
+  }
+  .categoryName{
+    width:140px; 
+    padding:10px; 
+    margin:10px; 
+    margin-left:-15px; 
+    background-color:white;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid #56c271;
+    transition: background-color 0.5s;
+  }
+  a{
+    color: black;
+    text-decoration: none;
   }
 </style>

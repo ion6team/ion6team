@@ -69,7 +69,6 @@
       }
     },
     mounted() {
-      alert("찜이요ㅕ")
       axios.get('/api/member/zzim', {
         headers: {
           'Content-Type': 'application/json',
