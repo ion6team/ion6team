@@ -106,6 +106,8 @@
       <button @click="replynew"> 작성 </button> 
 
     </div>
+
+
   </div>
 </template>
 
