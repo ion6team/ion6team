@@ -126,17 +126,18 @@ public class MemberController {
 
     //////////////////////찜/////////////////////////
 
-    @GetMapping("/board/{id}/zzim")
+    @GetMapping("/zzim/{id}")
     public Boolean addZzim(@PathVariable long id){
+        System.out.println(id);
         Long memberid = memberService.getMyUserWithAuthorities().get().getId();
         memberService.addZzim(memberid, id);
 
         return true;
     }
 
-    @GetMapping("/member/zzim")
-    public List<Board> getAllZZim(){
-        Long memberid = memberService.getMyUserWithAuthorities().get().getId();
-        memberService.getZzimList(memberid);
-    }
+//    @GetMapping("/member/zzim")
+//    public List<Board> getAllZZim(){
+//        Long memberid = memberService.getMyUserWithAuthorities().get().getId();
+//        memberService.getZzimList(memberid);
+//    }
 }

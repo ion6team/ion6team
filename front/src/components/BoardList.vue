@@ -3,7 +3,7 @@
   <div>
     <div>
       <h3 style="postion:flex;" align="left">{{myaddress}} 내 검색결과 </h3>
-      <b-button v-b-modal.searchAddr>다른지역검색</b-button>
+      <b-button v-b-modal.searchAddr @click="addressApi()">다른지역검색</b-button>
       <b-modal id="searchAddr" centered hide-footer>
     <searchAddr />
   </b-modal>
@@ -18,9 +18,9 @@
 
     <b-nav-item>
       <b-input-group>
-            <b-form-input placeholder="검색"></b-form-input>
+            <b-form-input placeholder="검색" v-model="keyword"></b-form-input>
             <b-input-group-append>
-              <b-button type='submit'>
+              <b-button type='submit' @click="searchApi()">
                 <b-icon icon='search'></b-icon>
               </b-button>
             </b-input-group-append>
@@ -31,9 +31,6 @@
 
     
       
-      <div class="col-md-2 mb-3">
-        <b-button class="ml-2" @click="addressApi()">검색</b-button>
-      </div>
     </div>
  
     {{selected}}

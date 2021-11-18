@@ -156,11 +156,11 @@ public class MemberService implements UserDetailsService{
 		return true;
 	}
 
-	public List<Board> getAllZzim(Long id){
-		Optional<Member> member = memberRepository.findById(id);
-		
-	}
-
+//	public List<Board> getAllZzim(Long id){
+//		Optional<Member> member = memberRepository.findById(id);
+//
+//	}
+//
 
 
 //	public Long join(Member m) {
