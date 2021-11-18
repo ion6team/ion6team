@@ -207,10 +207,7 @@ public class BoardService {
 				 updata.setFilepath3(arr[2]);
 			}
 			}
-			else {
-				updata.setFilepath1("이미지없음.PNG");
-				
-			}
+
 	}
 
 	@Transactional(readOnly = true)
