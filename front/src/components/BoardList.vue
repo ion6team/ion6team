@@ -2,25 +2,30 @@
 <template>
   <div>
     <div>
-      <h3 style="postion:flex;" align="left">{{myaddress}} 내 검색결과 </h3>
-      <b-button v-b-modal.searchAddr @click="addressApi()">다른지역검색</b-button>
-      <b-modal id="searchAddr" centered hide-footer>
-    <searchAddr />
-  </b-modal>
+      <ul style="list-style:none; display:flex;">
+        <li>
+          <h3 style="postion:flex;" align="left">{{myaddress}} 내 검색결과 </h3>
+        </li>
+        <li >
+          <b-button @click="addressApi()" 
+          
+          style="background-color:#ff8a3d; border-color:#fec69f" size="sm">다른지역검색</b-button>
+        </li>
+      </ul>
 
-<b-navbar type="light" variant="light">
+<b-navbar style="background-color:#e6f3e6;">
   <b-nav>
     <b-nav-item>
-      <select class="form-control" v-model="selected">
+      <select class="form-control" v-model="selected" style="border-color:#c2e8c2;">
           <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
         </select>
     </b-nav-item>
 
     <b-nav-item>
       <b-input-group>
-            <b-form-input placeholder="검색" v-model="keyword"></b-form-input>
+            <b-form-input placeholder="검색" v-model="keyword" style="border-color:#c2e8c2;"></b-form-input>
             <b-input-group-append>
-              <b-button type='submit' @click="searchApi()">
+              <b-button type='submit' @click="searchApi()" style="background-color:#56c271; border-color:#c2e8c2;">
                 <b-icon icon='search'></b-icon>
               </b-button>
             </b-input-group-append>
@@ -33,8 +38,6 @@
       
     </div>
  
-    {{selected}}
-    {{keyword}}
     <hr>
     <!-- <b-card-group class="cardlayout"> -->
     <div>
@@ -43,62 +46,67 @@
           params:{
             id:board.id
             }
-          })" v-for="(board,i) in list" :key="i" img-src="" img-alt="Card image"
-        img-left title="" class="mb-3" style="border:1px solid #fec69f">
+          })" v-for="(board,i) in list" :key="i"
+           class="mb-3" 
+           style="border:1px solid #fec69f; height:300px">
+       <b-row>
+         <b-col cols='4'>
         <!-- <img src="../assets/1373b807-50c9-43a7-837f-fb3b2c5e34ce_dog5.jpg" />
         <img src="`../assets/${board.filename}`" />  -->
-        <img  class="product-thumb" v-bind:src= "'../../upload/'+board.filepath1" />
-        <h4><b>{{board.title}}</b></h4>
-        <template #footer>
-          <b-link href='#'>
-            <b-icon icon='chat-left-fill' class="m-1"></b-icon>
-          </b-link>
-          <b-icon icon='heart' class="m-1"></b-icon>
-        </template>
+        <img  class="product-thumb" v-bind:src= "'../../upload/'+board.filepath1" style="width:350px; max-height:300px;" />
+    
+         </b-col>
 
+         <b-col cals='8'>
+           <h4><b>{{board.title}}</b></h4>
+            <table class="mx-5 my-3">
+              <tr>
+                <th style="width:15%">
+                  <b-card-text>가격 : </b-card-text>
+                </th>
+                <td style="width:35%">
+                  <b-card-text>{{board.price}}</b-card-text>
+                </td>
+                <th style="width:15%">
+                  <b-card-text>주소 : </b-card-text>
+                </th>
+                <td style="width:35%">
+                  <b-card-text>{{board.hopeaddress}}</b-card-text>
+                </td>
 
-        <table class="mx-5 my-3">
-          <tr>
-            <th style="width:20%">
-              <b-card-text>가격 : </b-card-text>
-            </th>
-            <td style="width:30%">
-              <b-card-text>{{board.price}}</b-card-text>
-            </td>
-            <th style="width:20%">
-              <b-card-text>주소 : </b-card-text>
-            </th>
-            <td style="width:30%">
-              <b-card-text>{{board.hopeaddress}}</b-card-text>
-            </td>
+              </tr>
+              <tr>
+                <th>
+                  <b-card-text>상세내용</b-card-text>
 
-          </tr>
-          <tr>
-            <th>
-              <b-card-text>상세내용</b-card-text>
+                </th>
+                <td colspan="3"></td>
+              </tr>
+              <tr>
 
-            </th>
-            <td colspan="3"></td>
-          </tr>
-          <tr>
-
-            <td colspan="4">
-              <p style="height:50px; 
-          overflow: hidden;
-          text-overflow: ellipsis;">
-                 <span v-html="board.contents"></span>
-              </p>
-            </td>
-          </tr>
-        </table>
+                <td colspan="4">
+                  <p style="height:50px; 
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                    <span v-html="board.contents"></span>
+                  </p>
+                </td>
+              </tr>
+            </table>
+         </b-col>
+       </b-row>
       </b-card>
+
+
     </div>
-    <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" align="center">
+    <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" align="center" >
     </b-pagination>
 
     <b-button
-                class="bg-primary m-2"
-                v-b-modal.needLogin>
+                class=" m-2"
+                v-b-modal.needLogin
+                style="background-color:#ff8a3d; border-color:#fec69f"
+                >
                 버튼
                 </b-button>
                 <b-modal id="needLogin" centered hide-footer>
@@ -109,7 +117,6 @@
 
 <script>
   import axios from 'axios';
-  import SearchAddr from './Modal/SearchAddr.vue'
   import NeedLogin from './Modal/NeedLogin.vue'
 
   export default {
@@ -129,7 +136,7 @@
       }
     },
     components:{
-      SearchAddr,
+
       NeedLogin,
     },
 
@@ -213,11 +220,14 @@
   }
 </script>
 
-<style>
+<style scoped>
   tr,
   th,
   td {
     text-align: left;
     padding: 10px;
+  }
+  li{
+    margin: 10px;
   }
 </style>

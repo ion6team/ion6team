@@ -11,7 +11,7 @@
           <b-row>
             <b-col>
 
-              <b-button @click="goboard()" class="bg-primary m-2 ">
+              <b-button @click="goboard()" class=" m-2 " style="background-color:#ff8a3d; border-color:#fec69f;">
                 내지역보기
               </b-button>
               </b-button>
@@ -33,7 +33,6 @@
 
       </div>
 
-  {{this.$store.state.islogin}}
 
     </b-container>
   </b-container>
@@ -67,5 +66,8 @@
 
   p {
     margin: 20px 0;
+  }
+  button:hover{
+    box-shadow: 0 0 2px black;
   }
 </style>
