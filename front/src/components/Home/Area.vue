@@ -1,8 +1,6 @@
 <template>
-
   <b-container fluid>
     <b-container fluid="md" class="p-4" style="height:600px;">
-      {{this.$store.state.member.zzim}}
       <b-row align-v="center" style="height:100%">
         <b-col cols='7'>
           <b-row>
@@ -13,8 +11,9 @@
           <b-row>
             <b-col>
 
-              <b-button @click="goboard()" class="m-2" style="background-color:#ff8a3d;">
+              <b-button @click="goboard()" class="bg-primary m-2 ">
                 내지역보기
+              </b-button>
               </b-button>
 
             </b-col>
