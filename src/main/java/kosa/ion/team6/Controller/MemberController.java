@@ -123,4 +123,21 @@ public class MemberController {
 //    public ResponseEntity<List<Board>> getAllWishList(HttpServletRequest request){
 //        //return ResponseEntity.ok(memberServi
 //    }
+
+    //////////////////////찜/////////////////////////
+
+    @GetMapping("/zzim/{id}")
+    public Boolean addZzim(@PathVariable long id){
+        System.out.println(id);
+        Long memberid = memberService.getMyUserWithAuthorities().get().getId();
+        memberService.addZzim(memberid, id);
+
+        return true;
+    }
+
+//    @GetMapping("/member/zzim")
+//    public List<Board> getAllZZim(){
+//        Long memberid = memberService.getMyUserWithAuthorities().get().getId();
+//        memberService.getZzimList(memberid);
+//    }
 }

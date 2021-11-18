@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import kosa.ion.team6.DTO.MemberDto;
 import kosa.ion.team6.Domain.Authority;
+import kosa.ion.team6.Domain.Board;
 import kosa.ion.team6.Jwt.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -143,6 +144,23 @@ public class MemberService implements UserDetailsService{
 
 	}
 
+	@Transactional
+	public boolean addZzim(Long memberid, Long id){
+		Optional<Member> updateUser = memberRepository.findById(memberid);
+		updateUser.ifPresent(selectUser -> {
+			selectUser.setZzim(selectUser.getZzim()+", " + id);
+
+			memberRepository.save(selectUser);
+		});
+
+		return true;
+	}
+
+//	public List<Board> getAllZzim(Long id){
+//		Optional<Member> member = memberRepository.findById(id);
+//
+//	}
+//
 
 
 //	public Long join(Member m) {

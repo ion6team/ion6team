@@ -22,6 +22,10 @@
         class="my-3" 
         style="border-bottom:1px solid #fec69f; text-align:left">
         <h6 class="mx-2"><b> {{list.member.name}} </b></h6>
+        
+        <a href="#" @click="addzzim()" > 찜</a>
+
+
         <p class="mx-2" style="font-size:14px;"> {{list.boardaddress}} </p>
         </div>
 
@@ -207,6 +211,15 @@
             //this.replylist=res.data.content;
           })
       },
+
+      addzzim(){
+        axios.get('/api/zzim/' + this.index , {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+      }
 
     }
   }
