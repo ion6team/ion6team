@@ -3,6 +3,7 @@ package kosa.ion.team6.Service;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import kosa.ion.team6.DTO.BoardDto;
@@ -33,6 +34,10 @@ public class BoardService {
 
 	@Autowired
 	private ReplyRepository replyRepository;
+
+	public Optional<Board> findById(Long id){
+		return boardRepository.findById(id);
+	}
 
 	@Transactional(readOnly = true)
 	public Page<Board> getMyAddressBoardList(long category_id, String hopeaddress, String keyword, Pageable pageable){ //페이징

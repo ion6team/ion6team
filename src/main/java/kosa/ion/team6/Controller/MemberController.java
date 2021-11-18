@@ -7,6 +7,7 @@ import kosa.ion.team6.Domain.Board;
 import kosa.ion.team6.Domain.Member;
 import kosa.ion.team6.Jwt.JwtFilter;
 import kosa.ion.team6.Jwt.TokenProvider;
+import kosa.ion.team6.Service.BoardService;
 import kosa.ion.team6.Service.MemberService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,11 +30,13 @@ public class MemberController {
     private final MemberService memberService;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final BoardService boardService;
 
-    public MemberController(MemberService memberService, TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder){
+    public MemberController(MemberService memberService, TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, BoardService boardService){
         this.memberService = memberService;
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.boardService = boardService;
     }
 
     // 로그인
@@ -130,14 +134,21 @@ public class MemberController {
     public Boolean addZzim(@PathVariable long id){
         System.out.println(id);
         Long memberid = memberService.getMyUserWithAuthorities().get().getId();
-        memberService.addZzim(memberid, id);
 
-        return true;
+        return memberService.addZzim(memberid, id); 
+        // return false 면 찜 삭제
+        // return true 면 찜 추가
     }
 
-//    @GetMapping("/member/zzim")
-//    public List<Board> getAllZZim(){
-//        Long memberid = memberService.getMyUserWithAuthorities().get().getId();
-//        memberService.getZzimList(memberid);
-//    }
+    @GetMapping("/member/zzim")
+    public List<Board> getAllZZim(){
+        String str = memberService.getMyUserWithAuthorities().get().getZzim();
+        String[] arr = str.split(",");
+        List<Board> boardList = new ArrayList<Board>();
+        for(int i=0; i<arr.length ;i++){
+            boardList.add(boardService.findById(Long.parseLong(arr[i].trim())).get());
+        }
+
+        return boardList;
+    }
 }

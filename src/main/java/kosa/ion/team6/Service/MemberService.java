@@ -26,135 +26,145 @@ import kosa.ion.team6.Exception.DuplicateMemberException;
 
 //
 @Service
-public class MemberService implements UserDetailsService{
+public class MemberService implements UserDetailsService {
 
-	private final MemberRepository memberRepository;
-	private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-	@Autowired
-	public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
-		this.memberRepository = memberRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
+    @Autowired
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+        this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-	@Override
-	@Transactional
-	public UserDetails loadUserByUsername(final String email) {
-		return memberRepository.findOneWithAuthoritiesByEmail(email)
-				.map(user -> createUser(email, user))
-				.orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
-	}
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(final String email) {
+        return memberRepository.findOneWithAuthoritiesByEmail(email)
+                .map(user -> createUser(email, user))
+                .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
+    }
 
-	private org.springframework.security.core.userdetails.User createUser(String username, Member member) {
-		if (!member.isActivated()) {
-			throw new RuntimeException(username + " -> 활성화되어 있지 않습니다.");
-		}
-		List<GrantedAuthority> grantedAuthorities = member.getAuthorities().stream()
-				.map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
-				.collect(Collectors.toList());
+    private org.springframework.security.core.userdetails.User createUser(String username, Member member) {
+        if (!member.isActivated()) {
+            throw new RuntimeException(username + " -> 활성화되어 있지 않습니다.");
+        }
+        List<GrantedAuthority> grantedAuthorities = member.getAuthorities().stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
+                .collect(Collectors.toList());
 
-		return new org.springframework.security.core.userdetails.User(member.getEmail(),
-				member.getPassword(),
-				grantedAuthorities);
-	}
+        return new org.springframework.security.core.userdetails.User(member.getEmail(),
+                member.getPassword(),
+                grantedAuthorities);
+    }
 
-	@Transactional
-	public Member signup(MemberDto memberDto) {
-		// 중복 체크
-		if (memberRepository.findOneWithAuthoritiesByEmail(memberDto.getEmail()).orElse(null) != null) {
-			throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
-		}
+    @Transactional
+    public Member signup(MemberDto memberDto) {
+        // 중복 체크
+        if (memberRepository.findOneWithAuthoritiesByEmail(memberDto.getEmail()).orElse(null) != null) {
+            throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
+        }
 
-		//권한 정보 넣음
-		Authority authority = Authority.builder()
-				.authorityName("ROLE_USER")
-				.build();
+        //권한 정보 넣음
+        Authority authority = Authority.builder()
+                .authorityName("ROLE_USER")
+                .build();
 
-		Member m = Member.builder()
-				.email(memberDto.getEmail())
-				.password(passwordEncoder.encode(memberDto.getPassword()))
-				.name(memberDto.getName())
-				.address(memberDto.getAddress())
-				.address_detail(memberDto.getAddress_detail())
-				.phone(memberDto.getPhone())
-				.resident1(memberDto.getResident1())
-				.resident2(memberDto.getResident2())
-				.authorities(Collections.singleton(authority))
-				.activated(true)
-				.build();
+        Member m = Member.builder()
+                .email(memberDto.getEmail())
+                .password(passwordEncoder.encode(memberDto.getPassword()))
+                .name(memberDto.getName())
+                .address(memberDto.getAddress())
+                .address_detail(memberDto.getAddress_detail())
+                .phone(memberDto.getPhone())
+                .resident1(memberDto.getResident1())
+                .resident2(memberDto.getResident2())
+                .authorities(Collections.singleton(authority))
+                .activated(true)
+                .build();
 
-		return memberRepository.save(m);
+        return memberRepository.save(m);
 
-	}
+    }
 
-	@Transactional
-	public String editMember(Long id, MemberDto memberDto){
-		Member editMember = memberRepository.findById(id).get();
+    @Transactional
+    public String editMember(Long id, MemberDto memberDto) {
+        Member editMember = memberRepository.findById(id).get();
 
-		editMember.setEmail(memberDto.getEmail());
-		editMember.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-		editMember.setName(memberDto.getName());
-		editMember.setAddress(memberDto.getAddress());
-		editMember.setAddress_detail(memberDto.getAddress_detail());
+        editMember.setEmail(memberDto.getEmail());
+        editMember.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+        editMember.setName(memberDto.getName());
+        editMember.setAddress(memberDto.getAddress());
+        editMember.setAddress_detail(memberDto.getAddress_detail());
 
-		return editMember.getEmail() + " 수정됨.";
-	}
+        return editMember.getEmail() + " 수정됨.";
+    }
 
-	@Transactional
-	public String deleteMember(Long id){
-		Member deleteMember = memberRepository.findById(id).get();
+    @Transactional
+    public String deleteMember(Long id) {
+        Member deleteMember = memberRepository.findById(id).get();
 
-		deleteMember.setActivated(false);
+        deleteMember.setActivated(false);
 
-		return deleteMember.getEmail() + " 비활성화";
-	}
+        return deleteMember.getEmail() + " 비활성화";
+    }
 
-	// 이메일을 받아서 정보를 가져옴
-	@Transactional(readOnly = true)
-	public Optional<Member> getUserWithAuthorities(String email) {
-		return memberRepository.findOneWithAuthoritiesByEmail(email);
-	}
+    // 이메일을 받아서 정보를 가져옴
+    @Transactional(readOnly = true)
+    public Optional<Member> getUserWithAuthorities(String email) {
+        return memberRepository.findOneWithAuthoritiesByEmail(email);
+    }
 
-	// 현재 SecurityContext에 저장된 email의 정보를 가져옴
-	@Transactional(readOnly = true)
-	public Optional<Member> getMyUserWithAuthorities() {
-		return SecurityUtil.getCurrentUsername().flatMap(memberRepository::findOneWithAuthoritiesByEmail);
-	}
+    // 현재 SecurityContext에 저장된 email의 정보를 가져옴
+    @Transactional(readOnly = true)
+    public Optional<Member> getMyUserWithAuthorities() {
+        return SecurityUtil.getCurrentUsername().flatMap(memberRepository::findOneWithAuthoritiesByEmail);
+    }
 
-	// 전체 정보를 가져옴
-	@Transactional(readOnly = true)
-	public List<Member> getAllMemberInfo(){
-		return (List<Member>) memberRepository.findAll();
-	}
+    // 전체 정보를 가져옴
+    @Transactional(readOnly = true)
+    public List<Member> getAllMemberInfo() {
+        return (List<Member>) memberRepository.findAll();
+    }
 
-	//이메일 중복 체크
-	public boolean isEmailDuplicate(String email){
-		return memberRepository.findOneWithAuthoritiesByEmail(email).orElse(null) != null;
-	}
+    //이메일 중복 체크
+    public boolean isEmailDuplicate(String email) {
+        return memberRepository.findOneWithAuthoritiesByEmail(email).orElse(null) != null;
+    }
 
-	public String findEmail(MemberDto memberDto){
-		Optional<Member> m = memberRepository.findByNameAndResident1AndResident2(
-				memberDto.getName(), memberDto.getResident1(), memberDto.getResident2());
+    public String findEmail(MemberDto memberDto) {
+        Optional<Member> m = memberRepository.findByNameAndResident1AndResident2(
+                memberDto.getName(), memberDto.getResident1(), memberDto.getResident2());
 
-		if(m.isPresent()){
-			return m.get().getEmail();
-		}else{
-			return " ";
-		}
+        if (m.isPresent()) {
+            return m.get().getEmail();
+        } else {
+            return " ";
+        }
 
-	}
+    }
 
-	@Transactional
-	public boolean addZzim(Long memberid, Long id){
-		Optional<Member> updateUser = memberRepository.findById(memberid);
-		updateUser.ifPresent(selectUser -> {
-			selectUser.setZzim(selectUser.getZzim()+", " + id);
+    @Transactional
+    public boolean addZzim(Long memberid, Long id) {
+        Optional<Member> updateUser = memberRepository.findById(memberid);
 
-			memberRepository.save(selectUser);
-		});
+        if (updateUser.get().getZzim().contains(" ," + id)) {
+			updateUser.ifPresent(selectUser -> {
+				selectUser.setZzim(selectUser.getZzim().replaceAll(" ," + id, ""));
+				System.out.print(memberid + "멤버의" + id + "찜 목록 삭제됨");
+				memberRepository.save(selectUser);
+			});
+			return false;
+        } else {
+            updateUser.ifPresent(selectUser -> {
+                selectUser.setZzim(selectUser.getZzim() + " ," + id);
+                System.out.print(memberid + "멤버의" + id + "찜 목록 추가됨");
+                memberRepository.save(selectUser);
 
-		return true;
-	}
+            });
+			return true;
+        }
+    }
 
 //	public List<Board> getAllZzim(Long id){
 //		Optional<Member> member = memberRepository.findById(id);
