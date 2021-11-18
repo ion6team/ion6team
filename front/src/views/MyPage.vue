@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div id='profileBG' style="padding:100px;">
+    <div id='profileBG' style="padding:100px; min-height:800px;">
       <div style="max-width:1000px; margin:auto;">
-        <b-row >
+        <b-row style="height:600px">
           <b-col cols='3' style="opacity:0.6;">
             <MyInfo />
           </b-col>
@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
 #profileBG{
-    background-image:url(../assets/profileBG.jpeg);
+    background-image:url(../assets/profileBG.jpg);
     background-repeat:no-repeat;
     background-size:cover;
     min-height:100px;
