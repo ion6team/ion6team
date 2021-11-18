@@ -54,9 +54,8 @@ export default new Vuex.Store({
         .then(response=>{
           commit('getMemberInfo', response.data)
         })
-        alert("로그인 성공")
       } catch (err) {
-        alert("로그인 실패")
+        
       }
     },
     logout({commit}){

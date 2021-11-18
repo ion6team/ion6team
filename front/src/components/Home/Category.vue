@@ -3,8 +3,8 @@
     <b-container fluid="md" class="p-4" style="height:600px;">
       <b-row align-v="center" style="height:100%">
         <b-col cols='5'>
-              <b-row>
-<!--donghyun
+          <b-row>
+            <!--donghyun
                 <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
                  <a href="/board" @click="setCategoryId(category.id)">
                   {{category.name}}
@@ -14,15 +14,15 @@
 
 -->
 
-                
-                <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
-                 <a href="/board" @click="setCategoryId(category.id)">
-                 <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px">
-                  {{category.name}}
-                  </a>
-                  </b-col>
-                
-              </b-row>
+
+            <b-col v-for="(category,i) in categorylist" :key="i" cols='3'>
+              <a @click="goboard()">
+                <img v-bind:src="'../../upload/category/'+category.icon" width="40px" height="40px">
+                {{category.name}}
+              </a>
+            </b-col>
+
+          </b-row>
         </b-col>
 
         <b-col cols='7'>
@@ -40,34 +40,49 @@
         </b-col>
       </b-row>
     </b-container>
+            <b-modal id="needLogin" ref="my-modal" centered hide-footer>
+          <needLogin />
+        </b-modal>
   </b-container>
 </template>
 
 <script>
-import axios from 'axios'
+  import axios from 'axios'
+  import NeedLogin from '../Modal/NeedLogin';
   export default {
     name: 'category',
+    components: {
+      NeedLogin
+    },
     data() {
       return {
         categorylist: [],
-        id:'',
-        category_id:'',
+        id: '',
+        category_id: '',
       }
     },
-    props:{
-category_id:'',
+    props: {
+      category_id: '',
     },
-    mounted(){
+    mounted() {
       axios.get('/api/category', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + this.$store.state.token
-          }
-        }).then((res)=>
-        {
-          this.categorylist = res.data;
-        })
+        }
+      }).then((res) => {
+        this.categorylist = res.data;
+      })
+    },
+    methods: {
+      goboard() {
+        if (this.$store.state.islogin == false) {
+          this.$refs['my-modal'].show()
+        } else {
+          this.$router.push("/board");
+        }
       }
+    }
   }
 </script>
 

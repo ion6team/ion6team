@@ -48,11 +48,13 @@
   </b-modal>
 
      </div>
-        {{this.$store.state.token}}
 
-        <b-button v-b-modal.welcome>로그인성공 환영</b-button>
-    <b-modal id="welcome" centered hide-footer>
+    <b-modal id="welcome" ref="welcome2" centered hide-footer>
     <welcome />
+  </b-modal>
+
+      <b-modal id="loginfailed" ref="loginfailed2" centered hide-footer>
+    <loginfailed />
   </b-modal>
     
   </div>
@@ -62,6 +64,7 @@
 import Findemail from '../components/Modal/Findemail.vue'
 import FindPassword from '../components/Modal/FindPassword.vue'
 import Welcome from '../components/Modal/Welcome.vue'
+import Loginfailed from '../components/Modal/LoginFailed.vue'
 
   export default {
     name: 'login',
@@ -75,7 +78,8 @@ import Welcome from '../components/Modal/Welcome.vue'
     components: {
       Findemail,
       FindPassword,
-        Welcome
+        Welcome,
+        Loginfailed
     },
     methods:{
         
@@ -86,10 +90,13 @@ import Welcome from '../components/Modal/Welcome.vue'
             password: this.password,
           })
         } catch (err) {
-          throw new Error(err)
+          alert(err)
         }
         if (this.$store.state.islogin == true) {
-          this.$router.push('/')
+          this.$refs['welcome2'].show()
+        }
+        else{
+          this.$refs['loginfailed2'].show()
         }
 
       },
