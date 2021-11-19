@@ -84,7 +84,7 @@
             <table class="mx-5 my-3">
               <tr>
                 <th style="width:15%">
-                  <b-card-text>가격 : </b-card-text>
+                  <b-card-text>가격 :  </b-card-text>
                   
                 </th>
                 <td style="width:35%">

@@ -1,15 +1,9 @@
 
+
 <template>
-
-  <b-container style="width:600px; margin-top:50px;">
-  <hr style="color:#fec69f">
-    <div class="mb-3">
-      <label for="title">제목</label>
-      <div>
-        <b-form-input v-model="list.title" placeholder="제목을 입력하세요."></b-form-input>
-      </div>
-    </div>
-
+  <b-container style="width:1000px; margin-top:50px;">
+    <hr style="color:#fec69f">
+    
     <label><input type="checkbox" name="soldOut" value="ture"> 판매완료</label>
 
     <hr style="color:#fec69f">
@@ -50,7 +44,7 @@
         <label for="title"><h5><b>제목</b></h5></label>  
       </b-col>
       <b-col cols='9'>
-        <b-form-input v-model="title" placeholder="제목을 입력하세요." style="border-color:#ff8a3d;"></b-form-input>
+        <b-form-input v-model="list.title" placeholder="제목을 입력하세요." style="border-color:#ff8a3d;"></b-form-input>
       </b-col>
     </b-row>
     <hr style="color:#fec69f">
@@ -64,35 +58,6 @@
             ></b-form-file>
             <div class="mt-3">Selected file: {{ file1 ? file1.name : '' }}</div>
            -->
-<!-- jaehoo
-           
-    <div class="mb-3">
-      <label for="address">장소</label>
-      <b-checkbox id="checkbox-1" v-model="hope_address" name="checkbox-1" value="accepted"
-        unchecked-value="not_accepted">
-        <label for="address">거래 지역 변경</label>
-      </b-checkbox>
-      <input v-if="hope_address=='not_accepted'"  class="form-control" v-model="defaultaddress" readonly>
-      <input v-if="hope_address=='accepted'"  class="form-control" placeholder="거래 희망 지역">
-    </div>
-
-    <label for="address">가격</label>
-    <div>
-      <b-form-input v-model="price" placeholder="가격"></b-form-input>
-    </div>
-    <p />
-    <label for="address">상세 설명</label>
-    <div>
-      <editor v-model="value" @change="onChange" paste-as-text="true"></editor>
-    </div>
-    <div>
-
-  <form> <input type="file" name="photo" id="photo" multiple /> </form>
-
-
-
-  </div>
--->
     <b-row>
       <b-col cols='3'>
         <label for="address"><h5><b>거래장소</b></h5></label>
@@ -108,14 +73,13 @@
     </b-row>
 
     <hr style="color:#fec69f">
-
     
     <b-row >
       <b-col cols='3'>
        <label for="price"><h5><b>가격</b></h5></label>
       </b-col>
       <b-col cols='9' class="nav justify-content-left">
-        <input id="price" v-model="price" placeholder="가격" style="border-color:#ff8a3d; margin:0 10px; border-radius:5px;">원</input>
+        <input id="price" v-model="list.price" placeholder="가격" style="border-color:#ff8a3d; margin:0 10px; border-radius:5px;">원</input>
       </b-col>
     </b-row>
 
@@ -139,7 +103,6 @@
 
 <script>
   import axios from 'axios'
-
   export default {
     name: 'ReWrite',
     data() {
@@ -154,8 +117,7 @@
         category_id: 1,
         image : '',
         FormData : null,
-        list: [],
-        
+        list: [],       
       }
     },
      props: {
@@ -164,7 +126,7 @@
       }
       },
     mounted() {
-    this.index = this.$route.params.id;
+       
     console.log(this.index);
       axios.get('/api//board/'+this.index, {
         headers: {
@@ -176,13 +138,14 @@
 
        
       })
-        axios.get('/api/member/address', {
+    this.index = this.$route.params.id;
+    console.log(this.index);
+      axios.get('/api/member/address', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + this.$store.state.token
         }
       }).then((response) => {
-
         this.defaultaddress = response.data;
       })
     },
@@ -193,11 +156,9 @@
     val() {
                 this.value = "This's new value";
             },
-
             onChange(html, text) {
                 console.log(html.length, text.length);
             },
-
 write_board() {
     this.index = this.$route.params.id;
     console.log(this.index);
@@ -228,7 +189,6 @@ write_board() {
        this.$router.go(-1);
       })
       .catch((error) => { // 예외 처리 })
-
     })
 }
   
@@ -259,7 +219,6 @@ hr{
   width:200px;
   background-image: url(../assets/uploadImg.png);
 }
-
 .filebox input[type="file"] {  /* 파일 필드 숨기기 */
   position: absolute;
   width: 1px;
