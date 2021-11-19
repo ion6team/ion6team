@@ -75,14 +75,14 @@ public class MemberController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<String> EditMemberInfo(@RequestBody MemberDto memberDto) {
         System.out.println(memberDto.getEmail());
-        System.out.println(memberDto.getPassword());
         System.out.println(memberDto.getName());
         System.out.println(memberDto.getAddress());
         System.out.println(memberDto.getAddress_detail());
 
-        return ResponseEntity.ok(
-                memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
-        );
+        return ResponseEntity.ok("zz");
+//        return ResponseEntity.ok(
+//                memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
+//        );
     }
 
     // 회원 삭제
