@@ -8,6 +8,7 @@
         <b-form-input v-model="title" placeholder="제목을 입력하세요."></b-form-input>
       </div>
     </div>
+    <label><input type="checkbox" name="soldOut" value="ture"> 판매완료</label>
     <!--
             <b-form-file
             v-model="file1"
