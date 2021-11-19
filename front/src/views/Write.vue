@@ -7,11 +7,14 @@
 
     <b-row>
       <b-col cols='3'>
-        <label for="photo"><h5><b>상품사진 등록</b></h5>
-        <span style="font-size:15px">(최대 3개)</span></label>
+        <h5><b>상품사진 등록</b></h5>
+        <span style="font-size:15px">(최대 3개)</span>
       </b-col>
-      <b-col cols='9'>
-        <input type="file" name="photo" id="photo" multiple />
+      <b-col cols='9' >
+        <div class="filebox">
+          <label for="photo"></label>
+          <input type="file" name="photo" id="photo" multiple />
+        </div>
       </b-col>
     </b-row>
   <hr style="color:#fec69f">
@@ -53,7 +56,7 @@
         <label for="address"><h5><b>거래장소</b></h5></label>
         <b-checkbox id="checkbox-1" v-model="hope_address" name="checkbox-1" value="accepted"
           unchecked-value="not_accepted">
-          <label for="address">거래 지역 변경</label>
+          <label for="address" style="margin:0 10px">거래 지역 변경</label>
         </b-checkbox>
       </b-col>
       <b-col cols='9'>
@@ -64,12 +67,12 @@
 
     <hr style="color:#fec69f">
     
-    <b-row>
+    <b-row >
       <b-col cols='3'>
        <label for="price"><h5><b>가격</b></h5></label>
       </b-col>
-      <b-col cols='9'>
-        <input id="price" v-model="price" placeholder="가격" style="border-color:#ff8a3d;">원</input>
+      <b-col cols='9' class="nav justify-content-left">
+        <input id="price" v-model="price" placeholder="가격" style="border-color:#ff8a3d; margin:0 10px; border-radius:5px;">원</input>
       </b-col>
     </b-row>
 
@@ -80,13 +83,13 @@
         <label for="detail"><h5><b>상세설명</b></h5></label>
       </b-col>
       <b-col cols='9'>
-        <editor id="detail" v-model="value" @change="onChange" paste-as-text="true" ></editor>
+        <editor id="detail" v-model="value" @change="onChange" paste-as-text="true" style="height:400px;"></editor>
       </b-col>
     </b-row>
 
     <hr style="color:#fec69f">
     
-    <button class="btn btn-primary btn-lg btn-block" @click="write_board()" style="background-color:#ff8a3d; border-color:#fec69f">작성 완료</button>
+    <button class="btn btn-primary btn-block" @click="write_board()" style="background-color:#ff8a3d; border-color:#fec69f">작성 완료</button>
 
   </b-container>
 </template>
@@ -215,5 +218,35 @@ frm.append("file",  photoFile.files[0]); //대표이미지
 </script>
 
 <style scoped>
+hr{
+  margin: 30px;
+}
+.filebox label {
+  display: inline-block;
+  padding: .5em .75em;
+  color: #999;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #fdfdfd;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  height: 200px;
+  width:200px;
+  background-image: url(../assets/uploadImg.png);
+}
+
+.filebox input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
 
 </style>
