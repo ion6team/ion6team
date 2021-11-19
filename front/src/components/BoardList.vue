@@ -1,7 +1,6 @@
 <!-- 내지역 보기 -->
 <template>
   <div>
-                  {{this.$store.state.ctindex}}
     <div>
       <ul style="list-style:none; display:flex;">
         <li>
@@ -165,7 +164,7 @@
     },
 
     mounted() {
-          this.keyword = this.$store.state.keywordsearch;
+        this.keyword = this.$store.state.keywordsearch;
          this.selected = this.$store.state.ctindex;
 
       this.currentPage = 1
