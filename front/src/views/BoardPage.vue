@@ -2,11 +2,11 @@
   <div>
     상세페이지 : {{index}}
     <div class="container" style="width:1000px">
-      <b-carousel id="carousel-1" v-model="slide" controls img-width="1024" img-height="480"
+      <b-carousel id="carousel-1" v-model="slide" controls style="max-width:700px;"
         @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
-        <b-carousel-slide v-bind:img-src="'../upload/'+list.filepath1"></b-carousel-slide>
-        <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2"></b-carousel-slide>
-        <b-carousel-slide v-if="list.filepath3!==null" v-bind:img-src="'../upload/'+list.filepath3"></b-carousel-slide>
+        <b-carousel-slide v-bind:img-src="'../upload/'+list.filepath1" style="height:700px"></b-carousel-slide>
+        <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2" style="height:700px"></b-carousel-slide>
+        <b-carousel-slide v-if="list.filepath3!==null" v-bind:img-src="'../upload/'+list.filepath3" style="height:700px"></b-carousel-slide>
 
       </b-carousel>
 
