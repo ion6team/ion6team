@@ -1,9 +1,9 @@
 <template>
   <div
   class="py-5"
-  style="background-color:white; height:100%; width:100%;" > 
+  style="height:100%; width:100%;" > 
     
-        <div style="opacity:1;">
+        <div>
           <h3>{{name}}<span style="font-size:15px;"> 님</span></h3>
         
           <ul style="list-style:none; text-align:left;">
