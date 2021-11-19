@@ -16,7 +16,6 @@
 
                 
  <!-- <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'> -->
-     
      <b-col @click="$router.push({
           name:'Board',
           params:{

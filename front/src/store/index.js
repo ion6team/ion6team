@@ -13,6 +13,8 @@ export default new Vuex.Store({
     islogin: '',
     loginfailed: false,
     member:[],
+    ctindex:0,
+
   },
   mutations: { 
     boardData(state,boards){
@@ -28,6 +30,9 @@ export default new Vuex.Store({
     },
     getMemberInfo(state, member){
       state.member=member
+    },
+    setctindex(state, ctindex){
+      state.ctindex=ctindex
     },
   },
   actions: { //method
