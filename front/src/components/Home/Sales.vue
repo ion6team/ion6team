@@ -17,9 +17,9 @@
         </b-col>
       </b-row>
 
-        <b-modal id="needLogin" ref="my-modal" centered hide-footer>
-          <needLogin />
-        </b-modal>
+      <b-modal id="needLogin" ref="my-modal" centered hide-footer>
+        <needLogin />
+      </b-modal>
 
     </b-container>
   </b-container>
@@ -30,7 +30,7 @@
 
   export default {
     name: 'sales',
-        components: {
+    components: {
       NeedLogin
     },
     methods: {

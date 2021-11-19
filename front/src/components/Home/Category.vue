@@ -4,8 +4,8 @@
       <b-row align-v="center" style="height:100%">
 
         <b-col cols='7'>
-              <b-row>
-<!--donghyun
+          <b-row>
+            <!--donghyun
                 <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
                  <a href="/board" @click="setCategoryId(category.id)">
                   {{category.name}}
@@ -14,28 +14,32 @@
                 
 -->
 
-                
- <!-- <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'> -->
+
+            <!-- <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'>
 
 
-          <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px" style="text-align:center; margin:10px 0;">
-           {{category.name}}
-         </b-col> -->
+            <img v-bind:src="'../../upload/category/'+category.icon" width="40px" height="40px"
+              style="text-align:center; margin:10px 0;">
+            {{category.name}}
+        </b-col> -->
 
         <b-col @click="sss(category.id)" v-for="(category,i) in categorylist" :key="i" cols='3'>
 
-                              <ul style="list-style:none; display:flex; width:240px; margin:0;">
-                                <li id="imgBack" style="">
+          <ul style="list-style:none; display:flex; width:240px; margin:0;">
+            <li id="imgBack" style="">
 
-                 <!-- <a href="/board" @click="setCategoryId(category.id)"> -->
-          <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px" style="text-align:center; margin:10px 0;">
-                 </li>
-                                       <li  ><p class="categoryName" style="">{{category.name}}</p></li>
-                    </ul>
-         </b-col>
-                  <!-- </a> -->
-                  <!-- </b-col> -->
-<!--
+              <!-- <a href="/board" @click="setCategoryId(category.id)"> -->
+              <img v-bind:src="'../../upload/category/'+category.icon" width="40px" height="40px"
+                style="text-align:center; margin:10px 0;">
+            </li>
+            <li>
+              <p class="categoryName" style="">{{category.name}}</p>
+            </li>
+          </ul>
+        </b-col>
+        <!-- </a> -->
+        <!-- </b-col> -->
+        <!--
                 <b-col  v-for="(category,i) in categorylist" :key="i" cols='3' >
                  <a href="/board" @click="setCategoryId(category.id)" style="background-color:blue;">
                     <ul style="list-style:none; display:flex; width:240px; margin:0;">
@@ -47,29 +51,29 @@
                 </a>
                </b-col>
 -->
-                
-              </b-row>
 
-        </b-col>
+      </b-row>
 
-        <b-col cols='5'>
-          <b-row>
-            <b-col>
-              <h2>카테고리별</h2>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col>
-              <h2>검색하기</h2>
-              <p>개인용품부터 사무용품까지 내가 필요한 물품만 모아보아요</p>
-            </b-col>
-          </b-row>
-        </b-col>
+      </b-col>
+
+      <b-col cols='5'>
+        <b-row>
+          <b-col>
+            <h2>카테고리별</h2>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <h2>검색하기</h2>
+            <p>개인용품부터 사무용품까지 내가 필요한 물품만 모아보아요</p>
+          </b-col>
+        </b-row>
+      </b-col>
       </b-row>
     </b-container>
-            <b-modal id="needLogin" ref="my-modal" centered hide-footer>
-          <needLogin />
-        </b-modal>
+    <b-modal id="needLogin" ref="my-modal" centered hide-footer>
+      <needLogin />
+    </b-modal>
   </b-container>
 </template>
 
@@ -109,14 +113,14 @@
           this.$router.push("/board");
         }
       },
-       sss(value){
-          this.$router.push({
-          name:'Board',
-           params:{
-             id:value
-             },
-             })
-           this.$store.commit('setctindex', value)
+      sss(value) {
+        this.$router.push({
+          name: 'Board',
+          params: {
+            id: value
+          },
+        })
+        this.$store.commit('setctindex', value)
       },
     }
   }
@@ -125,32 +129,35 @@
 <style scoped>
   h2 {
     font-size: 50px;
-    
+
   }
-  
-  #imgBack{
+
+  #imgBack {
     z-index: 2;
-    height:60px;
-    width:60px; 
-    background-color:white; 
-    border-radius:50%;
+    height: 60px;
+    width: 60px;
+    background-color: white;
+    border-radius: 50%;
     border: 4px solid #56c271;
   }
-  .categoryName:hover{
+
+  .categoryName:hover {
     background-color: #56c271;
     color: white;
   }
-  .categoryName{
-    width:140px; 
-    padding:10px; 
-    margin:10px; 
-    margin-left:-15px; 
-    background-color:white;
+
+  .categoryName {
+    width: 140px;
+    padding: 10px;
+    margin: 10px;
+    margin-left: -15px;
+    background-color: white;
     border-radius: 0 5px 5px 0;
     border: 1px solid #56c271;
     transition: background-color 0.5s;
   }
-  a{
+
+  a {
     color: black;
     text-decoration: none;
   }
