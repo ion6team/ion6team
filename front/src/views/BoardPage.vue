@@ -1,12 +1,15 @@
 <template>
   <div>
     상세페이지 : {{index}}
+    <!-- 지금 로그인한 사람 : {{this.$store.state.member.email}} -->
     <div class="container" style="width:1000px">
       <b-carousel id="carousel-1" v-model="slide" controls style="max-width:700px; margin:auto;"
         @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
         <b-carousel-slide v-bind:img-src="'../upload/'+list.filepath1" style="height:700px"></b-carousel-slide>
-        <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2" style="height:700px"></b-carousel-slide>
-        <b-carousel-slide v-if="list.filepath3!==null" v-bind:img-src="'../upload/'+list.filepath3" style="height:700px"></b-carousel-slide>
+        <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2"
+          style="height:700px"></b-carousel-slide>
+        <b-carousel-slide v-if="list.filepath3!==null" v-bind:img-src="'../upload/'+list.filepath3"
+          style="height:700px"></b-carousel-slide>
 
       </b-carousel>
 
@@ -30,25 +33,15 @@
 
         <b-nav>
           <b-nav-item disabled>조회수 45</b-nav-item>
-          {{this.$store.state.member.zzim}}<br>
-          ,{{index}} 
-          <b-nav-item >
-            <a 
-            href="#"
-            class="material-icons" 
-            style="color:#ff8a3d;"
-            v-if="zzimlist.includes(index)"
-            @click="addzzim()"
-            >favorite</a>
-            <a 
-            href="#"
-            class="material-icons" 
-            style="color:#ff8a3d;"
-            v-else
-            >favorite_border</a>
-            </b-nav-item>
+
+          <b-nav-item>
+            <a href="#" v-if="check" class="material-icons" style="color:#ff8a3d;" @click="addzzim()">favorite</a>
+
+
+            <a href="#" v-if="!check" class="material-icons" style="color:#ff8a3d;" @click="addzzim()">favorite_border</a>
+          </b-nav-item>
         </b-nav>
-        
+
       </div>
 
       <div class="my-3">
@@ -76,46 +69,6 @@
           </table>
         </div>
       </div>
-
-
-
-      <!-- <h3>게시글 정보</h3>
-      게시글 번호 : {{list.id}} <br>
-      게시글 이름 : {{list.title}} <br>
-      게시판 내용 : {{list.contents}} <br>
-      가격 : {{list.price}} <br>
-      판매여부 : {{list.onslae}} <br>
-      희망거래 지역 : {{list.boardaddress}} <br>
-      작성일 : {{list.create_date}} <br>
-
-    </div>
-    <hr>
-    <div>
-      <h3>작성자 정보</h3>
-      작성자 아이디 : {{list.member.id}} <br>
-      작성자 이름 : {{list.member.name}} <br>
-      작성자 이메일 : {{list.member.email}} <br>
-      작성자 주소 : {{list.member.address}} <br>
-      작성자 누적 신고 : {{list.member.report_count}} <br>
-
-    </div>
-    <div>
-      <h3>카테고리 정보</h3>
-      카테고리 아이디 : {{list.category.id}} <br>
-      카테고리 명 : {{list.category.name}} <br>
-    </div>
-    <div>
-      <h3>댓글 정보</h3>
-      <b-card v-for="(reply,i) in replylist" :key="i" class="list-group">
-        댓글 번호 : {{reply.id}}<br>
-        댓글 아이디 : {{reply.member.email}}<br>
-        댓글 내용 : {{reply.content}} <br>
-        댓글 작성일 : {{reply.createDate}} <br>
-        <textarea v-model="relpycontent1" ref="relpycontent1"></textarea>
-
-        <button @click="replyput(reply.id)"> 수정 </button>
-        <button @click="replydel(reply.id)"> 삭제 </button>
-      </b-card>-->
       <h3>댓글 쓰기</h3>
       <textarea v-model="relpycontent" ref="relpycontent"></textarea>
       <button @click="replynew"> 작성 </button>
@@ -139,24 +92,27 @@
         replyno: 0,
         replycontent: '',
         zzimlist: '',
+        zzim: '',
       }
     },
     props: {
       id: {
         type: String
       },
-      myaddress:String
+      myaddress: String
     },
-    components:{
-KaKaoMap
+    components: {
+      KaKaoMap
     },
 
     mounted() {
-      zzimlist = this.$store.state.member.zzim;
-     
-
+      // const zimlist = this.$store.state.member.zzim;
+      // if(.includes(this.index)){
+      //   check=true;
+      // }
       this.index = this.$route.params.id;
-
+      const zzim = this.$store.state.member.zzim;
+      console.log(zzim)
 
       axios.get("http://localhost:8080/api/board/" + this.index, {
           headers: {
@@ -179,9 +135,18 @@ KaKaoMap
           this.replylist = res.data.content;
         })
 
-
-
-
+      axios.get('/api/zzim', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      }).then((res) => {
+        if(res.data.includes('-'+this.index)){
+          this.check = true
+        }else{
+          this.check= false
+        }
+      })
 
     },
     methods: {
@@ -267,8 +232,17 @@ KaKaoMap
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res)=>{
-          alert('zz')
+        }).then((res) => {
+          console.log(res.data)
+          if(res.data){
+            alert("찜 추가")
+            this.check=false
+            this.$router.go(0);
+          }else{
+            alert("찜 취소")
+            this.check=true
+            this.$router.go(0);
+          }
         })
       },
 

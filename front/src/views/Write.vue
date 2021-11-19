@@ -1,5 +1,6 @@
 
 <template>
+
   <b-container style="width:1000px; margin-top:50px;">
 
     <hr style="color:#fec69f">
@@ -37,6 +38,7 @@
       </b-col>
     </b-row>
     <hr style="color:#fec69f">
+
     <!--
             <b-form-file
             v-model="file1"
@@ -109,7 +111,9 @@
       }
     },
     mounted() {
-        axios.get('/api/category', {
+
+      axios.get('/api/category', {
+
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + this.$store.state.token
@@ -147,7 +151,7 @@ write_board() {
       var data ={
         "title" : this.title,
         "contents" : this.contents,
-        "category_id": "1",
+        "category_id": this.selected,
         "price": this.price,
         "hopeaddress": this.defaultaddress,
          "onsale" :false

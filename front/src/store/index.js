@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+ 
   plugins: [createPersistedState()],
   state: { //data
     boards:[],
@@ -13,6 +14,8 @@ export default new Vuex.Store({
     islogin: '',
     loginfailed: false,
     member:[],
+    ctindex:0,
+
   },
   mutations: { 
     boardData(state,boards){
@@ -28,6 +31,9 @@ export default new Vuex.Store({
     },
     getMemberInfo(state, member){
       state.member=member
+    },
+    setctindex(state, ctindex){
+      state.ctindex=ctindex
     },
   },
   actions: { //method
@@ -70,7 +76,8 @@ export default new Vuex.Store({
         
         //.then('set_boards',boards)
         
-      }
+      },
+      
     },
   modules: {
   }
