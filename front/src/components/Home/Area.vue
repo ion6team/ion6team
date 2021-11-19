@@ -55,10 +55,12 @@
             this.$router.push({
           name:'Board',
           params:{
-            id:'0'
+            id:'0',
+            keyword:''
             }
             })
             this.$store.commit('setctindex', 0)
+            this.$store.commit('setkeywordsearch','')
         }
       } 
     }

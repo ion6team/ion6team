@@ -48,6 +48,9 @@ public class BoardService {
 		else if(keyword.equals("")) {
 			return boardRepository.findByCategory_idAndHopeaddressContains(category_id, hopeaddress, pageable);
 					}
+		else if(category_id == 0) {
+			return boardRepository.findByHopeaddressContainsAndTitleContainsOrContentsContains( hopeaddress, keyword,keyword, pageable);
+					}
 		else{
 			System.out.println("%%%%%" + category_id );
 			return boardRepository.findByCategory_idAndHopeaddressContainsAndTitleContainsOrContentsContains(category_id, hopeaddress,  keyword, keyword,pageable);
@@ -183,6 +186,7 @@ public class BoardService {
 	if(file!=null) {
 			String arr[] = new String[3];
 			String projectPath = System.getProperty("user.dir") +"\\front\\public\\upload" ; //저장 경로 잡기
+			//String projectPath = "D:\\upload"; 
 			UUID uuid = UUID.randomUUID(); //랜덤으로 아이디 만들어줌
 			
 
