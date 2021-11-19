@@ -48,15 +48,14 @@
         <KaKaoMap v-bind:address="list.hopeaddress" />
       </div>
 
+ {{this.$store.state.member.email}}
 
+ {{list.member.email}}
       <!-- 댓글 -->
-      <button @click="$router.push({
-          name:'ReWrite',
-          params:{
-            id:list.id
-            },
-          })">수정</button>
-      <button @click="del()"> 삭제 </button>
+   
+          <button @click="put(list.member.email,list.id)">
+          수정</button>
+      <button @click="del(list.member.email)"> 삭제 </button>
 
 
       <div style="background-color:#fbf7f2">
@@ -64,14 +63,20 @@
           <table v-for="(reply,i) in replylist" :key="i">
             <tr>
               <th style="width:150px; border-right:1px solid #fec69f; text-align:center">{{reply.member.name}}</th>
-              <td>{{reply.content}}</td>
+               <td>{{reply.content}}</td>  
+              <!-- <button @click="replyput(reply.id,list.member.email)"> 댓글수정 </button> -->
+                                           <button @click="replydel(reply.id,list.member.email)"> 댓글삭제 </button>
             </tr>
           </table>
         </div>
       </div>
-      <h3>댓글 쓰기</h3>
+
+ <h3>댓글 쓰기</h3>
       <textarea v-model="relpycontent" ref="relpycontent"></textarea>
-      <button @click="replynew"> 작성 </button>
+      <button @click="replynew()"> 작성 </button>
+
+  
+
 
 
     </div>
@@ -150,8 +155,21 @@
 
     },
     methods: {
-      del() {
-        this.index = this.$route.params.id;
+      put(membervel,id){
+        if (membervel == this.$store.state.member.email) {
+         this.$router.push({
+          name:'ReWrite',
+          params:{
+            id:id
+            },
+          })
+        }else{
+             alert("작성자가 아닙니다.")
+        }
+      },
+      del(membervel) {
+        if (membervel == this.$store.state.member.email) {
+           this.index = this.$route.params.id;
         axios.delete('/api/board/' + this.index, {
             headers: {
               'Content-Type': 'application/json',
@@ -161,7 +179,12 @@
           .then((res) => {
             this.$router.go(-1);
           })
-
+         
+        } else {
+          alert("작성자가 아닙니다.")
+        }
+        
+       
       },
 
       onSlideStart(slide) {
@@ -172,7 +195,6 @@
       },
       replyput(value) {
         const replyno = value;
-        this.index = this.$route.params.id;
         axios.put('/api/reply/' + replyno, {
             content: this.relpycontent1
           }, {
@@ -191,7 +213,6 @@
 
       },
       replynew() {
-
         this.index = this.$route.params.id;
         axios.post('/api/reply/' + this.index, {
             contents: this.relpycontent
@@ -209,10 +230,10 @@
           })
 
       },
-      replydel(value) {
+      replydel(value,membervel) {
+         if (membervel == this.$store.state.member.email) {
         console.log(value);
         const replyno = value;
-        this.index = this.$route.params.id;
         axios.delete('/api/reply/' + replyno, {
             headers: {
               'Content-Type': 'application/json',
@@ -221,9 +242,13 @@
           })
           .then((res) => {
             console.log(res.data.content[0]);
+            alert("삭제되었습니다.")
             this.$router.go(0);
             //this.replylist=res.data.content;
           })
+         }else{
+             alert("작성자가 아닙니다.")
+         }
       },
 
       addzzim() {

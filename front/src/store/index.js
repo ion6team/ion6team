@@ -15,6 +15,7 @@ export default new Vuex.Store({
     loginfailed: false,
     member:[],
     ctindex:0,
+    keywordsearch:'',
 
   },
   mutations: { 
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     setctindex(state, ctindex){
       state.ctindex=ctindex
+    },
+    setkeywordsearch(state, keywordsearch){
+      state.keywordsearch=keywordsearch
     },
   },
   actions: { //method
