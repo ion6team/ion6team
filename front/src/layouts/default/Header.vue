@@ -9,7 +9,7 @@
             <img src='../../assets/Daangeun_Logo_Color_RGB.png'>
           </b-navbar-brand>
         </b-col>
-
+<!--ㅋㅋㅋ-->
         <b-col cols='6' align-self="center" class="nav justify-content-center">
           <b-input-group>
             <!--검색창 -->

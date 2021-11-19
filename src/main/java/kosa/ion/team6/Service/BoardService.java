@@ -112,58 +112,63 @@ public class BoardService {
 			return boardRepository.save(board);
 			
 		}
+
 //		board.setFilepath1(arr[0]);
 //		board.setFilepath2(arr[1]);
 //		board.setFilepath3(arr[2]);
-		else {
-		Board board = Board.builder()
-				.title(boardDto.getTitle())
-				.category(categoryRepository.findById(boardDto.getCategory_id()))
-				.contents(boardDto.getContents())
-				.hopeaddress(boardDto.getHopeaddress())
-				.price(boardDto.getPrice())
-				.create_date(new Date())
-				.member(member)
-				.onsale(false)
-				.hit(0)
-				.filepath1(arr[0])
-				.filepath2(arr[1])
-				.filepath3(arr[2])
-				.build();
-		return boardRepository.save(board);
-		}
-		}
-		else {
-			Board board = Board.builder()
-					.title(boardDto.getTitle())
-					.category(categoryRepository.findById(boardDto.getCategory_id()))
-					.contents(boardDto.getContents())
-					.hopeaddress(boardDto.getHopeaddress())
-					.price(boardDto.getPrice())
-					.create_date(new Date())
-					.member(member)
-					.onsale(false)
-					.hit(0)
-					.filepath1("이미지없음.PNG")
-				
-					.build();
-			return boardRepository.save(board);
-		}
-//		
+            else {
+                Board board = Board.builder()
+                        .title(boardDto.getTitle())
+                        .category(categoryRepository.findById(boardDto.getCategory_id()))
+                        .contents(boardDto.getContents())
+                        .hopeaddress(boardDto.getHopeaddress())
+                        .price(boardDto.getPrice())
+                        .create_date(new Date())
+                        .member(member)
+                        .onsale(false)
+                        .hit(0)
+                        .filepath1(arr[0])
+                        .filepath2(arr[1])
+                        .filepath3(arr[2])
+                        .build();
+                return boardRepository.save(board);
+            }
+        } else {
+            Board board = Board.builder()
+                    .title(boardDto.getTitle())
+                    .category(categoryRepository.findById(boardDto.getCategory_id()))
+                    .contents(boardDto.getContents())
+                    .hopeaddress(boardDto.getHopeaddress())
+                    .price(boardDto.getPrice())
+                    .create_date(new Date())
+                    .member(member)
+                    .onsale(false)
+                    .hit(0)
+                    .filepath1("이미지없음.PNG")
+
+                    .build();
+            return boardRepository.save(board);
+        }
+//
 //		.filename1(fileName)
 //		.filepath(fileName)
+
 
 		
 	}
 
 
-	@Transactional(readOnly = true)
-	public Board selectBoardDetail(Long id) {
-		return boardRepository.findById(id)
-				.orElseThrow(()->{
-					return new IllegalArgumentException("글 상세보기 실패: 글 아이디가 없다");
-				});
-	}
+    @Transactional
+    public Board selectBoardDetail(Long id) {
+
+        Optional<Board> board = boardRepository.findById(id);
+
+        board.ifPresent(uphit -> {
+            uphit.setHit(uphit.getHit() + 1);
+            boardRepository.save(uphit);
+        });
+        return board.get();
+    }
 
 	@Transactional
 	public void delBoard(long id) {
@@ -276,32 +281,5 @@ public class BoardService {
 
 
 	//////////////////////////////////////////////검색////////////////////////////////////////
-
-	// 검색
-//	@Transactional(readOnly = true)
-//	public Page<Board> localsearch(String hopeaddress, long id, Pageable pageable) {
-//
-//		if(id==0&&hopeaddress.equals("전체 전체")) {
-//			Page<Board> searchobject = boardRepository.findAll(pageable);
-//			return searchobject;
-//		}
-//		else if(id==0&&hopeaddress.equals("")) {
-//			Page<Board> searchobject = boardRepository.findAll(pageable);
-//			return searchobject;
-//		}
-//		else if(hopeaddress.equals("전체 전체")&&id!=0) {
-//			Page<Board> searchobject = boardRepository.findByCategory_id(id,pageable);
-//			return searchobject;
-//
-//		}
-//		else if(hopeaddress.equals(hopeaddress)&&id==0) {
-//			Page<Board> searchobject = boardRepository.findByHopeaddress(hopeaddress,pageable);
-//			return searchobject;
-//		}
-//		else {
-//			Page<Board> searchobject = boardRepository.findByBoardaddressAndCategory_id(hopeaddress,id,pageable);
-//			return searchobject;
-//		}
-//	}
 
 }
