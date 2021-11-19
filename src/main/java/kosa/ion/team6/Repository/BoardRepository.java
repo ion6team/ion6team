@@ -28,6 +28,11 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 Page<Board> findByHopeaddressContains(String hopeaddress, Pageable pageable);
 
+Page<Board> findByHopeaddressContainsAndTitleContainsOrContentsContains(String hopeaddress, String keyword,
+		String keyword2, Pageable pageable);
+
+
+
 //   Page<Board> findByCategory_idAndTitleContaining(Long id, String keyword, Pageable pageable);
 //
 //   Page<Board> findByTitleContaining(String keyword, Pageable pageable);
