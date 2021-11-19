@@ -15,6 +15,10 @@
           <label for="photo"></label>
           <input type="file" name="photo" id="photo" multiple />
         </div>
+      <!--  <div >
+          <label for="photo"></label>
+          <input type="file" name="photo" id="photo" multiple />
+        </div> -->
       </b-col>
     </b-row>
   <hr style="color:#fec69f">
