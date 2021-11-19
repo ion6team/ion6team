@@ -2,6 +2,7 @@
   <b-container fluid>
     <Banner />
     <Area />
+    
     <Category />
     <Sales />
   </b-container>

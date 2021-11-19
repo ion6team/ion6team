@@ -75,14 +75,14 @@ public class MemberController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<String> EditMemberInfo(@RequestBody MemberDto memberDto) {
         System.out.println(memberDto.getEmail());
-        System.out.println(memberDto.getPassword());
         System.out.println(memberDto.getName());
         System.out.println(memberDto.getAddress());
         System.out.println(memberDto.getAddress_detail());
 
-        return ResponseEntity.ok(
-                memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
-        );
+
+       return ResponseEntity.ok(
+               memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
+       );
     }
 
     // 회원 삭제
@@ -129,6 +129,10 @@ public class MemberController {
 //    }
 
     //////////////////////찜/////////////////////////
+    @GetMapping("/zzim")
+    public String checkzzim(){
+        return memberService.getMyUserWithAuthorities().get().getZzim();
+    }
 
     @GetMapping("/zzim/{id}")
     public Boolean addZzim(@PathVariable long id){
@@ -143,9 +147,12 @@ public class MemberController {
     @GetMapping("/member/zzim")
     public List<Board> getAllZZim(){
         String str = memberService.getMyUserWithAuthorities().get().getZzim();
-        String[] arr = str.split(",");
+        System.out.println(str);
+        String[] arr = str.split("-");
+        System.out.println(arr.length);
         List<Board> boardList = new ArrayList<Board>();
-        for(int i=0; i<arr.length ;i++){
+        for(int i=1; i<arr.length ;i++){
+
             boardList.add(boardService.findById(Long.parseLong(arr[i].trim())).get());
         }
 

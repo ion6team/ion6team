@@ -142,6 +142,6 @@ write_board() {
   
 </script>
 
-<style>
+<style scoped>
 
 </style>

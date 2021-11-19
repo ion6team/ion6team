@@ -26,6 +26,7 @@
           <hr style="border:1px solid white">
 
           <b-row>
+            <b-col md="9" offset-md="3">
             <ul>
               <li>서울특별시 구로구 디지털로30길 28, 609호 (당근서비스)</li>
               <li>사업자 등록번호 : 375-87-00088</li>
@@ -36,6 +37,7 @@
               <li><link href="#"><img src="../../assets/icon_facebook.png"></link></li>
               <li><link href="#"><img src="../../assets/icon_instar.png"></link></li>
             </ul>
+            </b-col>
           </b-row>
 
     </div>

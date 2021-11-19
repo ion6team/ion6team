@@ -89,15 +89,20 @@ public class MemberService implements UserDetailsService {
 
     @Transactional
     public String editMember(Long id, MemberDto memberDto) {
-        Member editMember = memberRepository.findById(id).get();
 
-        editMember.setEmail(memberDto.getEmail());
-        editMember.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        editMember.setName(memberDto.getName());
-        editMember.setAddress(memberDto.getAddress());
-        editMember.setAddress_detail(memberDto.getAddress_detail());
+        Optional<Member> updateUser = memberRepository.findById(id);
 
-        return editMember.getEmail() + " 수정됨.";
+        updateUser.ifPresent(selectUser -> {
+            selectUser.setName(memberDto.getName());
+            selectUser.setEmail(memberDto.getEmail());
+            selectUser.setPhone(memberDto.getPhone());
+            selectUser.setAddress(memberDto.getAddress());
+            selectUser.setAddress_detail(memberDto.getAddress_detail());
+            memberRepository.save(selectUser);
+        });
+
+        return "changed";
+
     }
 
     @Transactional
@@ -148,21 +153,19 @@ public class MemberService implements UserDetailsService {
     public boolean addZzim(Long memberid, Long id) {
         Optional<Member> updateUser = memberRepository.findById(memberid);
 
-        if (updateUser.get().getZzim().contains(" ," + id)) {
-			updateUser.ifPresent(selectUser -> {
-				selectUser.setZzim(selectUser.getZzim().replaceAll(" ," + id, ""));
-				System.out.print(memberid + "멤버의" + id + "찜 목록 삭제됨");
-				memberRepository.save(selectUser);
-			});
-			return false;
+        if (updateUser.get().getZzim().contains("-"+id)) {
+            updateUser.ifPresent(selectUser -> {
+                selectUser.setZzim(selectUser.getZzim().replaceAll("-"+id, ""));
+                memberRepository.save(selectUser);
+            });
+            return false;
         } else {
             updateUser.ifPresent(selectUser -> {
-                selectUser.setZzim(selectUser.getZzim() + " ," + id);
-                System.out.print(memberid + "멤버의" + id + "찜 목록 추가됨");
+                selectUser.setZzim(selectUser.getZzim() + "-"+id);
                 memberRepository.save(selectUser);
 
             });
-			return true;
+            return true;
         }
     }
 

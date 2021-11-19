@@ -13,7 +13,7 @@
         <b-col cols='6' align-self="center" class="nav justify-content-center">
           <b-input-group>
             <!--검색창 -->
-            <b-form-input placeholder="검색" style=" border-color:#fec69f;"></b-form-input>
+            <b-form-input placeholder="검색" style=" border-color:#fec69f; border-right:0;"></b-form-input>
             <b-input-group-append>
               <b-button type='submit'style="background-color:#ff8a3d; border-color:#fec69f;">
                 <b-icon icon='search'></b-icon>
@@ -65,7 +65,7 @@
         this.$refs['my-modal'].show()
       },
       hideModal() {
-              this.$store.dispatch('logout')
+        this.$store.dispatch('logout')
         this.$refs['my-modal'].hide()
       },
       toggleModal() {

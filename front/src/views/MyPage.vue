@@ -2,8 +2,8 @@
   <div>
     <div id='profileBG' style="padding:100px; min-height:800px;">
       <div style="max-width:1000px; margin:auto;">
-        <b-row style="height:600px">
-          <b-col cols='3' style="opacity:0.6;">
+        <b-row style="height:600px ">
+          <b-col cols='3' style="background-color:rgba(255,255,255,0.5);">
             <MyInfo />
           </b-col>
 

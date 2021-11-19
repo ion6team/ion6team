@@ -14,7 +14,7 @@
               <b-button @click="goboard()" class=" m-2 " style="background-color:#ff8a3d; border-color:#fec69f;">
                 내지역보기
               </b-button>
-             
+
 
             </b-col>
           </b-row>
