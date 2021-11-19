@@ -1,13 +1,42 @@
 
 <template>
-  <b-container style="width:600px; margin-top:50px;">
+  <b-container style="width:1000px; margin-top:50px;">
 
-    <div class="mb-3">
-      <label for="title">제목</label>
-      <div>
-        <b-form-input v-model="title" placeholder="제목을 입력하세요."></b-form-input>
-      </div>
-    </div>
+    <hr style="color:#fec69f">
+
+    <b-row>
+      <b-col cols='3'>
+        <label for="photo"><h5><b>상품사진 등록</b></h5>
+        <span style="font-size:15px">(최대 3개)</span></label>
+      </b-col>
+      <b-col cols='9'>
+        <input type="file" name="photo" id="photo" multiple />
+      </b-col>
+    </b-row>
+  <hr style="color:#fec69f">
+
+    <b-row>
+      <b-col cols='3'>
+       <label for="category"><h5><b>카테고리 선택</b></h5></label>
+      </b-col>
+      <b-col cols='9'>
+        <select id="category" class="form-control" v-model="selected" style="border-color:#ff8a3d;">
+          <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
+        </select>
+      </b-col>
+    </b-row>
+
+  <hr style="color:#fec69f">
+
+    <b-row>
+      <b-col cols='3'>
+        <label for="title"><h5><b>제목</b></h5></label>  
+      </b-col>
+      <b-col cols='9'>
+        <b-form-input v-model="title" placeholder="제목을 입력하세요." style="border-color:#ff8a3d;"></b-form-input>
+      </b-col>
+    </b-row>
+    <hr style="color:#fec69f">
     <!--
             <b-form-file
             v-model="file1"
@@ -17,36 +46,45 @@
             ></b-form-file>
             <div class="mt-3">Selected file: {{ file1 ? file1.name : '' }}</div>
            -->
-    <div class="mb-3">
-      <label for="address">장소</label>
-      <b-checkbox id="checkbox-1" v-model="hope_address" name="checkbox-1" value="accepted"
-        unchecked-value="not_accepted">
-        <label for="address">거래 지역 변경</label>
-      </b-checkbox>
-      <input v-if="hope_address=='not_accepted'"  class="form-control" v-model="defaultaddress" readonly>
-      <input v-if="hope_address=='accepted'"  class="form-control" placeholder="거래 희망 지역">
-    </div>
+    <b-row>
+      <b-col cols='3'>
+        <label for="address"><h5><b>거래장소</b></h5></label>
+        <b-checkbox id="checkbox-1" v-model="hope_address" name="checkbox-1" value="accepted"
+          unchecked-value="not_accepted">
+          <label for="address">거래 지역 변경</label>
+        </b-checkbox>
+      </b-col>
+      <b-col cols='9'>
+       <input v-if="hope_address=='not_accepted'"  class="form-control" v-model="defaultaddress" readonly style="border:0; background-color:white;">
+       <input v-if="hope_address=='accepted'"  class="form-control" placeholder="거래 희망 지역" style="border-color:#ff8a3d;">
+     </b-col>
+    </b-row>
 
-    <label for="address">가격</label>
-    <div>
-      <b-form-input v-model="price" placeholder="가격"></b-form-input>
-    </div>
-    <p />
-    <label for="address">상세 설명</label>
-    <div>
-      <editor v-model="value" @change="onChange" paste-as-text="true"></editor>
-    </div>
-    <div>
-
-  <form> <input type="file" name="photo" id="photo" multiple/> </form>
-
-
-
-  </div>
+    <hr style="color:#fec69f">
     
-    <button class="btn btn-primary btn-lg btn-block" @click="write_board()" >작성 완료</button>
+    <b-row>
+      <b-col cols='3'>
+       <label for="price"><h5><b>가격</b></h5></label>
+      </b-col>
+      <b-col cols='9'>
+        <input id="price" v-model="price" placeholder="가격" style="border-color:#ff8a3d;">원</input>
+      </b-col>
+    </b-row>
 
+    <hr style="color:#fec69f">
 
+    <b-row>
+      <b-col cols='3'>
+        <label for="detail"><h5><b>상세설명</b></h5></label>
+      </b-col>
+      <b-col cols='9'>
+        <editor id="detail" v-model="value" @change="onChange" paste-as-text="true" ></editor>
+      </b-col>
+    </b-row>
+
+    <hr style="color:#fec69f">
+    
+    <button class="btn btn-primary btn-lg btn-block" @click="write_board()" style="background-color:#ff8a3d; border-color:#fec69f">작성 완료</button>
 
   </b-container>
 </template>
@@ -71,6 +109,16 @@
       }
     },
     mounted() {
+        axios.get('/api/category', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.options = res.data
+      })
+
       axios.get('/api/member/address', {
         headers: {
           'Content-Type': 'application/json',
@@ -162,6 +210,6 @@ frm.append("file",  photoFile.files[0]); //대표이미지
   
 </script>
 
-<style>
+<style scoped>
 
 </style>
