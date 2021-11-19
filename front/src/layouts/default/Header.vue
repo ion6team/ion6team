@@ -65,7 +65,7 @@
         this.$refs['my-modal'].show()
       },
       hideModal() {
-              this.$store.dispatch('logout')
+        this.$store.dispatch('logout')
         this.$refs['my-modal'].hide()
       },
       toggleModal() {

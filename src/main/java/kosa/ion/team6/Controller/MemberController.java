@@ -143,9 +143,12 @@ public class MemberController {
     @GetMapping("/member/zzim")
     public List<Board> getAllZZim(){
         String str = memberService.getMyUserWithAuthorities().get().getZzim();
-        String[] arr = str.split(",");
+        System.out.println(str);
+        String[] arr = str.split("-");
+        System.out.println(arr.length);
         List<Board> boardList = new ArrayList<Board>();
-        for(int i=0; i<arr.length ;i++){
+        for(int i=1; i<arr.length ;i++){
+
             boardList.add(boardService.findById(Long.parseLong(arr[i].trim())).get());
         }
 
