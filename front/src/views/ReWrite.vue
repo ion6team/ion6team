@@ -5,7 +5,7 @@
     <div class="mb-3">
       <label for="title">제목</label>
       <div>
-        <b-form-input v-model="title" placeholder="제목을 입력하세요."></b-form-input>
+        <b-form-input v-model="list.title" placeholder="제목을 입력하세요."></b-form-input>
       </div>
     </div>
     <label><input type="checkbox" name="soldOut" value="ture"> 판매완료</label>
@@ -18,6 +18,7 @@
             ></b-form-file>
             <div class="mt-3">Selected file: {{ file1 ? file1.name : '' }}</div>
            -->
+           
     <div class="mb-3">
       <label for="address">장소</label>
       <b-checkbox id="checkbox-1" v-model="hope_address" name="checkbox-1" value="accepted"
@@ -69,6 +70,7 @@
         category_id: 1,
         image : '',
         FormData : null,
+        list: [],
         
       }
     },
@@ -80,7 +82,17 @@
     mounted() {
     this.index = this.$route.params.id;
     console.log(this.index);
-      axios.get('/api/member/address', {
+      axios.get('/api//board/'+this.index, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      }).then((response) => {
+        this.list =response.data;
+
+       
+      })
+        axios.get('/api/member/address', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + this.$store.state.token
