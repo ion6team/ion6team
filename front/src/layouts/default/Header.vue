@@ -9,11 +9,12 @@
             <img src='../../assets/Daangeun_Logo_Color_RGB.png'>
           </b-navbar-brand>
         </b-col>
-<!--ㅋㅋㅋ-->
+        <!--ㅋㅋㅋ-->
         <b-col cols='6' align-self="center" class="nav justify-content-center">
           <b-input-group>
             <!--검색창 -->
-            <b-form-input placeholder="검색" v-model="keyword" style=" border-color:#fec69f; border-right:0; "></b-form-input>
+            <b-form-input placeholder="검색" v-model="keyword" style=" border-color:#fec69f; border-right:0; ">
+            </b-form-input>
             <b-input-group-append>
               <b-button @click="search(keyword)" type='submit' style="background-color:#ff8a3d; border-color:#fec69f;">
                 <b-icon icon='search'></b-icon>
@@ -57,29 +58,29 @@
     name: 'header',
     data() {
       return {
-        name: '', 
+        name: '',
         keyword: '',
 
       }
     },
     methods: {
-      search(value){
-        if (this.$store.state.islogin==false) {
+      search(value) {
+        if (this.$store.state.islogin == false) {
           this.$refs['my-modal'].show()
         } else {
-        this.$router.push({
-          name:'Board',
-          params:{
-            id:'0',
-            keyword:this.keyword
+          this.$router.push({
+            name: 'Board',
+            params: {
+              id: '0',
+              keyword: this.keyword
             }
-            })
-            console.log(this.keyword)
-            this.$store.commit('setkeywordsearch',this.keyword)
-            this.$store.commit('setctindex', 0)
-            this.$router.go(this.$router.currentRoute);
+          })
+          console.log(this.keyword)
+          this.$store.commit('setkeywordsearch', this.keyword)
+          this.$store.commit('setctindex', 0)
+          this.$router.go(this.$router.currentRoute);
 
-            
+
         }
 
       },
