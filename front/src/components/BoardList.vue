@@ -2,7 +2,6 @@
 <template>
   <div>
 
-
     <div>
       <ul style="list-style:none; display:flex;">
         <li>
@@ -168,9 +167,9 @@
     },
 
     mounted() {
-      this.when= new Date();
 
-      this.selected = this.$store.state.ctindex;
+        this.keyword = this.$store.state.keywordsearch;
+         this.selected = this.$store.state.ctindex;
 
       this.currentPage = 1
   

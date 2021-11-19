@@ -112,6 +112,7 @@
         hope_address: 'not_accepted',
         contents: '',
         defaultaddress: '',
+        selected: 1,
         category_id: 1,
         image : '',
         FormData : null
