@@ -41,9 +41,14 @@ public class BoardService {
 
 	@Transactional(readOnly = true)
 	public Page<Board> getMyAddressBoardList(long category_id, String hopeaddress, String keyword, Pageable pageable){ //페이징
-		if(keyword.equals("")) {
+		
+		if(category_id == 0 && keyword.equals("")) {
+			return boardRepository.findByHopeaddressContains(hopeaddress,pageable);
+		}
+		else if(keyword.equals("")) {
 			return boardRepository.findByCategory_idAndHopeaddressContains(category_id, hopeaddress, pageable);
-		}else{
+					}
+		else{
 			System.out.println("%%%%%" + category_id );
 			return boardRepository.findByCategory_idAndHopeaddressContainsAndTitleContainsOrContentsContains(category_id, hopeaddress,  keyword, keyword,pageable);
 		}

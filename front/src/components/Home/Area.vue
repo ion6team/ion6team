@@ -14,7 +14,7 @@
               <b-button @click="goboard()" class=" m-2 " style="background-color:#ff8a3d; border-color:#fec69f;">
                 내지역보기
               </b-button>
-              </b-button>
+             
 
             </b-col>
           </b-row>
@@ -47,13 +47,19 @@
       NeedLogin
     },
     methods: {
-      goboard() {
+       goboard() {
         if (this.$store.state.islogin==false) {
+       
           this.$refs['my-modal'].show()
         } else {
-          this.$router.push("/board");
+            this.$router.push({
+          name:'Board',
+          query:{
+            id:'0'
+            }
+            })
         }
-      }
+      } 
     }
 
   }

@@ -17,10 +17,10 @@
   <b-nav>
     <b-nav-item>
       <select class="form-control" v-model="selected" style="border-color:#c2e8c2;">
+          <option :value="0" > 전체</option>
           <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
         </select>
     </b-nav-item>
-
     <b-nav-item>
       <b-input-group>
             <b-form-input placeholder="검색" v-model="keyword" style="border-color:#c2e8c2;"></b-form-input>
@@ -43,7 +43,7 @@
     <div>
       <b-card @click="$router.push({
           name:'BoardPage',
-          params:{
+          query:{
             id:board.id
             }
           })" v-for="(board,i) in list" :key="i"
@@ -130,10 +130,10 @@
         list: [],
         pagecount: 1,
         totalpage: 0,
-        selected: 1,
+        selected: 0,
         options: [],
         myaddress: '',
-        index: 1,
+        index: 0,
       }
     },
     props: {
@@ -147,12 +147,9 @@
     },
 
     mounted() {
-      this.index = this.$route.params.id;
-       console.log(this.index);
-    
 
-      this.currentPage = 1
-
+       this.currentPage = 1
+      this.selected = this.$route.query.id;
       this.myaddress = this.$store.state.member.address
 
       axios.get('/api/category', {
@@ -168,9 +165,8 @@
     methods: {
 
       loadApi() {
-         this.index = this.$route.params.id;
         const page = this.currentPage - 1
-        this.selected = this.index
+        // this.selected = this.index
         axios.get('/api/board?page=' + page +
             '&size=' + this.perPage +
             '&hopeaddress=' + this.myaddress +
@@ -228,6 +224,7 @@
       myaddress(){
         this.loadApi()
       }
+
     }
 
   }
