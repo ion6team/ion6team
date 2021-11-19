@@ -79,10 +79,10 @@ public class MemberController {
         System.out.println(memberDto.getAddress());
         System.out.println(memberDto.getAddress_detail());
 
-        return ResponseEntity.ok("zz");
-//        return ResponseEntity.ok(
-//                memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
-//        );
+
+       return ResponseEntity.ok(
+               memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
+       );
     }
 
     // 회원 삭제

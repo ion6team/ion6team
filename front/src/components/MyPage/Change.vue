@@ -1,11 +1,11 @@
 <template>
   <div>
     <div v-if="!check">
-       비밀번호 :
+      비밀번호 :
       <input v-model="password" type="password">
-       <button @click="checkpassword()"> 확인 </button>
-       <br>
-       {{message}}
+      <button @click="checkpassword()"> 확인 </button>
+      <br>
+      {{message}}
     </div>
     <div v-if="check">
       <div style="max-width:600px; margin:auto;">
@@ -42,7 +42,8 @@
               <b-input-group-prepend is-text>
                 <i class="material-icons">place</i>
               </b-input-group-prepend>
-              <b-form-input v-model="address" aria-invalid="" id="form-address" :disabled="busy" readonly="true"></b-form-input>
+              <b-form-input v-model="address" aria-invalid="" id="form-address" :disabled="busy" readonly="true">
+              </b-form-input>
               <button @click="addressApi()">검색</button>
             </b-input-group>
             <b-form-input v-model="address_detail"></b-form-input>
@@ -75,11 +76,19 @@
         </b-form>
       </div>
     </div>
+
+    <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+      <div class="d-block text-center">
+        <h3>회원정보가 수정되었습니다. 다시 로그인해주세요</h3>
+      </div>
+      <b-button @click="hideModal">OK</b-button>
+    </b-modal>
+
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+  import axios from 'axios';
   export default {
     name: 'change',
     data() {
@@ -89,7 +98,7 @@ import axios from 'axios';
         counter: 1,
         interval: null,
         check: false,
-        message:'',
+        message: '',
         name: this.$store.state.member.name,
         email: this.$store.state.member.email,
         phone: this.$store.state.member.phone,
@@ -101,16 +110,16 @@ import axios from 'axios';
       this.clearInterval()
     },
     methods: {
-      checkpassword(){
-         axios.post('/api/login', {
+      checkpassword() {
+        axios.post('/api/login', {
           email: this.$store.state.member.email,
           password: this.password,
-        }).then((res)=>{
-          if(res.status==200)
-          this.check=true
-        }).catch((err)=>{
-           this.message='인증 실패';
-      })
+        }).then((res) => {
+          if (res.status == 200)
+            this.check = true
+        }).catch((err) => {
+          this.message = '인증 실패';
+        })
       },
       clearInterval() {
         if (this.interval) {
@@ -150,21 +159,28 @@ import axios from 'axios';
           }
         }, 100)
 
-          axios.put('/api/member',{
-              name: this.name,
-              email: this.email,
-              phone: this.phone,
-              address: this.address,
-              address_detail: this.address_detail
-           }, {
+        axios.put('/api/member', {
+            name: this.name,
+            email: this.email,
+            phone: this.phone,
+            address: this.address,
+            address_detail: this.address_detail
+          }, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + this.$store.state.token
             }
           })
           .then((res) => {
-            alert("수정됨")
+            this.showModal();
           })
+      },
+      showModal() {
+        this.$refs['my-modal'].show()
+      },
+      hideModal() {
+        this.$store.dispatch('logout')
+        this.$router.push('/login')
       },
       addressApi() {
         new window.daum.Postcode({
@@ -188,7 +204,7 @@ import axios from 'axios';
             if (fullRoadAddr !== '') {
               fullRoadAddr += extraRoadAddr;
             } // 우편번호와 주소 정보를 해당 필드에 넣는다. ㄴ
- //5자리 새우편번호 사용 
+            //5자리 새우편번호 사용 
             this.address = fullRoadAddr;
 
           }
