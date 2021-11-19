@@ -1,11 +1,12 @@
 <!-- 내지역 보기 -->
 <template>
   <div>
-                  {{this.$store.state.ctindex}}
+
+
     <div>
       <ul style="list-style:none; display:flex;">
         <li>
-          <h3 style="postion:flex;" align="left">{{myaddress}} 내 검색결과 </h3>
+          <h3 style="postion:flex;" align="left">{{myaddress}} 내 검색결과 {{when}} </h3>
         </li>
         <li>
           <b-button @click="addressApi()" style="background-color:#ff8a3d; border-color:#fec69f" size="sm">다른지역검색
@@ -76,7 +77,7 @@
         <img src="`../assets/${board.filename}`" />  -->
             <img class="product-thumb" v-bind:src="'../../upload/'+board.filepath1"
               style="width:350px; max-height:300px;" />
-
+          
           </b-col>
 
           <b-col cals='8'>
@@ -85,9 +86,10 @@
               <tr>
                 <th style="width:15%">
                   <b-card-text>가격 : </b-card-text>
+                  
                 </th>
                 <td style="width:35%">
-                  <b-card-text>{{board.price}}</b-card-text>
+                  <b-card-text>{{board.price}}{{board.create_date}}</b-card-text>
                 </td>
                 <th style="width:15%">
                   <b-card-text>주소 : </b-card-text>
@@ -152,6 +154,7 @@
         options: [],
         myaddress: '',
         index: 0,
+        when:0,
       }
     },
     props: {
@@ -165,8 +168,9 @@
     },
 
     mounted() {
+      this.when= new Date();
 
-         this.selected = this.$store.state.ctindex;
+      this.selected = this.$store.state.ctindex;
 
       this.currentPage = 1
   
