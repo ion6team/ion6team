@@ -33,6 +33,7 @@ const routes = [{
                 path: '/board',
                 name: 'Board',
                 component: Board,
+                props: true,
             },
             {
                 path: '/write',
