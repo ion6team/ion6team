@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+ 
   plugins: [createPersistedState()],
   state: { //data
     boards:[],
@@ -75,7 +76,8 @@ export default new Vuex.Store({
         
         //.then('set_boards',boards)
         
-      }
+      },
+      
     },
   modules: {
   }

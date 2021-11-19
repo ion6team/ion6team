@@ -8,6 +8,9 @@
         <b-form-input v-model="title" placeholder="제목을 입력하세요."></b-form-input>
       </div>
     </div>
+    <select class="form-control" v-model="selected" style="border-color:#c2e8c2;">
+          <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
+        </select>
     <!--
             <b-form-file
             v-model="file1"
@@ -71,6 +74,15 @@
       }
     },
     mounted() {
+      axios.get('/api/category', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.options = res.data
+      })
       axios.get('/api/member/address', {
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +111,7 @@ write_board() {
       var data ={
         "title" : this.title,
         "contents" : this.contents,
-        "category_id": "1",
+        "category_id": this.selected,
         "price": this.price,
         "hopeaddress": this.defaultaddress,
          "onsale" :false

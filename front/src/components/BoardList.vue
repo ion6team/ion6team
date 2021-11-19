@@ -1,6 +1,7 @@
 <!-- 내지역 보기 -->
 <template>
   <div>
+                  {{this.$store.state.ctindex}}
     <div>
       <ul style="list-style:none; display:flex;">
         <li>
@@ -12,6 +13,31 @@
         </li>
       </ul>
 
+
+<b-navbar style="background-color:#e6f3e6;">
+  <b-nav>
+    <b-nav-item>
+      <select class="form-control" v-model="selected" style="border-color:#c2e8c2;">
+          <option :value="0" > 전체</option>
+          <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
+        </select>
+    </b-nav-item>
+    <b-nav-item>
+      <b-input-group>
+            <b-form-input placeholder="검색" v-model="keyword" style="border-color:#c2e8c2;"></b-form-input>
+            <b-input-group-append>
+              <b-button type='submit' @click="searchApi()" style="background-color:#56c271; border-color:#c2e8c2;">
+                <b-icon icon='search'></b-icon>
+              </b-button>
+            </b-input-group-append>
+          </b-input-group>
+    </b-nav-item>
+  </b-nav>
+</b-navbar>
+
+    
+      
+<!--
       <b-navbar style="background-color:#e6f3e6;">
         <b-nav>
           <b-nav-item>
@@ -32,9 +58,7 @@
           </b-nav-item>
         </b-nav>
       </b-navbar>
-
-
-
+-->
     </div>
 
     <hr>
@@ -124,10 +148,10 @@
         list: [],
         pagecount: 1,
         totalpage: 0,
-        selected: 1,
+        selected: 0,
         options: [],
         myaddress: '',
-        index: 1,
+        index: 0,
       }
     },
     props: {
@@ -141,12 +165,11 @@
     },
 
     mounted() {
-      this.index = this.$route.params.id;
-      console.log(this.index);
 
+         this.selected = this.$store.state.ctindex;
 
       this.currentPage = 1
-
+  
       this.myaddress = this.$store.state.member.address
 
       axios.get('/api/category', {
@@ -162,9 +185,9 @@
     methods: {
 
       loadApi() {
-        this.index = this.$route.params.id;
+
         const page = this.currentPage - 1
-        this.selected = this.index
+        // this.selected = this.index
         axios.get('/api/board?page=' + page +
             '&size=' + this.perPage +
             '&hopeaddress=' + this.myaddress +
@@ -223,6 +246,7 @@
       myaddress() {
         this.loadApi()
       }
+
     }
 
   }

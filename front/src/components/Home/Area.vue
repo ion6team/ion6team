@@ -15,6 +15,7 @@
                 내지역보기
               </b-button>
 
+
             </b-col>
           </b-row>
         </b-col>
@@ -46,13 +47,20 @@
       NeedLogin
     },
     methods: {
-      goboard() {
+       goboard() {
         if (this.$store.state.islogin==false) {
+       
           this.$refs['my-modal'].show()
         } else {
-          this.$router.push("/board");
+            this.$router.push({
+          name:'Board',
+          params:{
+            id:'0'
+            }
+            })
+            this.$store.commit('setctindex', 0)
         }
-      }
+      } 
     }
 
   }
