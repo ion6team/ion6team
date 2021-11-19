@@ -165,7 +165,7 @@
     },
 
     mounted() {
-
+          this.keyword = this.$store.state.keywordsearch;
          this.selected = this.$store.state.ctindex;
 
       this.currentPage = 1
