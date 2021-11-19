@@ -17,12 +17,17 @@
                 
  <!-- <b-col  v-for="(category,i) in categorylist" :key="i" cols='3'> -->
      
-     <b-col @click="$router.push({
+     <!-- <b-col @click="$router.push({
           name:'Board',
-          query:{
+          params:{
             id:category.id
             }
           })" v-for="(category,i) in categorylist" :key="i" cols='3'>
+          <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px" style="text-align:center; margin:10px 0;">
+           {{category.name}}
+         </b-col> -->
+
+        <b-col @click="sss(category.id)" v-for="(category,i) in categorylist" :key="i" cols='3'>
                  <!-- <a href="/board" @click="setCategoryId(category.id)"> -->
           <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px" style="text-align:center; margin:10px 0;">
            {{category.name}}
@@ -102,7 +107,16 @@
         } else {
           this.$router.push("/board");
         }
-      }
+      },
+       sss(value){
+          this.$router.push({
+          name:'Board',
+           params:{
+             id:value
+             },
+             })
+           this.$store.commit('setctindex', value)
+      },
     }
   }
 </script>

@@ -1,6 +1,7 @@
 <!-- 내지역 보기 -->
 <template>
   <div>
+                  {{this.$store.state.ctindex}}
     <div>
       <ul style="list-style:none; display:flex;">
         <li>
@@ -43,7 +44,7 @@
     <div>
       <b-card @click="$router.push({
           name:'BoardPage',
-          query:{
+          params:{
             id:board.id
             }
           })" v-for="(board,i) in list" :key="i"
@@ -147,9 +148,9 @@
     },
 
     mounted() {
-
-       this.currentPage = 1
-      this.selected = this.$route.query.id;
+         this.selected = this.$store.state.ctindex;
+      this.currentPage = 1
+  
       this.myaddress = this.$store.state.member.address
 
       axios.get('/api/category', {
@@ -165,6 +166,7 @@
     methods: {
 
       loadApi() {
+     
         const page = this.currentPage - 1
         // this.selected = this.index
         axios.get('/api/board?page=' + page +

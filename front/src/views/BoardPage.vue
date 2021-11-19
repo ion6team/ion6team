@@ -1,6 +1,7 @@
 <template>
   <div>
     상세페이지 : {{index}}
+    <!-- 지금 로그인한 사람 : {{this.$store.state.member.email}} -->
     <div class="container" style="width:1000px">
       <b-carousel id="carousel-1" v-model="slide" controls img-width="1024" img-height="480"
         @sliding-start="onSlideStart" @sliding-end="onSlideEnd">

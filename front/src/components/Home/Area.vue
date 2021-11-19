@@ -54,10 +54,11 @@
         } else {
             this.$router.push({
           name:'Board',
-          query:{
+          params:{
             id:'0'
             }
             })
+            this.$store.commit('setctindex', 0)
         }
       } 
     }
