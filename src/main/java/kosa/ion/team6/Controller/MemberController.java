@@ -129,6 +129,10 @@ public class MemberController {
 //    }
 
     //////////////////////찜/////////////////////////
+    @GetMapping("/zzim")
+    public String checkzzim(){
+        return memberService.getMyUserWithAuthorities().get().getZzim();
+    }
 
     @GetMapping("/zzim/{id}")
     public Boolean addZzim(@PathVariable long id){
