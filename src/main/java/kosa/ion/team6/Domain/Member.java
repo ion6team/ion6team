@@ -52,6 +52,7 @@ public class Member{
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 
+    @ColumnDefault("0")
     private String zzim;
 
 

@@ -153,17 +153,15 @@ public class MemberService implements UserDetailsService {
     public boolean addZzim(Long memberid, Long id) {
         Optional<Member> updateUser = memberRepository.findById(memberid);
 
-        if (updateUser.get().getZzim().contains(" ," + id)) {
+        if (updateUser.get().getZzim().contains("-"+id)) {
             updateUser.ifPresent(selectUser -> {
-                selectUser.setZzim(selectUser.getZzim().replaceAll(" ," + id, ""));
-                System.out.print(memberid + "멤버의" + id + "찜 목록 삭제됨");
+                selectUser.setZzim(selectUser.getZzim().replaceAll("-"+id, ""));
                 memberRepository.save(selectUser);
             });
             return false;
         } else {
             updateUser.ifPresent(selectUser -> {
-                selectUser.setZzim(selectUser.getZzim() + " ," + id);
-                System.out.print(memberid + "멤버의" + id + "찜 목록 추가됨");
+                selectUser.setZzim(selectUser.getZzim() + "-"+id);
                 memberRepository.save(selectUser);
 
             });
