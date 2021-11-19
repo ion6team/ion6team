@@ -32,7 +32,7 @@
         <p class="mx-2"> <span v-html="list.contents"></span></p>
 
         <b-nav>
-          <b-nav-item disabled>조회수 45</b-nav-item>
+          <b-nav-item disabled>{{list.hit}}</b-nav-item>
 
           <b-nav-item>
             <a href="#" v-if="check" class="material-icons" style="color:#ff8a3d;" @click="addzzim()">favorite</a>
