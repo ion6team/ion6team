@@ -35,6 +35,7 @@ const routes = [{
                 component: Board,
                 props: true,
             },
+            
             {
                 path: '/write',
                 name: 'Write',

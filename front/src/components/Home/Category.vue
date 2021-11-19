@@ -23,9 +23,13 @@
             id:category.id
             }
           })" v-for="(category,i) in categorylist" :key="i" cols='3'>
+                              <ul style="list-style:none; display:flex; width:240px; margin:0;">
+                                <li id="imgBack" style="">
                  <!-- <a href="/board" @click="setCategoryId(category.id)"> -->
           <img  v-bind:src= "'../../upload/category/'+category.icon" width="40px" height="40px" style="text-align:center; margin:10px 0;">
-           {{category.name}}
+                 </li>
+                                       <li  ><p class="categoryName" style="">{{category.name}}</p></li>
+                    </ul>
          </b-col>
                   <!-- </a> -->
                   <!-- </b-col> -->

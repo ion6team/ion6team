@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="input-form-backgroud">
-      
+
       <div class="input-form col-md-12 mx-auto">
-        
+
         <div style="height:300px;" align-center>
           <div>
             <b-link href='/'>
@@ -119,10 +119,9 @@
         </validation-observer>
       </div>
     </div>
-    <b-button v-b-modal.joinComplete>회원가입성공</b-button>
-    <b-modal id="joinComplete" centered hide-footer>
-    <join-complete />
-  </b-modal>
+    <b-modal id="joinComplete" ref="join-modal" centered hide-footer>
+      <join-complete />
+    </b-modal>
   </div>
 </template>
 
@@ -148,7 +147,7 @@
 
       }
     },
-    components:{
+    components: {
       JoinComplete
     },
     methods: {
@@ -234,8 +233,7 @@
             })
             .then(response => {
               if (response.status == 200) {
-                alert("회원가입 성공 로그인페이지로 이동합니다.")
-                this.$router.push('/login')
+                this.$refs['join-modal'].show()
               } else {
                 alert("회원가입 실패")
               }
