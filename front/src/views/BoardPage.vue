@@ -2,7 +2,7 @@
   <div>
     상세페이지 : {{index}}
     <div class="container" style="width:1000px">
-      <b-carousel id="carousel-1" v-model="slide" controls style="max-width:700px;"
+      <b-carousel id="carousel-1" v-model="slide" controls style="max-width:700px; margin:auto;"
         @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
         <b-carousel-slide v-bind:img-src="'../upload/'+list.filepath1" style="height:700px"></b-carousel-slide>
         <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2" style="height:700px"></b-carousel-slide>
@@ -11,28 +11,52 @@
       </b-carousel>
 
       <div class="my-3" style="border-bottom:1px solid #fec69f; text-align:left">
-        <h6 class="mx-2"><b> {{list.member.name}} </b></h6>
+        <h3 class="mx-2"><b> {{list.member.name}} </b></h3>
+        <p>{{list.hopeaddress}}</p>
 
-        <a href="#" @click="addzzim()"> 찜</a>
-
-
+        <!-- 제품설명창  -->
         <p class="mx-2" style="font-size:14px;"> {{list.boardaddress}} </p>
       </div>
 
       <div class="my-3" style="border-bottom:1px solid #fec69f; text-align:left">
-        <h4 class="mx-2"> {{list.title}} </h4><!-- 글제목 -->
-        <p class="mx-2"> {{list.category.name}}</p>
+        <!-- 글제목 -->
+        <h2 class="mx-2"> 제목{{list.title}} </h2>
         <!--해당카테고리 -->
-        <h5 class="mx-2"> {{list.price}} </h5>
+        <p class="mx-2" style="color:#999;"> {{list.category.name}}</p>
         <!--가격 -->
-        <p class="mx-2"> <span v-html="list.contents"></span></p>
+        <h5 class="mx-2"><b> {{list.price}} 원</b></h5>
         <!--상세내용 -->
+        <p class="mx-2"> <span v-html="list.contents"></span></p>
+
+        <b-nav>
+          <b-nav-item disabled>조회수 45</b-nav-item>
+          {{this.$store.state.member.zzim}}<br>
+          ,{{index}} 
+          <b-nav-item >
+            <a 
+            href="#"
+            class="material-icons" 
+            style="color:#ff8a3d;"
+            v-if="zzimlist.includes(index)"
+            @click="addzzim()"
+            >favorite</a>
+            <a 
+            href="#"
+            class="material-icons" 
+            style="color:#ff8a3d;"
+            v-else
+            >favorite_border</a>
+            </b-nav-item>
+        </b-nav>
+        
       </div>
 
       <div class="my-3">
         <KaKaoMap v-bind:address="list.hopeaddress" />
       </div>
 
+
+      <!-- 댓글 -->
       <button @click="$router.push({
           name:'ReWrite',
           params:{
@@ -114,6 +138,7 @@
         replylist: [],
         replyno: 0,
         replycontent: '',
+        zzimlist: '',
       }
     },
     props: {
@@ -127,7 +152,7 @@ KaKaoMap
     },
 
     mounted() {
-      
+      zzimlist = this.$store.state.member.zzim;
      
 
       this.index = this.$route.params.id;
@@ -242,6 +267,8 @@ KaKaoMap
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.$store.state.token
           }
+        }).then((res)=>{
+          alert('zz')
         })
       },
 
