@@ -36,12 +36,23 @@
             <b-nav-item v-if="this.$store.state.islogin==true" @click="showModal">로그아웃</b-nav-item>
 
 
-            <b-modal ref="my-modal" hide-footer title="Using Component Methods">
-              <div class="d-block text-center">
-                <h3>로그아웃 하실건가요</h3>
-              </div>
-              <b-button @click="hideModal">네</b-button>
-              <b-button @click="toggleModal">아니요</b-button>
+            <b-modal ref="my-modal" centered hide-header hide-footer style="position:relative;">
+              
+               <template #default="{ close }">
+                  <div style="background-color: #fbf7f2; min-height:200px; width:100%;">
+                      <b-button style="background-color:#ff8a3d; border:3px solid white; border-radius:50%; height:40px; width:40px; text0align:center; position:absolute; top:-10px; right:-10px;"
+                    @click="close()">
+                      X
+                    </b-button>
+                  
+                    <logout-check />
+
+                  <b-button-group style="position:absolute; bottom:0; right:0;">       
+                    <b-button @click="hideModal">네</b-button>
+                    <b-button @click="toggleModal">아니요</b-button>
+                  </b-button-group>
+                  </div>
+              </template>
             </b-modal>
           </b-navbar-nav>
         </b-col>
@@ -53,7 +64,9 @@
 </template>
 
 <script>
+import LogoutCheck from '../../components/Modal/LogoutCheck.vue'
   export default {
+  components: { LogoutCheck },
     name: 'header',
     data() {
       return {
