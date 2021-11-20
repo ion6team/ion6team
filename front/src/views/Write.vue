@@ -13,7 +13,16 @@
       <b-col cols='9' >
         <div class="filebox">
           <label for="photo"></label>
-          <input type="file" name="photo" id="photo" multiple />
+          <input type="file" name="photo" id="photo" accept="image/*" @change="previewMultiImage" class="form-control-file"  multiple />
+           <template v-if="preview_list.length">
+           <div v-for="item, index in preview_list" :key="index">
+                <img :src="item" class="img-fluid" />
+                <p class="mb-0">file name: {{ image_list[index].name }}</p>
+                <p>size: {{ image_list[index].size/1024 }}KB</p>
+             </div>
+            </template>
+              <button @click="reset">취소</button>
+
         </div>
       <!--  <div >
           <label for="photo"></label>
@@ -115,8 +124,13 @@
         defaultaddress: '',
         selected: 1,
         category_id: 1,
-        image : '',
-        FormData : null
+       FormData : null,
+      preview: null,
+      image: null,
+      preview_list: [],
+      image_list: []
+       
+    
       }
     },
     mounted() {
@@ -146,6 +160,33 @@
     
   
   methods: {
+     previewMultiImage: function(event) {
+      var input = event.target;
+      var count = input.files.length;
+      var index = 0;
+      if (input.files) {
+        while(count --) {
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview_list.push(e.target.result);
+          }
+          this.image_list.push(input.files[index]);
+          reader.readAsDataURL(input.files[index]);
+          index ++;
+        }
+      }
+    },
+
+    reset: function() {
+      this.image = null;
+      this.preview = null;
+      this.image_list = [];
+      this.preview_list = [];
+    },
+
+
+ 
+ 
     val() {
                 this.value = "This's new value";
             },
@@ -153,6 +194,7 @@
             onChange(html, text) {
                 console.log(html.length, text.length);
             },
+    
 
 write_board() {
       var frm = new FormData(); 
