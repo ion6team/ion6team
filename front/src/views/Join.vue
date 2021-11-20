@@ -4,7 +4,7 @@
 
       <div class="input-form col-md-12 mx-auto">
 
-        <div style="height:300px;" align-center>
+        <div style="height:250px;" align-center>
           <div>
             <b-link href='/'>
               <img src='../assets/Daangeun_Logo_vertical_Color_RGB.png'>
@@ -12,7 +12,9 @@
           </div>
         </div>
 
-        <h4 class="mb-3" style="color:#ff8a3d;"><b>회원가입</b></h4>
+        <hr style="background-color:#ff8a3d;">
+
+        <h4 class="my-5" style="color:#ff8a3d;"><b>회원가입</b></h4>
 
         <validation-observer ref="observer" v-slot="{ handleSubmit }">
 
