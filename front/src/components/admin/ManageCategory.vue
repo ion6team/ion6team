@@ -31,8 +31,8 @@
                 </tr>
             </tbody>
         </table>
-        <b-button size="sm" style="float:right; margin-left:20px;" @click="deleteCateogory()">삭제</b-button>
-        <b-button size="sm" style="float:right;" v-b-modal.AdminAddCategory>추가</b-button>
+        <b-button size="sm" style="float:right; margin-left:20px; background-color:#56c271; border-color:#c2e8c2" @click="deleteCateogory()">삭제</b-button>
+        <b-button size="sm" style="float:right; background-color:#56c271; border-color:#c2e8c2" v-b-modal.AdminAddCategory>추가</b-button>
         <br><br>
         <b-pagination align="center" v-model="currentPage" :total-rows="rows" :per-page="perPage" >
         </b-pagination>
@@ -139,5 +139,11 @@
 </script>
 
 <style scoped>
-
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #e6f3e6;
+ }
+ table,tr,td,th{
+     border-color: #56c271;
+ }
 </style>
