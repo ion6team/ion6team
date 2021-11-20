@@ -5,7 +5,7 @@
     <div>
       <ul style="list-style:none; display:flex;">
         <li>
-          <h3 style="postion:flex;" align="left">{{myaddress}} 내 검색결과 {{when}} </h3>
+          <h3 style="postion:flex;" align="left">{{myaddress}} 내 검색결과 </h3>
         </li>
         <li>
           <b-button @click="addressApi()" style="background-color:#ff8a3d; border-color:#fec69f" size="sm">다른지역검색
@@ -15,7 +15,7 @@
 
 
 <b-navbar style="background-color:#e6f3e6;">
-  <b-nav>
+  <b-nav class="nav justify-content-end">
     <b-nav-item>
       <select class="form-control" v-model="selected" style="border-color:#c2e8c2;">
           <option :value="0" > 전체</option>
@@ -74,26 +74,27 @@
           <b-col cols='4'>
             <!-- <img src="../assets/1373b807-50c9-43a7-837f-fb3b2c5e34ce_dog5.jpg" />
         <img src="`../assets/${board.filename}`" />  -->
-            <img class="product-thumb" v-bind:src="'../../upload/'+board.filepath1"
-              style="width:350px; max-height:300px;" />
-          
+            <div style="width:360px; height:260px; overflow:hidden;">
+              <img class="product-thumb" v-bind:src="'../../upload/'+board.filepath1"
+                style="width:350px; max-height:250px;" />
+            </div>
           </b-col>
 
           <b-col cals='8'>
             <h4><b>{{board.title}}</b></h4>
-            <table class="mx-5 my-3">
+            <table class=" my-3" style="width:100%">
               <tr>
                 <th style="width:15%">
                   <b-card-text>가격 :  </b-card-text>
                   
                 </th>
-                <td style="width:35%">
-                  <b-card-text>{{board.price}}{{board.create_date}}</b-card-text>
+                <td style="width:20%">
+                  <b-card-text>{{board.price}} 원</b-card-text>
                 </td>
                 <th style="width:15%">
                   <b-card-text>주소 : </b-card-text>
                 </th>
-                <td style="width:35%">
+                <td style="width:65%">
                   <b-card-text>{{board.hopeaddress}}</b-card-text>
                 </td>
 
@@ -108,8 +109,8 @@
               <tr>
 
                 <td colspan="4">
-                  <p style="height:50px; 
-              overflow: hidden;
+                  <p style="height:100px; 
+              overflow: scroll;
               text-overflow: ellipsis;">
                     <span v-html="board.contents"></span>
                   </p>
@@ -131,6 +132,11 @@
     <b-modal id="needLogin" centered hide-footer>
       <needLogin />
     </b-modal>
+
+  <div>
+    {{when}} 
+  </div>
+    
   </div>
 </template>
 
