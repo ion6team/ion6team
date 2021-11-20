@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<p><a sec:authorize="isAnonymous()" th:href="@{member/new}"> sign up </a>
+	<p><a sec:authorize="isAnonymous()" th:href="@{member/login}"> login </a>
+	<div sec:authorize="isAuthenticated()"> <p> name > <a th:text="${name}"></a> 님 어서오시요 </div>
+	<p><a sec:authorize="isAuthenticated()" th:href="@{member/logout}">logout</a></p>
+	<hr>
+	<p><a sec:authorize="isAuthenticated()" th:href="@{board/boardlist}">all market</a></p>
+	<hr>
+	<form action="/board/category"  method="get" 
+	sec:authorize="isAuthenticated()">
+				카테고리 <select name="category_id">
+				<option value="선택">선택</option>
+				<option th:each="category : ${category}"
+					th:value="${category.id}" th:utext="${category.name}">
+				</option>
+			</select>
+			<button type="submit">Category market</button>
+	</form>
+	
+	<hr>
+	
+	
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  <a th:href="@{admin}">Admin page</a>
+</div>
+<hr>
+<div sec:authorize="hasRole('ROLE_MEMBER')">
+  only member
+</div>
+
+
+</body>
+</html>
