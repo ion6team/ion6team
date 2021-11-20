@@ -106,6 +106,7 @@
     data() {
       return {
         title: '',
+        options:[],
         price: 0,
         file1: null,
         value: '',
@@ -158,7 +159,7 @@ write_board() {
       var photoFile = document.getElementById("photo"); 
       var data ={
         "title" : this.title,
-        "contents" : this.contents,
+        "contents" : this.value,
         "category_id": this.selected,
         "price": this.price,
         "hopeaddress": this.defaultaddress,
@@ -167,7 +168,7 @@ write_board() {
      frm.append('data', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
 
       if(photoFile.files[0] != null){
-frm.append("file",  photoFile.files[0]); //대표이미지
+      frm.append("file",  photoFile.files[0]); //대표이미지
       frm.append("file",  photoFile.files[1]);
       frm.append("file",  photoFile.files[2]); 
       // frm.append("file", photoFile.files[2]); 

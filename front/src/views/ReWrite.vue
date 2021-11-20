@@ -2,11 +2,7 @@
 
 <template>
   <b-container style="width:1000px; margin-top:50px;">
-    <hr style="color:#fec69f">
-    
-    <label><input type="checkbox" name="soldOut" value="ture"> 판매완료</label>
-
-    <hr style="color:#fec69f">
+  
 
     <b-row>
       <b-col cols='3'>
@@ -31,7 +27,7 @@
        <label for="category"><h5><b>카테고리 선택</b></h5></label>
       </b-col>
       <b-col cols='9'>
-        <select id="category" class="form-control" v-model="selected" style="border-color:#ff8a3d;">
+          <select id="category" class="form-control" v-model="list.category.id" style="border-color:#ff8a3d;">
           <option :key="i" :value="d.id" v-for="(d, i) in options">{{ d.name }}</option>
         </select>
       </b-col>
@@ -90,7 +86,7 @@
         <label for="detail"><h5><b>상세설명</b></h5></label>
       </b-col>
       <b-col cols='9'>
-        <editor id="detail" v-model="value" @change="onChange" paste-as-text="true" style="height:400px;"></editor>
+        <editor id="detail" v-model="list.contents" @change="onChange" paste-as-text="true" style="height:400px;"></editor>
       </b-col>
     </b-row>
 
@@ -114,6 +110,8 @@
         hope_address: 'not_accepted',
         contents: '',
         defaultaddress: '',
+        options:[],
+        selected: 1,
         category_id: 1,
         image : '',
         FormData : null,
@@ -126,7 +124,7 @@
       }
       },
     mounted() {
-       
+    this.index = this.$route.params.id;
     console.log(this.index);
       axios.get('/api//board/'+this.index, {
         headers: {
@@ -138,8 +136,6 @@
 
        
       })
-    this.index = this.$route.params.id;
-    console.log(this.index);
       axios.get('/api/member/address', {
         headers: {
           'Content-Type': 'application/json',
@@ -147,6 +143,16 @@
         }
       }).then((response) => {
         this.defaultaddress = response.data;
+      })
+       axios.get('/api/category', {
+
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.options = res.data
       })
     },
     
@@ -160,19 +166,20 @@
                 console.log(html.length, text.length);
             },
 write_board() {
-    this.index = this.$route.params.id;
     console.log(this.index);
+     console.log(this.selected);
       var frm = new FormData(); 
       var photoFile = document.getElementById("photo"); 
       var data ={
-        "title" : this.title,
-        "contents" : this.value,
-        "category_id": "1",
-        "price": this.price,
+        "title" : this.list.title,
+        "contents" : this.list.contents,
+        "category_id": this.list.category.id,
+        "price": this.list.price,
         "hopeaddress": this.defaultaddress,
         "onsale" :false
       }
       frm.append('data', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
+    //  if(photoFile.files[0] != null){
       frm.append("file", photoFile.files[0]); 
       frm.append("file", photoFile.files[1]); 
       frm.append("file", photoFile.files[2]); 
@@ -190,6 +197,26 @@ write_board() {
       })
       .catch((error) => { // 예외 처리 })
     })
+   //  }
+
+    //   else{
+    //       alert("사진이없는 처리를 할게요")
+    //      axios.put('http://localhost:8080/api/board/'+this.index, frm, 
+    //   { 
+    //     headers: 
+    //    { 
+    //      'Content-Type': 'multipart/form-data' , 
+    //       'Authorization': 'Bearer ' + this.$store.state.token
+    //    } 
+    //   }) .then((response) => 
+    //   { 
+    //     alert("게시물 작성 완료")
+    //    this.$router.go(-1);
+    //   })
+    //   .catch((error) => { // 예외 처리 })
+
+    // })
+    //   }
 }
   
   

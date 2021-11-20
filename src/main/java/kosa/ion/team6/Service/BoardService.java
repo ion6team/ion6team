@@ -180,12 +180,13 @@ public class BoardService {
 		Board updata = boardRepository.findById(id).orElseThrow(()->{
 			return new IllegalArgumentException("글 찾기 실패: 아이디가 없다");
 		});//영속화 완료
-		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+categoryRepository.findById(boardDto.getCategory_id()));
 		
 		updata.setTitle(boardDto.getTitle());
 		updata.setContents(boardDto.getContents());
 		updata.setHopeaddress(boardDto.getHopeaddress());
 		updata.setPrice(boardDto.getPrice());
+		updata.setCategory(categoryRepository.findById(boardDto.getCategory_id()));
 		updata.setUpdate_date(new Date());
 		
 	if(file!=null) {
