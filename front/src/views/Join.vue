@@ -21,7 +21,7 @@
           <b-form @submit.stop.prevent="handleSubmit(onSubmit)">
 
 
-            <validation-provider name="email" :rules="{  required: true, min: 3 }" v-slot="validationContext">
+            <validation-provider name="email" rules="required|email" v-slot="validationContext">
               <b-form-group id="example-input-group-1" label="이메일*" label-for="example-input-1">
                 <div class="row">
                   <div class="col-md-9 mb-3">
@@ -44,7 +44,7 @@
 <br>
 <br>
 
-            <validation-provider name="password" :rules="{ required: true }" v-slot="validationContext">
+            <validation-provider name="password" :rules="{ required: true  }" v-slot="validationContext">
               <b-form-group id="example-input-group-2" label="비밀번호*" label-for="example-input-1">
                 <b-form-input id="example-input-2" name="example-input-2" v-model="password"
                   :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
@@ -56,10 +56,12 @@
 
               </b-form-group>
             </validation-provider>
+     
 
-            <validation-provider name="password" :rules="{ required: true }" v-slot="validationContext">
-              <b-form-group id="example-input-group-2" label="비밀번호 확인*" label-for="example-input-1">
-                <b-form-input id="example-input-2" name="example-input-2" v-model="password"
+
+            <validation-provider name="passwordcheck" rules="required|confirmed:password"  v-slot="validationContext">
+              <b-form-group id="example-input-group-2" label="비밀번호 확인*" label-for="example-input-1" >
+                <b-form-input id="example-input-2" name="example-input-2" v-model="passwordcheck" 
                   :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
                   type="password" style="border-color:#fec69f;">
                 </b-form-input>
@@ -74,7 +76,7 @@
 <br>
 
 
-            <validation-provider name="name" :rules="{ required: true, min: 3 }" v-slot="validationContext">
+            <validation-provider name="name" :rules="{ required: true, min: 2, max: 10 }" v-slot="validationContext">
               <b-form-group id="example-input-group-3" label="이름*" label-for="example-input-1">
 
                 <b-form-input id="example-input-3" name="example-input-2" v-model="name" placeholder="김당근"
@@ -115,10 +117,19 @@
 <br>
 <br>
 
-            <div class="mb-3">
-              <label for="phone">전화번호*<span class="text-muted">&nbsp;('-' 없이 입력)</span></label>
-              <input type="tel" class="form-control" v-model="phone" placeholder="전화번호를 입력해주세요." style="border-color:#fec69f;">
-            </div>
+            <validation-provider name="phone" :rules="{ required: true}" v-slot="validationContext">
+              <b-form-group id="example-input-group-2" label="휴대폰*" label-for="example-input-1">
+
+                <b-form-input id="example-input-2" name="example-input-2" v-model="phone" placeholder="***-****-****"  type="number"
+                  :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
+                  style="border-color:#fec69f;">
+                </b-form-input>
+
+                <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+            </validation-provider>
+
 
 <br>
 <br>
@@ -126,12 +137,41 @@
             <div class="row">
               <label for="resident">주민등록번호*</label>
               <div class="col-md-6 mb-3">
-                <input type="text" class="form-control" v-model="resident1" placeholder="앞자리" style="border-color:#fec69f;">
+              
+            <validation-provider name="resident1" :rules="{ required: true,regex:/([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/}" v-slot="validationContext">
+              <b-form-group id="example-input-group-2"  label-for="example-input-1">
+
+                <b-form-input id="example-input-2" name="example-input-2" v-model="resident1" placeholder="앞자리" type="number"
+                  :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
+                  style="border-color:#fec69f;">
+                </b-form-input>
+
+                <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+            </validation-provider>
+
+                
+               
+               
               </div>
               <div class="col-md-6 mb-3">
-                <input type="password" class="form-control" v-model="resident2" placeholder="뒷자리" style="border-color:#fec69f;">
+                         <validation-provider name="resident2" :rules="{ required: true,regex:/([1-4]{1}\d{6})/}" v-slot="validationContext">
+              <b-form-group id="example-input-group-2"  label-for="example-input-1">
+
+                <b-form-input id="example-input-2" name="example-input-2" v-model="resident2" placeholder="뒷자리" type="number"
+                  :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
+                  style="border-color:#fec69f;">
+                </b-form-input>
+
+                <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+            </validation-provider>
               </div>
             </div>
+
+
 
             <hr class="mb-4" style="border-color:#fbf7f2;" >
 
@@ -142,7 +182,7 @@
             </div>
             <div class="mb-4"></div>
             <b-button class="btn btn-primary btn-lg btn-block" type="submit"
-            style="background-color:#ff8a3d; border-color:#fec69f;"
+            style="background-color:#ff8a3d; border-color:#fec69f;" 
             >회원 가입
             </b-button>
 
@@ -182,6 +222,7 @@
       JoinComplete
     },
     methods: {
+      
       getValidationStateEmail({
         dirty,
         validated,
@@ -251,7 +292,9 @@
       onSubmit() {
         if (this.isDuplicateEmail == true) {
           alert("이메일 중복 체크를 해주세요")
-        } else {
+        }  
+   else 
+   {
           axios.post('/api/member/new', {
               name: this.name,
               email: this.email,
