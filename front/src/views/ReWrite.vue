@@ -12,7 +12,15 @@
       <b-col cols='9' >
         <div class="filebox">
           <label for="photo"></label>
-          <input type="file" name="photo" id="photo" multiple />
+          <input type="file" name="photo" id="photo" accept="image/*" @change="previewMultiImage" class="form-control-file"  multiple />
+           <template v-if="preview_list.length">
+           <div v-for="item, index in preview_list" :key="index">
+                <img :src="item" class="img-fluid" />
+                <p class="mb-0">file name: {{ image_list[index].name }}</p>
+                <p>size: {{ image_list[index].size/1024 }}KB</p>
+             </div>
+            </template>
+              <button @click="reset">취소</button>
         </div>
       <!--  <div >
           <label for="photo"></label>
@@ -63,8 +71,8 @@
         </b-checkbox>
       </b-col>
       <b-col cols='9'>
-       <input v-if="hope_address=='not_accepted'"  class="form-control" v-model="defaultaddress" readonly style="border:0; background-color:white;">
-       <input v-if="hope_address=='accepted'"  class="form-control" placeholder="거래 희망 지역" style="border-color:#ff8a3d;">
+       <input v-if="hope_address=='not_accepted'"  class="form-control" v-model="list.hopeaddress" readonly style="border:0; background-color:white;">
+       <input v-if="hope_address=='accepted'"  class="form-control"   v-model="list.hopeaddress" placeholder="거래 희망 지역" style="border-color:#ff8a3d;"  @click="addressApi()">
      </b-col>
     </b-row>
 
@@ -116,6 +124,10 @@
         image : '',
         FormData : null,
         list: [],       
+         preview: null,
+      image: null,
+      preview_list: [],
+      image_list: []
       }
     },
      props: {
@@ -159,6 +171,58 @@
     
   
   methods: {
+     previewMultiImage: function(event) {
+      var input = event.target;
+      var count = input.files.length;
+      var index = 0;
+      if (input.files) {
+        while(count --) {
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview_list.push(e.target.result);
+          }
+          this.image_list.push(input.files[index]);
+          reader.readAsDataURL(input.files[index]);
+          index ++;
+        }
+      }
+    },
+
+    reset: function() {
+      this.image = null;
+      this.preview = null;
+      this.image_list = [];
+      this.preview_list = [];
+    },
+     addressApi() {
+        new window.daum.Postcode({
+          oncomplete: (
+            data
+          ) => { // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분. // 도로명 주소의 노출 규칙에 따라 주소를 조합한다. // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            let fullRoadAddr = data.roadAddress; // 도로명 주소 변수 
+            let extraRoadAddr =
+            ''; // 도로명 조합형 주소 변수 // 법정동명이 있을 경우 추가한다. (법정리는 제외) // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다. 
+
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+              extraRoadAddr += data.bname;
+            } // 건물명이 있고, 공동주택일 경우 추가한다.
+
+            if (data.buildingName !== '' && data.apartment === 'Y') {
+              extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            } // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다. 
+            if (extraRoadAddr !== '') {
+              extraRoadAddr = ' (' + extraRoadAddr + ')';
+            } // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다. 
+            if (fullRoadAddr !== '') {
+              fullRoadAddr += extraRoadAddr;
+            } // 우편번호와 주소 정보를 해당 필드에 넣는다. 
+
+            this.list.hopeaddress = fullRoadAddr;
+
+          }
+        }).open(this.$refs.embed)
+      },
+
     val() {
                 this.value = "This's new value";
             },
@@ -175,7 +239,7 @@ write_board() {
         "contents" : this.list.contents,
         "category_id": this.list.category.id,
         "price": this.list.price,
-        "hopeaddress": this.defaultaddress,
+        "hopeaddress": this.list.hopeaddress,
         "onsale" :false
       }
       frm.append('data', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
