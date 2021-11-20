@@ -4,14 +4,14 @@
             <b-card-header header-tag="nav">
                 <b-nav card-header tabs>
                     <b-nav class="nav-tabs">
-                        <b-nav-item :active="tab === 1" @click="tab = 1">회원 관리</b-nav-item>
-                        <b-nav-item :active="tab === 2" @click="tab = 2">게시물 관리</b-nav-item>
-                        <b-nav-item :active="tab === 3" @click="tab = 3">카테고리 관리</b-nav-item>
+                        <b-nav-item :active="this.$store.state.admintab === 1" @click="tab1()">회원 관리</b-nav-item>
+                        <b-nav-item :active="this.$store.state.admintab === 2" @click="tab2()">게시물 관리</b-nav-item>
+                        <b-nav-item :active="this.$store.state.admintab === 3" @click="tab3()">카테고리 관리</b-nav-item>
                     </b-nav>
                 </b-nav>
             </b-card-header>
 
-            <b-card-body class="text-center" v-if="tab==1">
+            <b-card-body class="text-center" v-if="this.$store.state.admintab==1">
                 <b-card-text>
                     <b-form-group>
 
@@ -21,7 +21,7 @@
                 </b-card-text>
             </b-card-body>
 
-            <b-card-body class="text-center" v-if="tab==2">
+            <b-card-body class="text-center" v-if="this.$store.state.admintab==2">
                 <b-card-text>
                     <b-form-group>
                         <ManageBoard />
@@ -29,7 +29,7 @@
                 </b-card-text>
             </b-card-body>
 
-            <b-card-body class="text-center" v-if="tab==3">
+            <b-card-body class="text-center" v-if="this.$store.state.admintab==3">
                 <b-card-text>
                     <b-form-group>
                         <ManageCategory />
@@ -53,7 +53,23 @@ import ManageCategory from '../components/admin/ManageCategory.vue'
         },
         components:{
             ManageMember, ManageBoard, ManageCategory
-        }
+        },
+          methods: {
+           tab1() {
+            
+            this.$store.commit('changeadmintab', 1)
+          },
+          tab2() {
+              
+            this.$store.commit('changeadmintab', 2)
+
+          },
+          tab3() {
+              
+            this.$store.commit('changeadmintab', 3)
+
+          }
+    }
     }
 </script>
 

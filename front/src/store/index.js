@@ -16,6 +16,7 @@ export default new Vuex.Store({
     member:[],
     ctindex:0,
     keywordsearch:'',
+    admintab:1,
 
   },
   mutations: { 
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     },
     setkeywordsearch(state, keywordsearch){
       state.keywordsearch=keywordsearch
+    },
+    changeadmintab(state, admintab){
+      state.admintab=admintab
     },
   },
   actions: { //method
