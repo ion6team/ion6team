@@ -112,6 +112,8 @@
 
                 this.tableselected = []
                 this.loadApi()
+                this.$router.go(0)
+                
 
 
             },

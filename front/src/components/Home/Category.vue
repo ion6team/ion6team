@@ -114,6 +114,9 @@
         }
       },
       sss(value) {
+          if (this.$store.state.islogin == false) {
+          this.$refs['my-modal'].show()
+           } else {
         this.$router.push({
           name: 'Board',
           params: {
@@ -121,6 +124,7 @@
           },
         })
         this.$store.commit('setctindex', value)
+         }
       },
     }
   }

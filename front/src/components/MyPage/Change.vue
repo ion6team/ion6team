@@ -44,7 +44,7 @@
               </b-input-group-prepend>
               <b-form-input v-model="address" aria-invalid="" id="form-address" :disabled="busy" readonly="true">
               </b-form-input>
-              <button @click="addressApi()">검색</button>
+              <button type="button" @click="addressApi()">검색</button>
             </b-input-group>
             <b-form-input v-model="address_detail"></b-form-input>
           </b-form-group>

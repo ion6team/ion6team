@@ -65,7 +65,7 @@
     methods: {
       search(value){
         if (this.$store.state.islogin==false) {
-          this.$refs['my-modal'].show()
+          alert("로그인하세요")
         } else {
         this.$router.push({
           name:'Board',
