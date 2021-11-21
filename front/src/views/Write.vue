@@ -21,7 +21,7 @@
                 <p>size: {{ image_list[index].size/1024 }}KB</p>
              </div>
             </template>
-              <button @click="reset">취소</button>
+              <b-button @click="reset" style="background-color:#ff8a3d; border-color:#fec69f;">취소</b-button>
 
         </div>
       <!--  <div >
