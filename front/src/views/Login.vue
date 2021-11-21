@@ -89,13 +89,19 @@
 
      </div>
 
-    <b-modal id="welcome" ref="welcome2" centered hide-footer>
-    <welcome />
-  </b-modal>
+    <b-modal id="welcome" ref="welcome2"  centered hide-header hide-footer style="position:relative;">
+<template #default="{ close }">
+                  <div style="background-color: #fbf7f2; min-height:200px; width:100%;">
+                      <b-button style="background-color:#ff8a3d; border:3px solid white; border-radius:50%; height:40px; width:40px; text0align:center; position:absolute; top:-10px; right:-10px;"
+                    @click="close()">
+                      X
+                    </b-button>
+                  
+                    <welcome />
 
-      <b-modal id="loginfailed" ref="loginfailed2" centered hide-footer>
-    <loginfailed />
-  </b-modal>
+                  </div>
+              </template>
+            </b-modal>
     
   </div>
 </template>

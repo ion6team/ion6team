@@ -148,20 +148,16 @@
       </div>
     </div>
 
-    <b-modal ref="my-modal"  centered hide-header hide-footer style="position:relative;">
-              
-               <template #default="{ close }">
-                  <div style="background-color: #fbf7f2; min-height:200px; width:100%;">
-                      <b-button style="background-color:#ff8a3d; border:3px solid white; border-radius:50%; height:40px; width:40px; text0align:center; position:absolute; top:-10px; right:-10px;"
+    <b-modal ref="my-modal" centered hide-header hide-footer style="position:relative;">
+<template #default="{ close }">
+                  <div style="background-color: #fbf7f2; min-height:200px; width:100%; text-align:center;">
+                      <b-button style="background-color:#ff8a3d; border:3px solid white; border-radius:50%; height:40px; width:40px; text0align:center; position:absolute; top:-20px; right:-20px;"
                     @click="close()">
                       X
                     </b-button>
                   
                     <relogin-pls />
-
-                         
-                    <b-button @click="hideModal">OK</b-button>
-                  
+		<b-button @click="hideModal" class="mt-3" href="/" style="background-color:#ff8a3d; border-color:#fec69f; " >OK</b-button>
                   </div>
               </template>
             </b-modal>
