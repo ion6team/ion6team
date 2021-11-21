@@ -77,6 +77,8 @@ public class MemberService implements UserDetailsService {
                 .address(memberDto.getAddress())
                 .address_detail(memberDto.getAddress_detail())
                 .phone(memberDto.getPhone())
+                .zzim("0")
+                .chatting("0")
                 .resident1(memberDto.getResident1())
                 .resident2(memberDto.getResident2())
                 .authorities(Collections.singleton(authority))
@@ -172,6 +174,7 @@ public class MemberService implements UserDetailsService {
     public boolean addZzim(Long memberid, Long id) {
         Optional<Member> updateUser = memberRepository.findById(memberid);
 
+        System.out.println("바뀔 컬럼" + updateUser.get().getZzim() + "-"+id);
         if (updateUser.get().getZzim().contains("-"+id)) {
             updateUser.ifPresent(selectUser -> {
                 selectUser.setZzim(selectUser.getZzim().replaceAll("-"+id, ""));
@@ -193,18 +196,18 @@ public class MemberService implements UserDetailsService {
         Optional<Member> updateUser = memberRepository.findById(id1);
 
         if (updateUser.get().getChatting().contains("-"+id)) {
-
+            System.out.println("이미있음");
         } else {
             updateUser.ifPresent(selectUser -> {
                 selectUser.setChatting(selectUser.getChatting() + "-"+id);
-                memberRepository.save(selectUser);
+                //memberRepository.save(selectUser);
             });
         }
 
         Optional<Member> updateUser2 = memberRepository.findById(id2);
 
         if (updateUser2.get().getChatting().contains("-"+id)) {
-
+            System.out.println("이미있음");
         } else {
             updateUser2.ifPresent(selectUser -> {
                 selectUser.setChatting(selectUser.getChatting() + "-"+id);
