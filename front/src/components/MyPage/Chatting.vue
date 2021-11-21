@@ -49,14 +49,12 @@
                     'Authorization': 'Bearer ' + this.$store.state.token
                 },
             }).then((res) => {
-                alert(res.data)
                 console.log(res.data);
                 this.list = res.data
             })
         },
         methods:{
             go(id){
-                alert(id)
         var myForm = document.popForm;
         var url = "http://localhost:8081/chat/" + id;
         window.open("http://localhost:8081/chat/" + id, "popForm",
