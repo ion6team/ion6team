@@ -139,6 +139,8 @@
         replycontent: '',
         zzimlist: '',
         zzim: '',
+        slide: 0,
+        sliding: null,
       }
     },
     props: {
