@@ -62,6 +62,8 @@
                     <td> <a v-if="item.activated==false" @click="check(item.id)"> 복구
                     </a>
                     </td>
+                    <b-button size="sm" style="float:right; background-color:#56c271; border-color:#c2e8c2"  @click="put(item.id, item.name, item.email, item.address, item.address_detail ,item.phone)" v-b-modal.AdminChangeMember>수정</b-button>
+                      
                 </tr>
             </tbody>
         </table>
@@ -73,6 +75,19 @@
         <b-button size="sm" style="float:right; background-color:#56c271; border-color:#c2e8c2" @click="deleteMember()">삭제</b-button>
         <h6 style="float:right;">
             <pre />{{tableselected.length}}/{{rows}}..</h6>
+  <b-modal id="AdminChangeMember"  centered hide-header hide-footer size="xl" style="position:relative;">
+              
+               <template #default="{ close }">
+                  <div style="background-color: #fbf7f2; min-height:200px; width:100%;">
+                      <b-button style="background-color:#ff8a3d; border:3px solid white; border-radius:50%; height:40px; width:40px; text0align:center; position:absolute; top:-10px; right:-10px;"
+                    @click="close()">
+                      X
+                    </b-button>
+              
+                <admin-change-member :id="id" :name="name" :address="address" :address_detail="address_detail" :email="email" :password="password" :phone="phone"/>
+                   </div>
+              </template>
+ </b-modal>
 
             
     </div>
@@ -80,8 +95,13 @@
 
 <script>
     import axios from 'axios';
+    import AdminChangeMember from '../Modal/AdminChangeMember.vue'
+    
 
     export default {
+             components:{
+        AdminChangeMember
+      },
         data() {
             return {
                 kind:'all',
@@ -97,6 +117,14 @@
                 items: [],
                 tableselected: [],
                 selectAll: false,
+                name: '',
+                email: '',
+                phone: 0,
+                address: '',
+                address_detail:'',
+                id: '',
+                password: 0,
+
                 options: [{
                         value: 5,
                         text: '5개씩'
@@ -142,6 +170,16 @@
                         this.tableselected.push(this.items[i].id);
                     }
                 }
+            },
+            put(id, name, email, address, address_detail, phone, password){
+                this.id= id;
+                this.name= name;
+                this.email= email;
+                this.address= address;
+                this.address_detail= address_detail;
+                this.phone= phone;
+                this.password= password;
+
             },
             searchtext() {
                 this.search = this.text;

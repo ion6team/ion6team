@@ -1,126 +1,149 @@
 <template>
   <div>
         <h5>회원정보 변경</h5>
-          <validation-observer ref="observer" v-slot="{ handleSubmit }">
-
-          <b-form @submit.stop.prevent="handleSubmit(onSubmit)">
         <b-input-group>
+            <b-row>
+                <b-col sm="7">
+                    <label type="id" for="name">아이디</label>
+                </b-col>
+                <b-col sm="5">
+                    <b-form-input id="name" type="text" v-model="id"></b-form-input>
+                </b-col>
+            </b-row>
              
-           <validation-provider name="name" :rules="{ required: true,regex: /^[가-힣]{2,4}$/ }" v-slot="validationContext">
-          <b-form-group label="이름" label-for="form-name" label-cols-lg="2">
-            <b-input-group>
-              <b-input-group-prepend is-text>
-                <b-icon icon="person-fill"></b-icon>
-              </b-input-group-prepend>
-              <!-- <b-form-input v-model="name" id="form-name" :disabled="busy"></b-form-input> -->
-               <b-form-input id="example-input-3" name="example-input-2" v-model="name" placeholder="김당근" :disabled="busy"
-                  :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
-                  style="border-color:#fec69f;">
-                </b-form-input>
+            <b-row>
+                <b-col sm="7">
+                    <label type="text" for="name">이름</label>
+                </b-col>
+                <b-col sm="5">
+                    <b-form-input id="name" type="text" v-model="name"></b-form-input>
+                </b-col>
+            </b-row>
 
-            </b-input-group>
-          </b-form-group>
-              </validation-provider>
+            <b-row>
+                <b-col sm="7">
+                    <label type="email" for="email">이메일</label>
+                </b-col>
+                <b-col sm="5">
+                    <b-form-input id="email" type="text" v-model="email"></b-form-input>
+                </b-col>
+            </b-row>
 
-            <validation-provider name="email" rules="required|email" v-slot="validationContext">
-          <b-form-group label="Email" label-for="form-mail" label-cols-lg="2">
-            <b-input-group>
-              <b-input-group-prepend is-text>
-                <i class="material-icons">email</i>
-              </b-input-group-prepend>
+            <b-row>
+                <b-col sm="7">
+                    <label type="text" for="address">주소</label>
+                </b-col>
+                <b-col sm="5">
+                    <b-form-input  id="address" type="text" v-model="address" @click="addressApi()"></b-form-input>
+                </b-col>
+            </b-row>
+
+            <b-row>
+                <b-col sm="7">
+                    <label type="text" for="address_detail">상세주소</label>
+                </b-col>
+                <b-col sm="5">
+                    <b-form-input  id="address_detail" type="text" v-model="address_detail"></b-form-input>
+                </b-col>
+            </b-row>
+
+            <b-row>
+                <b-col sm="7">
+                    <label type="tel" for="phone">전화번호</label>
+                </b-col>
+                <b-col sm="5">
+                    <b-form-input id="phone" type="text" v-model="phone"></b-form-input>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col sm="7">
+                    <label type="tel" for="password">비밀번호</label>
+                </b-col>
+                <b-col sm="5">
+                    <b-form-input id="password" type="password" v-model="password"></b-form-input>
+                </b-col>
+            </b-row>
+
             
-              <!-- <b-form-input v-model="email" id="form-email" type="email" :disabled="busy"></b-form-input> -->
-                <div class="col-md-9-mb-3">
-              <b-form-input id="example-input-1" name="example-input-1" v-model="email" :disabled="busy"
-                      placeholder="you@example.com" :state="getValidationStateEmail(validationContext)"
-                      aria-describedby="input-1-live-feedback"
-                      style="border-color:#fec69f;">
-                    </b-form-input>
-
-                     <div class="col-md-3 mb-3">
-                    <b-button class="ml-2" @click="checkEmailDuplicate()" style="background-color:#ff8a3d; border-color:#fec69f;">중복확인</b-button>
-                  </div>
-
-                    <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
-                  </b-form-invalid-feedback>
-                </div>
-           </b-input-group>
-          </b-form-group>
-</validation-provider>
-
-<validation-provider name="password" :rules="{ required: true  }" v-slot="validationContext">
-              <b-form-group id="example-input-group-2" label="비밀번호*" label-for="example-input-1">
-                <b-form-input id="example-input-2" name="example-input-2" v-model="password" :disabled="busy"
-                  :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
-                  type="password" style="border-color:#fec69f;">
-                </b-form-input>
-
-                <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
-                </b-form-invalid-feedback>
-
-              </b-form-group>
-            </validation-provider>
-     
-
-
-            <validation-provider name="passwordcheck" rules="required|confirmed:password"  v-slot="validationContext">
-              <b-form-group id="example-input-group-2" label="비밀번호 확인*" label-for="example-input-1" >
-                <b-form-input id="example-input-2" name="example-input-2" v-model="passwordcheck"  :disabled="busy"
-                  :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
-                  type="password" style="border-color:#fec69f;">
-                </b-form-input>
-
-                <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
-                </b-form-invalid-feedback>
-
-              </b-form-group>
- </validation-provider>
-
-            <validation-provider name="phone" :rules="{required: true, min: 11, max: 11 }" v-slot="validationContext">
-          <b-form-group label="전화번호" label-for="form-phonNum" label-cols-lg="2">
-            <b-input-group>
-              <b-input-group-prepend is-text>
-                <i class="material-icons">phone</i>
-              </b-input-group-prepend>
-              <!-- <b-form-input v-model="phone" id="form-phonNum" :disabled="busy"></b-form-input> -->
-               
-                <b-form-input id="example-input-2" name="example-input-2" v-model="phone" placeholder="휴대폰번호"  type="number" :disabled="busy"
-                  :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
-                  style="border-color:#fec69f;">
-                </b-form-input>
-
-                <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
-                </b-form-invalid-feedback>
-            </b-input-group>
-          </b-form-group>
- </validation-provider>
-
-        
-          <b-form-group label="주소" label-for="form-address" label-cols-lg="2">
-            <b-input-group>
-              <b-input-group-prepend is-text>
-                <i class="material-icons">place</i>
-              </b-input-group-prepend>
-              <b-form-input v-model="address" aria-invalid="" id="form-address" :disabled="busy" readonly="true">
-              </b-form-input>
-              <button type="button" @click="addressApi()">검색</button>
-            </b-input-group>
-            <b-form-input v-model="address_detail"></b-form-input>
-          </b-form-group>
-
         </b-input-group>
-       <b-button variant="outline-danger" class="mr-3" @click="onCancel">
-                    취소
-                  </b-button>
-   <b-button variant="outline-success" @click="onOK">확인</b-button>
+        <button @click="putMember()">추가</button>
+        <button> 취소</button>
 
-   </validation-observer>
-    </div> 
+
+    </div>
 </template>
 
 <script>
+ import axios from 'axios';
 export default {
+    name : 'AdminChangeMember',
 
+    props: {
+      name: String ,
+      email: String ,
+      address : String ,
+      address_detail: String ,
+      phone :     Number ,
+      password  : Number ,
+      id: Number,
+
+      
+    },
+     methods: {
+           addressApi() {
+        new window.daum.Postcode({
+          oncomplete: (
+            data
+          ) => { // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분. // 도로명 주소의 노출 규칙에 따라 주소를 조합한다. // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            let fullRoadAddr = data.roadAddress; // 도로명 주소 변수 
+            let extraRoadAddr =
+              ''; // 도로명 조합형 주소 변수 // 법정동명이 있을 경우 추가한다. (법정리는 제외) // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다. 
+
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+              extraRoadAddr += data.bname;
+            } // 건물명이 있고, 공동주택일 경우 추가한다.
+
+            if (data.buildingName !== '' && data.apartment === 'Y') {
+              extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            } // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다. 
+            if (extraRoadAddr !== '') {
+              extraRoadAddr = ' (' + extraRoadAddr + ')';
+            } // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다. 
+            if (fullRoadAddr !== '') {
+              fullRoadAddr += extraRoadAddr;
+            } // 우편번호와 주소 정보를 해당 필드에 넣는다. ㄴ
+            //5자리 새우편번호 사용 
+            this.address = fullRoadAddr;
+
+          }
+        }).open(this.$refs.embed)
+      },
+   putMember() {
+       console.log(this.id);
+        axios.put('/api/member/'+this.id, {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            phone: this.phone,
+            address: this.address,
+            address_detail: this.address_detail,
+          
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+        
+          .then((res) => {
+         
+              this.$router.go(0)
+            
+          })
+    
+
+        }
+     }
 }
 </script>
 

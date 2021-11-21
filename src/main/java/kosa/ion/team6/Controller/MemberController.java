@@ -84,6 +84,18 @@ public class MemberController {
                 memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
         );
     }
+    @PutMapping("/member/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public String adiminMemberInfo(@PathVariable("id") Long id, @RequestBody MemberDto memberDto) {
+        System.out.println(memberDto.getEmail());
+        System.out.println(memberDto.getName());
+        System.out.println(memberDto.getAddress());
+        System.out.println(memberDto.getAddress_detail());
+
+
+        return memberService.adiminMeInfo(id,memberDto);
+        
+    }
 
     // 회원 삭제
     @DeleteMapping("/member")

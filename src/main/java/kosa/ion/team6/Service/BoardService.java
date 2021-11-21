@@ -61,11 +61,10 @@ public class BoardService {
 	{
 		
 		if(file!=null) {
-			String arr[] = new String[3];
+		String arr[] = new String[3];
 		String projectPath = System.getProperty("user.dir") +"\\front\\public\\upload" ; //저장 경로 잡기
 
 		UUID uuid = UUID.randomUUID(); //랜덤으로 아이디 만들어줌
-
 
 		int i=0;
 		for(MultipartFile m : file) {
