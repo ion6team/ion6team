@@ -56,13 +56,14 @@
               @click="addzzim()">favorite_border</a>
           </b-nav-item>
         </b-nav>
-        {{this.$store.state.member.id}}
-        <button @click="$router.push({
-          name:'ChatRomm',
-          params:{
-            chatid: list.member.id
-            }
-          })"> 채팅방 </button>
+
+
+
+        <button @click="go()">채팅방</button>
+
+
+
+
       </div>
 
       <hr style="background-color:#ff8a3d;" class="my-4">
@@ -115,10 +116,6 @@
             댓글쓰기 </button>
         </b-col>
       </b-row>
-
-
-
-
     </div>
 
   </div>
@@ -195,6 +192,24 @@
 
     },
     methods: {
+      go() {
+        axios.get('/api/chatting/' + this.index, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+
+        })
+
+
+        var myForm = document.popForm;
+        var url = "http://localhost:8081/chat/" + this.list.member.id;
+        window.open("http://localhost:8081/chat/" + this.list.member.id, "popForm",
+          "toolbar=no, width=400, height=800, directories=no, status=no,    scrollorbars=no, resizable=no");
+
+
+      },
       put(membervel, id) {
         if (membervel == this.$store.state.member.email) {
           this.$router.push({

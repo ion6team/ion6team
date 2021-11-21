@@ -1,25 +1,46 @@
 <template>
     <div>
-        {{chatid}}
-        {{this.$store.state.member.id}}
-        <h2>gdgd</h2>
+        {{this.chatid}}
+        {{this.$store.state.member.id}} 
+        {{this.$store.state.member.name}}
+            <div v-for="(item, idx) in before" :key="idx">
+                <div v-if="before[idx].sender==loginname" align="right"> 
+                {{ before[idx].sender }} <br>  
+                <h3> {{ before[idx].message }}</h3>
+                </div>
 
-            <div id="app">
-        유저이름:
-        <input v-model="userName" type="text">
-        내용: <input v-model="message" type="text" @keyup="sendMessage">
-        <div v-for="(item, idx) in recvList" :key="idx"> -->
+                <div v-if="before[idx].sender!=loginname" align="left"> 
+                {{ before[idx].sender }} <br>  
+                <h3> {{ before[idx].message }}</h3>
+                </div>
 
-            <h3>유저이름: {{ item.sender }}</h3>
-            <h3>내용: {{ item.message }}</h3>
+            </div>
+        <div id="app">
+
+
+            <div v-for="(item, idx) in recvList" :key="idx">
+                <div v-if="item.sender==loginname" align="right"> 
+                {{ item.sender }} <br>  
+                <h3> {{item.message }}</h3>
+                </div>
+
+                <div v-if="item.sender!=loginname" align="left"> 
+                {{ item.sender }} <br>  
+                <h3> {{ item.message }}</h3>
+                </div>
+
+
+            </div>
+
+             <input v-model="message" type="text" @keyup="sendMessage" placeholder="내용" style="position:fixed;bottom:0px;">
         </div>
-    </div>
     </div>
 </template>
 
 <script>
     import Stomp from 'webstomp-client'
     import SockJS from 'sockjs-client'
+    import axios from 'axios'
 
     export default {
         name: 'App',
@@ -33,29 +54,45 @@
             return {
                 userName: "",
                 message: "",
+                before:[],
                 recvList: [],
+                loginname:'',
             }
         },
         created() {
             // App.vue가 생성되면 소켓 연결을 시도합니다.
             this.connect()
+            this.loginname = this.$store.state.member.name
+            axios.get("/api/chat/open/" + this.chatid, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.$store.state.token
+                    }
+                })
+                .then((res) => {
+                    console.log ('이전대화내용' + res)
+                    this.before = res.data;
+                })
         },
         methods: {
-             sendMessage(e) {
-                if (e.keyCode === 13 && this.userName !== '' && this.message !== '') {
+            sendMessage(e) {
+                if (e.keyCode === 13 && this.message !== '') {
                     this.send()
                     this.message = ''
                 }
+                       document.body.scrollTop = document.body.scrollHeight;
             },
             send() {
                 console.log("Send message:" + this.message);
                 if (this.stompClient && this.stompClient.connected) {
                     const msg = {
-                        sender: 'donghyun2',
+                        chatid: this.chatid,
+                        sender: this.$store.state.member.name,
                         message: this.message
                     };
                     this.stompClient.send("http://localhost:8080/pub/api/chat/message", JSON.stringify(msg), {});
                 }
+         
             },
             connect() {
                 const serverURL = "http://localhost:8080/ws-stomp"

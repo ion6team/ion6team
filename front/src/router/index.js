@@ -56,12 +56,7 @@ const routes = [{
                 props: true,
             },
 
-            {
-                path: '/chat/:chatid',
-                name: 'ChatRomm',
-                component: ChatRomm,
-                props: true,
-            },
+
         ]
     },
 
@@ -104,6 +99,14 @@ const routes = [{
             },
             
         ]
+
+    },
+
+    {
+        path: '/chat/:chatid',
+        name: 'ChatRomm',
+        component: ChatRomm,
+        props: true,
     },
 
 

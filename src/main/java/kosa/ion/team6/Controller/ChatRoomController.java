@@ -18,24 +18,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/chat")
 public class ChatRoomController {
 
-    private final ChatMessageRepository chatRoomRepository;
+    private final ChatMessageRepository chatMessageRepository;
 
-    @GetMapping("/open")
+    @GetMapping("/open/{chatid}")
     @ResponseBody
-    public Optional<ChatMessage> createNewChatRoomOrGetChatRoom(
-            @RequestParam(value = "id1") int id1,
-            @RequestParam(value = "id2") int id2
-    ){
-        String roomid="";
-        if(id1 > id2){
-            roomid = Integer.toString(id2) + "to" + Integer.toString(id1);
-        }else{
-            roomid = Integer.toString(id1) + "to" + Integer.toString(id2);
-        }
-
-        if(chatRoomRepository.findById(roomid).orElse(null) != null)
-            return chatRoomRepository.findById(roomid);
-
-        return null;
+    public List<ChatMessage> createNewChatRoomOrGetChatRoom(@PathVariable String chatid){
+        return chatMessageRepository.findByChatid(chatid);
     }
 }
