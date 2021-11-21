@@ -18,7 +18,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 // @PreAuthorize 어노테이션을 메소드 단위로 추가하기 위해 사용
@@ -85,13 +90,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/admin/member/**").permitAll()
                 .antMatchers("/api/category").permitAll()
                 .antMatchers("/api/admin/**").permitAll()
+                .antMatchers("/ws/chat").permitAll()
+                .antMatchers("/chat").permitAll()
+                .antMatchers("/api/ws-stomp/**").permitAll()
+                .antMatchers("/ws-stomp/**").permitAll()
 
-                .anyRequest().authenticated()
 
+                .anyRequest().permitAll()
+                //.authenticated()
+
+                .and()
+                .cors()
                 .and()
                 //JwtFilter를 addFilterBefore로 등록한 클래스 적용
                 .apply(new JwtSecurityConfig(tokenProvider));
+
     }
+
+
+
 
 }
 
