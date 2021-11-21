@@ -47,9 +47,9 @@
                   
                     <logout-check />
 
-                  <b-button-group style="position:absolute; bottom:0; right:0;">       
-                    <b-button @click="hideModal">네</b-button>
-                    <b-button @click="toggleModal">아니요</b-button>
+                  <b-button-group style="position:absolute; bottom:0; right:0; ">       
+                    <b-button @click="hideModal" style="background-color:#ff8a3d; border-color:#fec69f;">네</b-button>
+                    <b-button @click="toggleModal" style="background-color:#ff8a3d; border-color:#fec69f;">아니요</b-button>
                   </b-button-group>
                   </div>
               </template>

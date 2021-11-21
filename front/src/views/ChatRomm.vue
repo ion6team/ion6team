@@ -1,40 +1,79 @@
 <template>
-    <div>
-        {{this.chatid}}
+    <div style="margin:10px; padding:10px;">
+        <!-- {{this.chatid}}
         {{this.$store.state.member.id}} 
-        {{this.$store.state.member.name}}
-            <div v-for="(item, idx) in before" :key="idx">
-                <div v-if="before[idx].sender==loginname" align="right"> 
-                {{ before[idx].sender }} <br>  
-                <h3> {{ before[idx].message }}</h3>
+        {{this.$store.state.member.name}} -->
+<br>
+            <div v-for="(item, idx) in before" :key="idx" style="background-color:#fbf7f2;">
+                <div v-if="before[idx].sender==loginname" align="right">
+                    <b-row align-h="end" class="pb-3"> 
+                        
+                        <b-col cols="6">
+                        <div style="border:1px solid #ff8a3d; border-radius:5px;
+                        text-align:center; max-width:500px; 
+                        background-color:white; min-height:100px;
+                        padding:10px;"> 
+                            <span> {{ before[idx].message }}</span>
+                        </div>
+                        </b-col>
+                        <b-col cols="2" align-self="center" align="center">
+                        <h5>{{ before[idx].sender }}</h5> <br> 
+                        </b-col>
+                    </b-row>
                 </div>
 
                 <div v-if="before[idx].sender!=loginname" align="left"> 
-                {{ before[idx].sender }} <br>  
-                <h3> {{ before[idx].message }}</h3>
+                  <b-row align-h="start" class="pb-3"> 
+
+                        <b-col cols="2" align-self="center" align="center">
+                        <h5>{{ before[idx].sender }}</h5> <br> 
+                        </b-col>
+
+                        <b-col cols="6">
+                        <div style="border:1px solid #ff8a3d; border-radius:5px;
+                        text-align:center; max-width:500px; 
+                        background-color:white; min-height:100px;
+                        padding:10px;"> 
+                            <span> {{ before[idx].message }}</span>
+                        </div>
+                        </b-col>
+                        
+                    </b-row>
                 </div>
 
             </div>
-        <div id="app">
 
+<p style="font-size:12px; color:#999;">이전 채팅</p>
+<hr style="background-color:#ff8a3d;">
 
-            <div v-for="(item, idx) in recvList" :key="idx">
+            <div v-for="(item, idx) in recvList" :key="idx" style="background-color:#fbf7f2;">
                 <div v-if="item.sender==loginname" align="right"> 
-                {{ item.sender }} <br>  
-                <h3> {{item.message }}</h3>
+                <b-row align-h="end" class="pb-3"> 
+                        
+                        <b-col cols="6">
+                        <div style="border:1px solid #ff8a3d; border-radius:5px;
+                        text-align:center; max-width:500px; 
+                        background-color:white; min-height:100px;
+                        padding:10px;"> 
+                            <span> {{item.message }}</span>
+                        </div>
+                        </b-col>
+                        <b-col cols="2" align-self="center" align="center">
+                        <h5>{{ item.sender }}</h5> <br> 
+                        </b-col>
+                    </b-row>
                 </div>
-
-                <div v-if="item.sender!=loginname" align="left"> 
-                {{ item.sender }} <br>  
-                <h3> {{ item.message }}</h3>
-                </div>
-
-
             </div>
 
-             <input v-model="message" type="text" @keyup="sendMessage" placeholder="내용" style="position:fixed;bottom:0px;">
+             <input v-model="message" type="text" @keyup="sendMessage" placeholder="내용을 입력하세요" style="position:fixed; bottom:20px; left:50%; 
+             margin-left:-250px;
+             min-width:500px;
+             min-height:100px;
+             border-color:#ff8a3d;
+             background-color:#fbf7f2;
+             ">
         </div>
-    </div>
+    
 </template>
 
 <script>
@@ -125,6 +164,6 @@
     }
 </script>
 
-<style>
+<style scoped>
 
 </style>
