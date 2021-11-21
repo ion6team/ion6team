@@ -29,31 +29,35 @@
           </b-form-group>
               </validation-provider>
 
+
  <validation-provider name="email" rules="required|email" v-slot="validationContext">
-          <b-form-group label="Email" label-for="form-mail" label-cols-lg="2">
-            <b-input-group>
+          <b-form-group label="Email" label-for="form-mail">
+            <b-input-group style="position:relative;">
               <b-input-group-prepend is-text>
                 <i class="material-icons">email</i>
               </b-input-group-prepend>
             
+           
               <!-- <b-form-input v-model="email" id="form-email" type="email" :disabled="busy"></b-form-input> -->
-                <div class="col-md-9-mb-3">
-              <b-form-input id="example-input-1" name="example-input-1" v-model="email" :disabled="busy"
+                
+                    <b-form-input id="example-input-1" name="example-input-1" v-model="email" :disabled="busy"
                       placeholder="you@example.com" :state="getValidationStateEmail(validationContext)"
                       aria-describedby="input-1-live-feedback"
-                      style="border-color:#fec69f;">
+                      style="border-color:#fec69f; height:37px;">
                     </b-form-input>
-
-                     <div class="col-md-3 mb-3">
-                    <b-button class="ml-2" @click="checkEmailDuplicate()" style="background-color:#ff8a3d; border-color:#fec69f;">중복확인</b-button>
-                  </div>
+                
+                  
+                    <b-button @click="checkEmailDuplicate()" style="background-color:#ff8a3d; border-color:#fec69f; position:relative; top:-10px;">중복확인</b-button>
+                  
 
                     <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
                   </b-form-invalid-feedback>
-                </div>
+                
+                
            </b-input-group>
           </b-form-group>
 </validation-provider>
+
 
  <validation-provider name="password" :rules="{ required: true  }" v-slot="validationContext">
               <b-form-group id="example-input-group-2" label="비밀번호*" label-for="example-input-1">
@@ -104,19 +108,19 @@
 
 
           <b-form-group label="주소" label-for="form-address" label-cols-lg="2">
-            <b-input-group>
+            <b-input-group style="position:relative;">
               <b-input-group-prepend is-text>
-                <i class="material-icons">place</i>
+                <i class="material-icons" >place</i>
               </b-input-group-prepend>
-              <b-form-input v-model="address" aria-invalid="" id="form-address" :disabled="busy" readonly="true">
+              <b-form-input v-model="address" aria-invalid="" id="form-address" :disabled="busy" readonly="true" style="height:37px; background-color:#fec69f; border-color:#ff8a3d;">
               </b-form-input>
-              <button type="button" @click="addressApi()">검색</button>
+              <b-button type="button" @click="addressApi()" style="background-color:#ff8a3d; border-color:#fec69f; position:relative; top:-11px;">검색</b-button>
             </b-input-group>
-            <b-form-input v-model="address_detail"></b-form-input>
+            <b-form-input v-model="address_detail" style="border-color:#ff8a3d;"></b-form-input>
           </b-form-group>
 
           <div class="d-flex justify-content-center">
-            <b-button ref="submit" type="submit" :disabled="busy" @click="chagneinfo()">변경</b-button>
+            <b-button ref="submit" type="submit" :disabled="busy" @click="chagneinfo()" style="background-color:#ff8a3d; border-color:#fec69f;">변경</b-button>
           </div>
 
           <b-overlay :show="busy" no-wrap @shown="onShown" @hidden="onHidden">

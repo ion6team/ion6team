@@ -3,7 +3,7 @@
     <!-- 상세페이지 : {{index}} -->
     <!-- 지금 로그인한 사람 : {{this.$store.state.member.email}} -->
     <div class="container" style="width:1000px">
-      <b-carousel id="carousel-1" v-model="slide" controls style="max-width:700px; margin:auto;"
+      <b-carousel id="carousel-1" :interval="3000" v-model="slide" controls style="max-width:700px; margin:auto;"
         @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
         <b-carousel-slide v-bind:img-src="'../upload/'+list.filepath1" style="height:700px"></b-carousel-slide>
         <b-carousel-slide v-if="list.filepath2!==null" v-bind:img-src="'../upload/'+list.filepath2"
@@ -13,72 +13,109 @@
 
       </b-carousel>
 
-      <div class="my-3" style="border-bottom:1px solid #fec69f; text-align:left">
+      <b-nav class="nav justify-content-end">
+        <b-nav-item @click="put(list.member.email,list.id)">
+          <p style="color:#ff8a3d">글 수정</p>
+        </b-nav-item>
+        <b-nav-item @click="del(list.member.email)">
+          <p style="color:#ff8a3d">삭제</p>
+        </b-nav-item>
+      </b-nav>
+
+      <div class="my-3" style="text-align:left">
         <h3 class="mx-2"><b> {{list.member.name}} </b></h3>
         <p>{{list.hopeaddress}}</p>
 
+        <hr style="background-color:#ff8a3d;" class="my-4">
         <!-- 제품설명창  -->
         <p class="mx-2" style="font-size:14px;"> {{list.boardaddress}} </p>
       </div>
 
-      <div class="my-3" style="border-bottom:1px solid #fec69f; text-align:left">
+      <div class="my-3" style="text-align:left">
         <!-- 글제목 -->
-        <h2 class="mx-2"> 제목{{list.title}} </h2>
+        <h2 class="mx-2"> {{list.title}} </h2>
         <!--해당카테고리 -->
         <p class="mx-2" style="color:#999;"> {{list.category.name}}</p>
         <!--가격 -->
         <h5 class="mx-2"><b> {{list.price}} 원</b></h5>
+      </div>
+      <hr style="background-color:#ff8a3d;" class="my-4">
+
+      <div>
         <!--상세내용 -->
-        <p class="mx-2"> <span v-html="list.contents"></span></p>
+        <p class="mx-2" style="text-align:left"> <span v-html="list.contents"></span></p>
 
         <b-nav>
-          <b-nav-item disabled>{{list.hit}}</b-nav-item>
+          <b-nav-item disabled> 조회수 : {{list.hit}}</b-nav-item>
 
           <b-nav-item>
             <a href="#" v-if="check" class="material-icons" style="color:#ff8a3d;" @click="addzzim()">favorite</a>
 
 
-            <a href="#" v-if="!check" class="material-icons" style="color:#ff8a3d;" @click="addzzim()">favorite_border</a>
+            <a href="#" v-if="!check" class="material-icons" style="color:#ff8a3d;"
+              @click="addzzim()">favorite_border</a>
           </b-nav-item>
         </b-nav>
 
+
+
+        <button @click="go()">채팅방</button>
+
+
+
+
       </div>
 
-      <div class="my-3">
-        <KaKaoMap v-bind:address="list.hopeaddress" />
-      </div>
+      <hr style="background-color:#ff8a3d;" class="my-4">
 
- {{this.$store.state.member.email}}
+      <b-row align-h="center">
+        <b-col cols="6">
+          <KaKaoMap v-bind:address="list.hopeaddress" />
+        </b-col>
+      </b-row>
 
- {{list.member.email}}
+      <hr style="background-color:#ff8a3d;" class="my-4">
+
       <!-- 댓글 -->
-   
-          <button @click="put(list.member.email,list.id)">
-          수정</button>
-      <button @click="del(list.member.email)"> 삭제 </button>
 
 
-      <div style="background-color:#fbf7f2">
-        <div>
-          <table v-for="(reply,i) in replylist" :key="i">
-            <tr>
-              <th style="width:150px; border-right:1px solid #fec69f; text-align:center">{{reply.member.name}}</th>
-               <td>{{reply.content}}</td>  
-              <!-- <button @click="replyput(reply.id,list.member.email)"> 댓글수정 </button> -->
-                                           <button @click="replydel(reply.id,list.member.email)"> 댓글삭제 </button>
-            </tr>
-          </table>
-        </div>
+
+
+      <div>
+        <b-row v-for="(reply,i) in replylist" :key="i" style="border-bottom:1px solid #ff8a3d; padding:10px;">
+          <b-col cols='11'>
+
+            <p style=" text-align:left; font-size:18px; margin-left:20px;"><b>{{reply.member.name}}</b></p>
+
+            <p style="text-align:left; font-size:15px;">{{reply.content}}</p>
+
+          </b-col>
+
+          <b-col cols="1">
+            <b-nav class="nav justify-content-end" style="height:20px; font-size:12px;">
+              <!-- <b-nav-item @click="replyput(reply.id,list.member.email)" >
+                  <p style="color:#ff8a3d">수정</p></b-nav-item> -->
+              <b-nav-item @click="replydel(reply.id,list.member.email)">
+                <p style="color:#ff8a3d">삭제</p>
+              </b-nav-item>
+            </b-nav>
+          </b-col>
+        </b-row>
+
+
       </div>
 
- <h3>댓글 쓰기</h3>
-      <textarea v-model="relpycontent" ref="relpycontent"></textarea>
-      <button @click="replynew()"> 작성 </button>
-
-  
-
-
-
+      <b-row no-gutters style="height:80px; margin:20px 0">
+        <b-col cols="11" style="padding:0;">
+          <textarea v-model="relpycontent" ref="relpycontent"
+            style="height:100%; width:100%; border-color:#ff8a3d; border-radius: 10px 0 0 10px ;"></textarea>
+        </b-col>
+        <b-col cols='1' style="padding:0;">
+          <button @click="replynew()"
+            style="height:100%; width:100%; background-color:#ff8a3d; border:0; color:#fbf7f2; border-radius:0 10px 10px 0;">
+            댓글쓰기 </button>
+        </b-col>
+      </b-row>
     </div>
 
   </div>
@@ -146,45 +183,63 @@
           'Authorization': 'Bearer ' + this.$store.state.token
         }
       }).then((res) => {
-        if(res.data.includes('-'+this.index)){
+        if (res.data.includes('-' + this.index)) {
           this.check = true
-        }else{
-          this.check= false
+        } else {
+          this.check = false
         }
       })
 
     },
     methods: {
-      put(membervel,id){
+      go() {
+        axios.get('/api/chatting/' + this.index, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+
+        })
+
+
+        var myForm = document.popForm;
+        var url = "http://localhost:8081/chat/" + this.list.member.id;
+        window.open("http://localhost:8081/chat/" + this.list.member.id, "popForm",
+          "toolbar=no, width=400, height=800, directories=no, status=no,    scrollorbars=no, resizable=no");
+
+
+      },
+      put(membervel, id) {
         if (membervel == this.$store.state.member.email) {
-         this.$router.push({
-          name:'ReWrite',
-          params:{
-            id:id
+          this.$router.push({
+            name: 'ReWrite',
+            params: {
+              id: id
             },
           })
-        }else{
-             alert("작성자가 아닙니다.")
+        } else {
+          alert("작성자가 아닙니다.")
         }
       },
       del(membervel) {
         if (membervel == this.$store.state.member.email) {
-           this.index = this.$route.params.id;
-        axios.delete('/api/board/' + this.index, {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + this.$store.state.token
-            }
-          })
-          .then((res) => {
-            this.$router.go(-1);
-          })
-         
+          this.index = this.$route.params.id;
+          axios.delete('/api/board/' + this.index, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.$store.state.token
+              }
+            })
+            .then((res) => {
+              this.$router.go(-1);
+            })
+
         } else {
           alert("작성자가 아닙니다.")
         }
-        
-       
+
+
       },
 
       onSlideStart(slide) {
@@ -230,25 +285,25 @@
           })
 
       },
-      replydel(value,membervel) {
-         if (membervel == this.$store.state.member.email) {
-        console.log(value);
-        const replyno = value;
-        axios.delete('/api/reply/' + replyno, {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + this.$store.state.token
-            }
-          })
-          .then((res) => {
-            console.log(res.data.content[0]);
-            alert("삭제되었습니다.")
-            this.$router.go(0);
-            //this.replylist=res.data.content;
-          })
-         }else{
-             alert("작성자가 아닙니다.")
-         }
+      replydel(value, membervel) {
+        if (membervel == this.$store.state.member.email) {
+          console.log(value);
+          const replyno = value;
+          axios.delete('/api/reply/' + replyno, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.$store.state.token
+              }
+            })
+            .then((res) => {
+              console.log(res.data.content[0]);
+              alert("삭제되었습니다.")
+              this.$router.go(0);
+              //this.replylist=res.data.content;
+            })
+        } else {
+          alert("작성자가 아닙니다.")
+        }
       },
 
       addzzim() {
@@ -259,13 +314,13 @@
           }
         }).then((res) => {
           console.log(res.data)
-          if(res.data){
+          if (res.data) {
             alert("찜 추가")
-            this.check=false
+            this.check = false
             this.$router.go(0);
-          }else{
+          } else {
             alert("찜 취소")
-            this.check=true
+            this.check = true
             this.$router.go(0);
           }
         })
@@ -279,5 +334,13 @@
 </script>
 
 <style scoped>
+  a {
+    text-decoration: none;
+  }
 
+  tr,
+  th,
+  td {
+    min-height: 30px;
+  }
 </style>

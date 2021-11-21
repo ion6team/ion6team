@@ -3,7 +3,7 @@
     <div class="input-form-backgroud">
       <div class="input-form col-md-12 mx-auto">
 
-        <div style="height:300px;" align-center>
+        <div style="height:250px;" align-center>
           <div>
             <b-link href='/'>
               <img src='../assets/Daangeun_Logo_vertical_Color_RGB.png'>
@@ -11,20 +11,38 @@
           </div>
         </div>
 
-        <h4 class="mb-3">로그인</h4>
+        <hr style="background-color:#ff8a3d;">
+
+        <h4 class="my-5" style="color:#ff8a3d;"><b>로그인</b></h4>
         <!-- <form class="validation-form" novalidate> -->
 
-        <div class="mb-3">
-          <label for="email">아이디(이메일)</label>
-          <input type="email" class="form-control" v-model="email" placeholder="you@example.com" required>
-        </div>
-        <div class="mb-3">
-          <label for="password">비밀번호</label>
-          <input type="password" class="form-control" v-model="password" required>
-          <div class="invalid-feedback"> 비밀번호를 입력해주세요. </div>
-        </div>
+        <b-row>
+          <b-col cols='3' offset-md="1" align-self="center">
+            <label for="email">아이디(이메일)</label>
+          </b-col>
+
+          <b-col cols='7'> 
+          <input type="email" class="form-control" v-model="email" placeholder="you@example.com" required style="border-color:#fec69f;">
+          </b-col>
+        </b-row>
+<br>
+        <b-row>
+          <b-col cols='3' offset-md="1" align-self="center">
+            <label for="password">비밀번호</label>
+          </b-col>
+          <b-col cols='7'> 
+            <input type="password" class="form-control" v-model="password" required style="border-color:#fec69f;">
+            <div class="invalid-feedback"> 비밀번호를 입력해주세요. </div>
+          </b-col>
+        </b-row>
+
+
         <div class="mb-4"></div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit" @click="login()">로그인</button>
+        <button class="btn btn-primary btn-lg btn-block mb-3" type="submit" @click="login()"
+        style="background-color:#ff8a3d; border-color:#fec69f;"
+        >로그인</button>
+
+
 
         <b-row class="m-3">
           <b-col>
@@ -39,9 +57,20 @@
         </b-row>
       </div>
 
-  <b-modal id="findEmail" centered hide-footer>
-    <findemail />
-  </b-modal>
+  <b-modal id="findEmail"  centered hide-header hide-footer size="lg" style="position:relative;">
+              
+               <template #default="{ close }">
+                  <div style="background-color: #fbf7f2; min-height:200px; width:100%;">
+                      <b-button style="background-color:#ff8a3d; border:3px solid white; border-radius:50%; height:40px; width:40px; text0align:center; position:absolute; top:-10px; right:-10px;"
+                    @click="close()">
+                      X
+                    </b-button>
+                  
+                    <findemail />
+
+                  </div>
+              </template>
+            </b-modal>
 
   <b-modal id="findPassword" centered hide-footer>
     <find-password />
@@ -117,5 +146,9 @@ import Loginfailed from '../components/Modal/LoginFailed.vue'
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+  }
+  a{
+    text-decoration: none;
+    color: #56c271;
   }
 </style>
