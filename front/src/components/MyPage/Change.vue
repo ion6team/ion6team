@@ -2,8 +2,8 @@
   <div>
     <div v-if="!check">
       비밀번호 :
-      <input v-model="password" type="password">
-      <button @click="checkpassword()"> 확인 </button>
+      <input v-model="password" type="password" style="border-color:#ff8a3d;">
+      <b-button @click="checkpassword()" style="background-color:#ff8a3d; border-color:#fec69f;"> 확인 </b-button>
       <br>
       {{message}}
     </div>
@@ -148,19 +148,32 @@
       </div>
     </div>
 
-    <b-modal ref="my-modal" hide-footer title="Using Component Methods">
-      <div class="d-block text-center">
-        <h3>회원정보가 수정되었습니다. 다시 로그인해주세요</h3>
-      </div>
-      <b-button @click="hideModal">OK</b-button>
-    </b-modal>
+    <b-modal ref="my-modal"  centered hide-header hide-footer style="position:relative;">
+              
+               <template #default="{ close }">
+                  <div style="background-color: #fbf7f2; min-height:200px; width:100%;">
+                      <b-button style="background-color:#ff8a3d; border:3px solid white; border-radius:50%; height:40px; width:40px; text0align:center; position:absolute; top:-10px; right:-10px;"
+                    @click="close()">
+                      X
+                    </b-button>
+                  
+                    <relogin-pls />
+
+                         
+                    <b-button @click="hideModal">OK</b-button>
+                  
+                  </div>
+              </template>
+            </b-modal>
 
   </div>
 </template>
 
 <script>
   import axios from 'axios';
+import ReloginPls from '../Modal/ReloginPls.vue';
   export default {
+  components: { ReloginPls },
     name: 'change',
     data() {
       return {
