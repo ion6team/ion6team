@@ -163,7 +163,7 @@ public class MemberController {
 
     @GetMapping("/chatting/{id}")
     public void addChattingRoom(@PathVariable long id) {
-
+        System.out.println("게시물 id" + id);
         Long id1 = boardService.findById(id).get().getMember().getId();
         Long id2 = memberService.getMyUserWithAuthorities().get().getId();
 

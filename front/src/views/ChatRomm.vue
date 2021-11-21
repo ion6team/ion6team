@@ -1,79 +1,97 @@
 <template>
-    <div style="margin:10px; padding:10px;">
+    <div style="margin:10px; padding:10px;background-color:#fbf7f2;" id="top">
         <!-- {{this.chatid}}
         {{this.$store.state.member.id}} 
         {{this.$store.state.member.name}} -->
-<br>
-            <div v-for="(item, idx) in before" :key="idx" style="background-color:#fbf7f2;">
+        <div style="margin-bottom:130px;">
+            <br>
+            <div v-for="(item, idx) in before" :key="idx">
                 <div v-if="before[idx].sender==loginname" align="right">
-                    <b-row align-h="end" class="pb-3"> 
-                        
+                    <b-row align-h="end" class="pb-3">
+
                         <b-col cols="6">
-                        <div style="border:1px solid #ff8a3d; border-radius:5px;
+                            <div style="border:1px solid #ff8a3d; border-radius:5px;
                         text-align:center; max-width:500px; 
-                        background-color:white; min-height:100px;
-                        padding:10px;"> 
-                            <span> {{ before[idx].message }}</span>
-                        </div>
+                        background-color:white; min-height:50px;
+                        padding:10px;">
+                                <span> {{ before[idx].message }}</span>
+                            </div>
                         </b-col>
                         <b-col cols="2" align-self="center" align="center">
-                        <h5>{{ before[idx].sender }}</h5> <br> 
+                            <h5>{{ before[idx].sender }}</h5> <br>
                         </b-col>
                     </b-row>
                 </div>
 
-                <div v-if="before[idx].sender!=loginname" align="left"> 
-                  <b-row align-h="start" class="pb-3"> 
+                <div v-if="before[idx].sender!=loginname" align="left">
+                    <b-row align-h="start" class="pb-3">
 
                         <b-col cols="2" align-self="center" align="center">
-                        <h5>{{ before[idx].sender }}</h5> <br> 
+                            <h5>{{ before[idx].sender }}</h5> <br>
                         </b-col>
 
                         <b-col cols="6">
-                        <div style="border:1px solid #ff8a3d; border-radius:5px;
-                        text-align:center; max-width:500px; 
-                        background-color:white; min-height:100px;
-                        padding:10px;"> 
-                            <span> {{ before[idx].message }}</span>
-                        </div>
+                            <div style="border:1px solid #ff8a3d; border-radius:5px;
+                        text-align:center; max-width:300px; 
+                        background-color:white; min-height:50px;
+                        padding:10px;">
+                                <span> {{ before[idx].message }}</span>
+                            </div>
                         </b-col>
-                        
+
                     </b-row>
                 </div>
 
             </div>
 
-<p style="font-size:12px; color:#999;">이전 채팅</p>
-<hr style="background-color:#ff8a3d;">
+            <p style="font-size:12px; color:#999;">이전 채팅</p>
+            <hr style="background-color:#ff8a3d;">
 
-            <div v-for="(item, idx) in recvList" :key="idx" style="background-color:#fbf7f2;">
-                <div v-if="item.sender==loginname" align="right"> 
-                <b-row align-h="end" class="pb-3"> 
-                        
+            <div v-for="(item, idx) in recvList" :key="idx" style="background-color:#fbf7f2;magin-bottom:100px">
+                <div v-if="item.sender==loginname" align="right">
+                    <b-row align-h="end" class="pb-3">
+
                         <b-col cols="6">
-                        <div style="border:1px solid #ff8a3d; border-radius:5px;
+                            <div style="border:1px solid #ff8a3d; border-radius:5px;
                         text-align:center; max-width:500px; 
-                        background-color:white; min-height:100px;
-                        padding:10px;"> 
-                            <span> {{item.message }}</span>
-                        </div>
+                        background-color:white; min-height:50px;
+                        padding:10px;">
+                                <span> {{item.message }}</span>
+                            </div>
                         </b-col>
                         <b-col cols="2" align-self="center" align="center">
-                        <h5>{{ item.sender }}</h5> <br> 
+                            <h5>{{ item.sender }}</h5> <br>
                         </b-col>
                     </b-row>
                 </div>
-            </div>
+                 <div v-if="item.sender!=loginname" align="left">
+                    <b-row align-h="start" class="pb-3">
+                        <b-col cols="2" align-self="center" align="center">
+                            <h5>{{ item.sender }}</h5> <br>
+                        </b-col>
+                        <b-col cols="6">
+                            <div style="border:1px solid #ff8a3d; border-radius:5px;
+                        text-align:center; max-width:500px; 
+                        background-color:white; min-height:50px;
+                        padding:10px;">
+                                <span> {{item.message }}</span>
+                            </div>
+                        </b-col>
 
-             <input v-model="message" type="text" @keyup="sendMessage" placeholder="내용을 입력하세요" style="position:fixed; bottom:20px; left:50%; 
+                    </b-row>
+                </div>
+            </div>
+        </div>
+
+        <input v-model="message" type="text" @keyup="sendMessage" placeholder="내용을 입력하세요" style="position:fixed; bottom:20px; left:50%; 
              margin-left:-250px;
              min-width:500px;
-             min-height:100px;
+             min-height:50px;
              border-color:#ff8a3d;
              background-color:#fbf7f2;
              ">
-        </div>
-    
+    </div>
+
 </template>
 
 <script>
@@ -82,7 +100,7 @@
     import axios from 'axios'
 
     export default {
-        name: 'App',
+        el: '#app_chat_list',
         props: {
             chatid: {
                 type: String
@@ -93,9 +111,9 @@
             return {
                 userName: "",
                 message: "",
-                before:[],
+                before: [],
                 recvList: [],
-                loginname:'',
+                loginname: '',
             }
         },
         created() {
@@ -109,7 +127,7 @@
                     }
                 })
                 .then((res) => {
-                    console.log ('이전대화내용' + res)
+                    console.log('이전대화내용' + res)
                     this.before = res.data;
                 })
         },
@@ -119,7 +137,6 @@
                     this.send()
                     this.message = ''
                 }
-                       document.body.scrollTop = document.body.scrollHeight;
             },
             send() {
                 console.log("Send message:" + this.message);
@@ -131,7 +148,7 @@
                     };
                     this.stompClient.send("http://localhost:8080/pub/api/chat/message", JSON.stringify(msg), {});
                 }
-         
+
             },
             connect() {
                 const serverURL = "http://localhost:8080/ws-stomp"
@@ -152,6 +169,7 @@
                             this.recvList.push(JSON.parse(res.body))
 
                         });
+                         window.scrollTo(0,document.body.scrollHeight);
                     },
                     error => {
                         // 소켓 연결 실패
@@ -160,7 +178,9 @@
                     }
                 );
             }
-        }
+        },
+
+     
     }
 </script>
 

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <!-- 상세페이지 : {{index}} -->
+
     <!-- 지금 로그인한 사람 : {{this.$store.state.member.email}} -->
+
     <div class="container" style="width:1000px">
       <b-carousel id="carousel-1" :interval="3000" v-model="slide" controls style="max-width:700px; margin:auto;"
         @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
@@ -208,9 +209,9 @@
 
 
         var myForm = document.popForm;
-        var url = "http://localhost:8081/chat/" + this.list.member.id;
-        window.open("http://localhost:8081/chat/" + this.list.member.id, "popForm",
-          "toolbar=no, width=400, height=800, directories=no, status=no,    scrollorbars=no, resizable=no");
+        var url = "http://localhost:8081/chat/" + this.index;
+        window.open("http://localhost:8081/chat/" + this.index, "popForm",
+          "toolbar=no, width=420, height=600, directories=no, status=no,    scrollorbars=no, resizable=no");
 
 
       },

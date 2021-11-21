@@ -11,7 +11,7 @@
             <b-tabs align="start">
               <b-tab title="정보수정" ><change /></b-tab>
               <b-tab title="찜목록" ><Zzim /></b-tab>
-              <b-tab title="채팅목록" ><Zzim /></b-tab>
+              <b-tab title="채팅목록" ><Chatting /></b-tab>
             </b-tabs>
           </b-col>
         </b-row>
@@ -24,12 +24,14 @@
 import MyInfo from '../components/MyPage/MyInfo.vue'
 import Change from '../components/MyPage/Change.vue'
 import Zzim from '../components/MyPage/Zzim.vue'
+import Chatting from '../components/MyPage/Chatting.vue'
 export default {
     name:'myPage',
     components:{
       MyInfo:MyInfo,
       Change:Change,
-      Zzim:Zzim
+      Zzim:Zzim,
+      Chatting:Chatting
     }
 }
 </script>
