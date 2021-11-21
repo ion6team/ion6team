@@ -76,7 +76,7 @@
 <br>
 
 
-            <validation-provider name="name" :rules="{ required: true, min: 2, max: 10 }" v-slot="validationContext">
+            <validation-provider name="name" :rules="{ required: true,regex: /^[가-힣]{2,4}$/ }" v-slot="validationContext">
               <b-form-group id="example-input-group-3" label="이름*" label-for="example-input-1">
 
                 <b-form-input id="example-input-3" name="example-input-2" v-model="name" placeholder="김당근"
@@ -117,9 +117,15 @@
 <br>
 <br>
 
-            <validation-provider name="phone" :rules="{ required: true}" v-slot="validationContext">
+            <validation-provider name="phone" :rules="{required: true, min: 11, max: 11 }" v-slot="validationContext">
               <b-form-group id="example-input-group-2" label="휴대폰*" label-for="example-input-1">
 
+
+                <b-form-input id="example-input-2" name="example-input-2" v-model="phone" placeholder="휴대폰번호"  type="number"
+                  :state="getValidationState(validationContext)" aria-describedby="input-2-live-feedback"
+                  style="border-color:#fec69f;">
+                </b-form-input>
+<!--    이부분 확인해주세요!!
                 <b-row>
                   <b-col cols="2">
                     <b-form-input id="example-input-2" name="example-input-2" v-model="phone" type="number"
@@ -140,6 +146,7 @@
                     </b-form-input>
                   </b-col>
                 </b-row>
+-->
 
                 <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}
                 </b-form-invalid-feedback>
@@ -288,7 +295,8 @@
       checkEmailDuplicate() {
         if (this.email == '') {
           alert("이메일을 입력해주세요")
-        } else {
+        } 
+        else {
 
           axios({
             url: '/api/member/' + this.email,
