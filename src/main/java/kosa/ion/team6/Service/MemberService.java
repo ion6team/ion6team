@@ -88,6 +88,25 @@ public class MemberService implements UserDetailsService {
     }
 
     @Transactional
+    public String adiminMeInfo(Long id, MemberDto memberDto) {
+
+        Optional<Member> updateUser = memberRepository.findById(id);
+
+        updateUser.ifPresent(selectUser -> {
+            selectUser.setName(memberDto.getName());
+            selectUser.setEmail(memberDto.getEmail());
+            selectUser.setPhone(memberDto.getPhone());
+            selectUser.setAddress(memberDto.getAddress());
+            selectUser.setAddress_detail(memberDto.getAddress_detail());
+            selectUser.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+            memberRepository.save(selectUser);
+        });
+
+        return "changed";
+
+    }
+    
+    @Transactional
     public String editMember(Long id, MemberDto memberDto) {
 
         Optional<Member> updateUser = memberRepository.findById(id);

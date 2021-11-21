@@ -13,7 +13,7 @@
 
           <b-form @submit.stop.prevent="handleSubmit(onSubmit)">
         <!-- <b-form class="position-relative p-3" @submit.prevent="onSubmit"> -->
-             <validation-provider name="name" :rules="{ required: true,regex: /^[가-힣]{2,4}$/ }" v-slot="validationContext">
+       <validation-provider name="name" :rules="{ required: true,regex: /^[가-힣]{2,4}$/ }" v-slot="validationContext">
           <b-form-group label="이름" label-for="form-name" label-cols-lg="2">
             <b-input-group>
               <b-input-group-prepend is-text>

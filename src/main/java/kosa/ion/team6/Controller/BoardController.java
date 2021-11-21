@@ -104,7 +104,7 @@ public class BoardController {
     // 게시물 상세페이지 댓글 조회
     @GetMapping("/reply/{id}")
     public Page ReplyList(@PathVariable long id, @PageableDefault(size=10,sort="id",
-            direction = Sort.Direction.DESC) Pageable pageable) {
+            direction = Sort.Direction.ASC) Pageable pageable) {
         System.out.println("Controller" + id);
         return boardService.replyList(id,pageable);
     }
