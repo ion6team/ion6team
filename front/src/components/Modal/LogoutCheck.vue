@@ -1,6 +1,6 @@
 <template>
     <div class="text-center" style=" padding-top:80px;">
-        <h3>로그아웃 하실건가요</h3>
+        <h5>정말 로그아웃 하실건가요?</h5>
     </div>
 </template>
 
