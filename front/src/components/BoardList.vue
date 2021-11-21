@@ -126,16 +126,7 @@
     <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" align="center">
     </b-pagination>
 
-    <b-button class=" m-2" v-b-modal.needLogin style="background-color:#ff8a3d; border-color:#fec69f">
-      버튼
-    </b-button>
-    <b-modal id="needLogin" centered hide-footer>
-      <needLogin />
-    </b-modal>
-
-  <div>
-    {{when}} 
-  </div>
+   
     
   </div>
 </template>
