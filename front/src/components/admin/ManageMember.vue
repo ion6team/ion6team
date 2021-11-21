@@ -1,13 +1,31 @@
 <template>
     <div class="container">
-        <b-form-select v-model="perPage" :options="options" size="sm" class="mt-3" style="float:right;">
-        </b-form-select>
-        <a v-if="kind!='all'" @click="kindAll()">전체보기</a>
-        <b-form-select v-model="searchKinds" :options="searchOptions" style="float:left;margin-right:10px;">
-        </b-form-select>
-        <b-form-input size="sm" v-model="search" placeholder="검색하세요" style="float:left; width:200px;">
-        </b-form-input>
-        <b-button size="sm" style="float:left; margin-left:10px;" @click="searchApi()">Search</b-button>
+        
+        
+         <b-navbar-nav class="ml-auto my-2">
+             <b-row>
+                <b-col cols="1" class="nav justify-content-start">
+                <b-form-select v-model="searchKinds" :options="searchOptions" style="margin-right:10px;">
+                </b-form-select>
+                </b-col>
+
+                <b-col class="nav justify-content-start">
+                    <b-input-group>
+                        <b-form-input size="sm" v-model="search" placeholder="검색하세요" style="max-width:200px; border-color:#c2e8c2;">
+                        </b-form-input>
+                        <b-input-group-append>
+                            <b-button size="sm" style="background-color:#56c271; border-color:#c2e8c2;" @click="searchApi()">검색</b-button>
+                        </b-input-group-append>
+                    </b-input-group>
+                </b-col>
+
+                <b-col class="nav justify-content-end">
+                    <b-form-select v-model="perPage" :options="options" size="sm">
+                    </b-form-select>
+                    <a v-if="kind!='all'" @click="kindAll()">전체보기</a>
+                </b-col>
+             </b-row>
+      </b-navbar-nav>
 
         <table class="table table-striped table-hover">
             <thead>
@@ -41,7 +59,7 @@
                     <td>{{item.address}}</td>
                     <td>{{item.address_detail}}</td>
                     <td>{{item.phone}}</td>
-                    <td> <a v-if="item.activated==false" @click="check(item.id)"> 탈퇴
+                    <td> <a v-if="item.activated==false" @click="check(item.id)"> 복구
                     </a>
                     </td>
                 </tr>
@@ -52,11 +70,11 @@
         </b-pagination>
 
 
-        <b-button size="sm" style="float:right;" @click="deleteMember()">삭제</b-button>
+        <b-button size="sm" style="float:right; background-color:#56c271; border-color:#c2e8c2" @click="deleteMember()">삭제</b-button>
         <h6 style="float:right;">
             <pre />{{tableselected.length}}/{{rows}}..</h6>
 
-            {{tableselected}}
+            
     </div>
 </template>
 
@@ -206,5 +224,11 @@
 </script>
 
 <style scoped>
-
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #e6f3e6;
+ }
+ table,tr,td,th{
+     border-color: #56c271;
+ }
 </style>

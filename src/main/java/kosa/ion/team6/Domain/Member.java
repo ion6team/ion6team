@@ -55,5 +55,8 @@ public class Member{
     @ColumnDefault("0")
     private String zzim;
 
+    @ColumnDefault("0")
+    private String chatting;
+
 
 }

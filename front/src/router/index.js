@@ -16,6 +16,7 @@ import ReWrite from '../views/ReWrite.vue';
 import MyInfo from '../components/MyPage/MyInfo.vue'
 import Change from '../components/MyPage/Change.vue'
 import Zzim from '../components/MyPage/Zzim.vue'
+import ChatRomm from '../views/ChatRomm'
 
 
 Vue.use(VueRouter)
@@ -54,6 +55,8 @@ const routes = [{
                 component: BoardPage,
                 props: true,
             },
+
+
         ]
     },
 
@@ -96,6 +99,14 @@ const routes = [{
             },
             
         ]
+
+    },
+
+    {
+        path: '/chat/:chatid',
+        name: 'ChatRomm',
+        component: ChatRomm,
+        props: true,
     },
 
 

@@ -169,66 +169,28 @@ public class MemberService implements UserDetailsService {
         }
     }
 
-//	public List<Board> getAllZzim(Long id){
-//		Optional<Member> member = memberRepository.findById(id);
-//
-//	}
-//
+    @Transactional
+    public void addChatting(Long id,Long id1, Long id2) {
+        Optional<Member> updateUser = memberRepository.findById(id1);
 
+        if (updateUser.get().getChatting().contains("-"+id)) {
 
-//	public Long join(Member m) {
-//		//if(memberRepository.existsByEamil(m.getEmail())) {
-//		//	return 0L;
-//		//}
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		m.setPassword(passwordEncoder.encode(m.getPassword()));
-//
-//		return memberRepository.save(m).getId();
-//	}
-//
-//	public List<Member> findAll(){
-//		return memberRepository.findAll();
-//	}
-//
-//	public boolean checkEmail(String email) {
-//		if(memberRepository.existsByEmail(email))
-//			return true;
-//		else
-//			return false;
-//	}
-//
-//	public Member selectOne(long id) {
-//
-//		return memberRepository.findById(id);
-//	}
-
-/*    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-*//*        Optional<Member> memberWrapper = memberRepository.findByEmail(email);
-        Member member = memberWrapper.get();
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        if("admin".equals(email)){
-            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
-        }else{
-            authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
+        } else {
+            updateUser.ifPresent(selectUser -> {
+                selectUser.setChatting(selectUser.getChatting() + "-"+id);
+                memberRepository.save(selectUser);
+            });
         }
-        return new User(member.getName(),member.getPw(),authorities);*//*
-        return (UserDetails) memberRepository.findByEmail(email);
-                //orElseThrow(() -> new UsernameNotFoundException(email));
-    }*/
 
-//	public Member validationLogin(MemberDto memberDto){
-//		Member lmember = memberRepository.findByEmail(memberDto.getUsername());
-//
-//		if(lmember==null){
-//			return null;
-//		}
-//
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		if(!passwordEncoder.matches(memberDto.getPassword(), lmember.getPassword())){
-//			return null;
-//		}
-//
-//		return lmember;
-//	}
+        Optional<Member> updateUser2 = memberRepository.findById(id2);
+
+        if (updateUser2.get().getChatting().contains("-"+id)) {
+
+        } else {
+            updateUser2.ifPresent(selectUser -> {
+                selectUser.setChatting(selectUser.getChatting() + "-"+id);
+                memberRepository.save(selectUser);
+            });
+        }
+    }
 }

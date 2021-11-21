@@ -32,7 +32,7 @@ public class MemberController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final BoardService boardService;
 
-    public MemberController(MemberService memberService, TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, BoardService boardService){
+    public MemberController(MemberService memberService, TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, BoardService boardService) {
         this.memberService = memberService;
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
@@ -59,7 +59,7 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/member/new")
-    public ResponseEntity<Member> signup( @Valid @RequestBody MemberDto memberDto) {
+    public ResponseEntity<Member> signup(@Valid @RequestBody MemberDto memberDto) {
         return ResponseEntity.ok(memberService.signup(memberDto));
     }
 
@@ -80,36 +80,36 @@ public class MemberController {
         System.out.println(memberDto.getAddress_detail());
 
 
-       return ResponseEntity.ok(
-               memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
-       );
+        return ResponseEntity.ok(
+                memberService.editMember(memberService.getMyUserWithAuthorities().get().getId(), memberDto)
+        );
     }
 
     // 회원 삭제
     @DeleteMapping("/member")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<String> DeleteMember(){
+    public ResponseEntity<String> DeleteMember() {
         return ResponseEntity.ok(memberService.deleteMember(memberService.getMyUserWithAuthorities().get().getId()));
     }
 
     // 이메일 중복 체크
-    @GetMapping(value="/member/{email}")
-    public ResponseEntity<Boolean> isEmailDup(@PathVariable("email") String email){
+    @GetMapping(value = "/member/{email}")
+    public ResponseEntity<Boolean> isEmailDup(@PathVariable("email") String email) {
         return ResponseEntity.ok(memberService.isEmailDuplicate(email));
     }
 
     @GetMapping(value = "/member/address")
-    public ResponseEntity<String> getMemberAddress(){
+    public ResponseEntity<String> getMemberAddress() {
         return ResponseEntity.ok(memberService.getMyUserWithAuthorities().get().getAddress());
     }
 
     @PostMapping(value = "/member/email")
-    public String findEmail(@RequestBody MemberDto memberDto){
+    public String findEmail(@RequestBody MemberDto memberDto) {
         System.out.println(memberDto.getName());
         System.out.println(memberDto.getResident1());
         System.out.println(memberDto.getResident2());
         String email = memberService.findEmail(memberDto);
-        if(email.equals(" ")){
+        if (email.equals(" ")) {
             email = "notfound";
         }
         System.out.println(email);
@@ -117,7 +117,7 @@ public class MemberController {
     }
 
     @PostMapping(value = "/member/password")
-    public String findPassword(@RequestBody MemberDto memberDto){
+    public String findPassword(@RequestBody MemberDto memberDto) {
         String email = memberService.findEmail(memberDto);
         System.out.println(email);
         return email;
@@ -130,29 +130,58 @@ public class MemberController {
 
     //////////////////////찜/////////////////////////
     @GetMapping("/zzim")
-    public String checkzzim(){
+    public String checkzzim() {
         return memberService.getMyUserWithAuthorities().get().getZzim();
     }
 
     @GetMapping("/zzim/{id}")
-    public Boolean addZzim(@PathVariable long id){
+    public Boolean addZzim(@PathVariable long id) {
         System.out.println(id);
         Long memberid = memberService.getMyUserWithAuthorities().get().getId();
 
-        return memberService.addZzim(memberid, id); 
+        return memberService.addZzim(memberid, id);
         // return false 면 찜 삭제
         // return true 면 찜 추가
     }
 
     @GetMapping("/member/zzim")
-    public List<Board> getAllZZim(){
+    public List<Board> getAllZZim() {
         String str = memberService.getMyUserWithAuthorities().get().getZzim();
         System.out.println(str);
         String[] arr = str.split("-");
         System.out.println(arr.length);
         List<Board> boardList = new ArrayList<Board>();
-        for(int i=1; i<arr.length ;i++){
+        for (int i = 1; i < arr.length; i++) {
 
+            boardList.add(boardService.findById(Long.parseLong(arr[i].trim())).get());
+        }
+
+        return boardList;
+    }
+
+    //////////// 채팅 /////////////
+
+    @GetMapping("/chatting/{id}")
+    public void addChattingRoom(@PathVariable long id) {
+
+        Long id1 = boardService.findById(id).get().getMember().getId();
+        Long id2 = memberService.getMyUserWithAuthorities().get().getId();
+
+        System.out.println("글쓴사람 id" + id1);
+        System.out.println("로그인 id" + id2);
+
+        memberService.addChatting(id, id1, id2);
+    }
+
+    @GetMapping("/member/chat")
+    public List<Board> getAllChatting() {
+        String str = memberService.getMyUserWithAuthorities().get().getChatting();
+        System.out.println(str);
+        String[] arr = str.split("-");
+        System.out.println(arr.length);
+        List<Board> boardList = new ArrayList<Board>();
+
+        for (int i = 1; i < arr.length; i++) {
             boardList.add(boardService.findById(Long.parseLong(arr[i].trim())).get());
         }
 

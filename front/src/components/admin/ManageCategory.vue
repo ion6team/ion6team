@@ -31,15 +31,27 @@
                 </tr>
             </tbody>
         </table>
-        <b-button size="sm" style="float:right; margin-left:20px;" @click="deleteCateogory()">삭제</b-button>
-        <b-button size="sm" style="float:right;" v-b-modal.AdminAddCategory>추가</b-button>
+        <b-button size="sm" style="float:right; margin-left:20px; background-color:#56c271; border-color:#c2e8c2" @click="deleteCateogory()">삭제</b-button>
+        <b-button size="sm" style="float:right; background-color:#56c271; border-color:#c2e8c2" v-b-modal.AdminAddCategory>추가</b-button>
         <br><br>
         <b-pagination align="center" v-model="currentPage" :total-rows="rows" :per-page="perPage" >
         </b-pagination>
 
-          <b-modal id="AdminAddCategory" centered>
-    <admin-add-category/>
-  </b-modal>
+          <b-modal id="AdminAddCategory"  centered hide-header hide-footer size="xl" style="position:relative;">
+              
+               <template #default="{ close }">
+                  <div style="background-color: #fbf7f2; min-height:200px; width:100%;">
+                      <b-button style="background-color:#ff8a3d; border:3px solid white; border-radius:50%; height:40px; width:40px; text0align:center; position:absolute; top:-10px; right:-10px;"
+                    @click="close()">
+                      X
+                    </b-button>
+
+                <admin-add-category/>
+
+            
+                  </div>
+              </template>
+            </b-modal>
     </div>
 </template>
 
@@ -127,5 +139,11 @@
 </script>
 
 <style scoped>
-
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #e6f3e6;
+ }
+ table,tr,td,th{
+     border-color: #56c271;
+ }
 </style>
