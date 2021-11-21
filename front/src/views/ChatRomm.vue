@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="margin:10px; padding:10px;">
         <!-- {{this.chatid}}
         {{this.$store.state.member.id}} 
         {{this.$store.state.member.name}} -->
@@ -23,7 +23,7 @@
                 </div>
 
                 <div v-if="before[idx].sender!=loginname" align="left"> 
-                <b-row align-h="start" class="pb-3"> 
+                  <b-row align-h="start" class="pb-3"> 
 
                         <b-col cols="2" align-self="center" align="center">
                         <h5>{{ before[idx].sender }}</h5> <br> 
@@ -63,8 +63,6 @@
                         </b-col>
                     </b-row>
                 </div>
-
-
             </div>
 
              <input v-model="message" type="text" @keyup="sendMessage" placeholder="내용을 입력하세요" style="position:fixed; bottom:20px; left:50%; 
@@ -75,7 +73,7 @@
              background-color:#fbf7f2;
              ">
         </div>
-    </div>
+    
 </template>
 
 <script>

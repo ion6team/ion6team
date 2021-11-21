@@ -55,11 +55,15 @@
             <a href="#" v-if="!check" class="material-icons" style="color:#ff8a3d;"
               @click="addzzim()">favorite_border</a>
           </b-nav-item>
+
+          <b-nav-item>
+            <a href="#" class="material-icons" style="color:#ff8a3d;" @click="go()">mode_comment</a>
+          </b-nav-item>
         </b-nav>
 
 
 
-        <button @click="go()">채팅방</button>
+
 
 
 
